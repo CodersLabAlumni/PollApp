@@ -17,7 +17,8 @@ public class UserAccount {
 
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private UserRole userRole;
 
     @OneToOne

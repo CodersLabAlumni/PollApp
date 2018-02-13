@@ -3,6 +3,8 @@ package com.pollapp.entity;
 import com.pollapp.enums.Gender;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "data")
@@ -23,6 +25,15 @@ public class UserData {
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     private UserAccount userAccount;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(joinColumns = { @JoinColumn(name = "data_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "answer_id") })
+    private List<Answer> answers;
+
+    public UserData() {
+        answers = new ArrayList<>();
+    }
 
     public long getId() {
         return id;
@@ -70,5 +81,13 @@ public class UserData {
 
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }
