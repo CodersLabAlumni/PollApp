@@ -14,6 +14,9 @@ public class UserData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
+    private String ip;
+
     private int age;
 
     private String firstName;
@@ -27,8 +30,8 @@ public class UserData {
     private UserAccount userAccount;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(joinColumns = { @JoinColumn(name = "data_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "answer_id") })
+    @JoinTable(joinColumns = {@JoinColumn(name = "data_id")}, inverseJoinColumns = {
+            @JoinColumn(name = "answer_id")})
     private List<Answer> answers;
 
     public UserData() {
@@ -41,6 +44,14 @@ public class UserData {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public int getAge() {
