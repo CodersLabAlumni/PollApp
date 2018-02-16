@@ -3,6 +3,9 @@ package com.pollapp.controller;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
+import com.pollapp.repository.PollRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +14,12 @@ import java.util.List;
 @RequestMapping("/polls")
 public class PollController {
 
+	@Autowired
+	private PollRepository pollRepository;
+	
     @GetMapping("")
     public List<Poll> getPoll() {
-        // TODO
-        return null;
+        return pollRepository.findAll();
     }
 
     @PostMapping("")
