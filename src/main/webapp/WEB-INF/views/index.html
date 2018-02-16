@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>REST test</title>
+    <link rel="stylesheet" href="C:\Users\mateu\Documents\workspace-sts-3.9.2.RELEASE\FactoryApp\src\main\webapp\WEB-INF\css\bootstrap.min.css">
+    <link rel="stylesheet" href="C:\Users\mateu\Documents\workspace-sts-3.9.2.RELEASE\FactoryApp\src\main\webapp\WEB-INF\css\style.css">
+
+  </head>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <a class="navbar-brand" href="#">PollApp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+  <body>
+
+
+    <br><br>
+    <div class="container">
+      <form class="hidden" id="pollForm">
+        <fieldset>
+          <legend>Create poll</legend>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Your question</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter question"><br>
+            <label for="exampleInputEmail1">Answers</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 1">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 2">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 3">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+      </form>
+<br>
+    <div class="row">
+    <div class="col-lg-6">
+    <div class="card border-danger mb-3" style="max-width: 40rem;">
+      <div class="card-header">Which Harry Potter book is the best?</div>
+      <div class="card-body">
+<div id="chart1"></div>
+      </div>
+    </div>
+    <div class="card border-danger mb-3" style="max-width: 40rem;">
+      <div class="card-header">Does Donald Trump have fake hair?</div>
+      <div class="card-body">
+<div id="chart2"></div>
+      </div>
+    </div>
+    </div>
+
+    <div class="col-lg-6">
+    <div class="text-white bg-secondary mb-3" style="max-width: 40rem;">
+      <div class="card-header">Who will survive Game of Thrones</div>
+      <div class="card-body">
+        <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          White walkers
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          No-one
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Jon Show
+        </label>
+      </div>
+    </fieldset>
+      </div>
+    </div>
+    <div class="text-white bg-secondary mb-3" style="max-width: 40rem;">
+      <div class="card-header">Is global warming a real issue</div>
+      <div class="card-body">
+        <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Yes
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          No
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Who cares, we are going to kill ourselves anyway
+        </label>
+      </div>
+    </fieldset>
+      </div>
+    </div>
+    <div class="text-white bg-secondary mb-3" style="max-width: 40rem;">
+      <div class="card-header">Who will survive Game of Thrones</div>
+      <div class="card-body">
+        <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          White walkers
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          No-one
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Jon Show
+        </label>
+      </div>
+    </fieldset>
+      </div>
+    </div>
+    <div class="text-white bg-secondary mb-3" style="max-width: 40rem;">
+      <div class="card-header">Who will survive Game of Thrones</div>
+      <div class="card-body">
+        <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          White walkers
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          No-one
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Jon Show
+        </label>
+      </div>
+    </fieldset>
+      </div>
+    </div>
+    <div class="text-white bg-secondary mb-3" style="max-width: 40rem;">
+      <div class="card-header">Who will survive Game of Thrones</div>
+      <div class="card-body">
+        <fieldset class="form-group">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          White walkers
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          No-one
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Jon Show
+        </label>
+      </div>
+    </fieldset>
+      </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="C:\Users\mateu\Documents\workspace-sts-3.9.2.RELEASE\FactoryApp\src\main\webapp\WEB-INF\js\app.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+
+
+    <p>factories list:</p>
+    <ul class="factories"></ul>
+
+
+  </body>
+</html>
