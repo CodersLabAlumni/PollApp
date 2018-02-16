@@ -1,6 +1,9 @@
 package com.pollapp.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -20,6 +23,7 @@ public class Poll {
     @ManyToOne(fetch = FetchType.EAGER)
     private UserAccount userAccount;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "poll", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Answer> answers;
 

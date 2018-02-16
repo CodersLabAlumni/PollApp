@@ -12,12 +12,21 @@ $(function() {
 
   function renderList() {
     $.ajax({
-      url: baseUrl + 'categories'
+      url: baseUrl + 'polls/ongoing/'
     }).done(function(data) {
       console.log(data);
       ongoingPolls.empty();
       data.forEach(function(poll) {
-        ongoingPolls.append('<li>' + poll.name + '</li>');
+        ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">'
+        + poll.question +
+        '</div><div class="card-body">'+
+        '<fieldset class="form-group">'+
+        '<div class="form-check">'+
+        '<label class="form-check-label">'+
+        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">'+
+        'White walkers'+
+        '</label>'+
+        '</div>');
       })
     }).fail(function(e) {
       console.log("error");

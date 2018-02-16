@@ -22,6 +22,22 @@ public class PollController {
     public List<Poll> getPoll() {
         return pollRepository.findAll();
     }
+    
+    @RequestMapping("/set")
+    @ResponseBody
+    public String setPolls() {
+    	pollRepository.deleteAll();
+    	Poll poll1 = new Poll();
+    	poll1.setQuestion("What is time?");
+    	pollRepository.save(poll1);
+    	Poll poll2 = new Poll();
+    	poll2.setQuestion("What is life?");
+    	pollRepository.save(poll2);
+    	Poll poll3 = new Poll();
+    	poll3.setQuestion("What is the meaning?");
+    	pollRepository.save(poll3);
+    	return "polls set";
+    }
 
     @PostMapping("")
     public Poll createPoll() {
