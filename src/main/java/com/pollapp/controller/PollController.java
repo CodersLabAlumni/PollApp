@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/polls")
 public class PollController {
@@ -17,7 +18,7 @@ public class PollController {
 	@Autowired
 	private PollRepository pollRepository;
 	
-    @GetMapping("")
+    @GetMapping("/ongoing")
     public List<Poll> getPoll() {
         return pollRepository.findAll();
     }
