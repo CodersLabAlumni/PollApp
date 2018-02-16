@@ -1,6 +1,7 @@
 $(function() {
   var baseUrl = 'http://localhost:5000/'
   var ongoingPolls = $('#ongoingPolls')
+
   //
   // test();
   //
@@ -17,16 +18,21 @@ $(function() {
       console.log(data);
       ongoingPolls.empty();
       data.forEach(function(poll) {
-        ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">'
-        + poll.question +
-        '</div><div class="card-body">'+
-        '<fieldset class="form-group">'+
-        '<div class="form-check">'+
-        '<label class="form-check-label">'+
-        '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">'+
-        'White walkers'+
-        '</label>'+
-        '</div>');
+        var pollAnswers = '';
+        poll.answers.forEach(function(answer) {
+          pollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        })
+        ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+          poll.question +
+          '</div><div class="card-body">' +
+          '<fieldset class="form-group">' +
+          pollAnswers +
+          '</fieldset></div></div>');
       })
     }).fail(function(e) {
       console.log("error");
