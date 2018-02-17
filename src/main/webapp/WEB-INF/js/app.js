@@ -95,6 +95,25 @@ $(function() {
     });
   }
 
+  renderCategoriesList()
+
+    var closedPollsCategories = $('#closedPollsCategories');
+
+  function renderCategoriesList() {
+    $.ajax({
+      url: baseUrl + 'categories/'
+    }).done(function(data) {
+      console.log(data);
+      closedPollsCategories.empty();
+      data.forEach(function(category) {
+        closedPollsCategories.append('<a class="dropdown-item" href="#">' + category.name + '</a>');
+      })
+    }).fail(function(e) {
+      console.log("error");
+      console.log(e);
+    });
+  }
+
   form.on('submit', function(e) {
 
     //process form
@@ -135,6 +154,13 @@ $(function() {
   button.on('click', function() {
     console.log($(this).parents('.text-white'));
     $(this).parents('.text-white').fadeOut();
+  })
+
+  var closedPollsCategories = $('#closedPollsCategories');
+
+  closedPollsCategories.on('mouseover', function() {
+    console.log(closedPollsCategories);
+    closedPollsCategories.append('<a class="dropdown-item" href="#">test</a>');
   })
 
 
