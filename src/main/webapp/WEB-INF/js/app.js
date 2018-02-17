@@ -98,15 +98,15 @@ $(function() {
   renderCategoriesList()
 
     var closedPollsCategories = $('#closedPollsCategories');
+    var openPollsCategories = $('#openPollsCategories');
 
   function renderCategoriesList() {
     $.ajax({
       url: baseUrl + 'categories/'
     }).done(function(data) {
-      console.log(data);
-      closedPollsCategories.empty();
       data.forEach(function(category) {
         closedPollsCategories.append('<a class="dropdown-item" href="#">' + category.name + '</a>');
+        openPollsCategories.append('<a class="dropdown-item" href="#">' + category.name + '</a>');
       })
     }).fail(function(e) {
       console.log("error");
