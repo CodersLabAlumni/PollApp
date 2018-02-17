@@ -59,12 +59,35 @@ $(function() {
             '</label>' +
             '</div>'
         })
-        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+        closedPolls.append('<div class="card border-danger mb-3" style="max-width: 40rem;">' +
+          '<div class="card-header">' +
           poll.question +
-          '</div><div class="card-body">' +
-          '<fieldset class="form-group">' +
-          pollAnswers +
-          '</fieldset></div></div>');
+          '</div>' +
+          '<div class="card-body">' +
+          '<div id="chartContainer' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
+          '</div></div>');
+          var charContent = [];
+           poll.answers.forEach(function(answer) {
+             charContent.push({y: answer.id, label: answer.content})
+           })
+          var chart = new CanvasJS.Chart("chartContainer"+poll.id, {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+              text: ""
+            },
+            axisY: {
+              title: "%"
+            },
+            data: [{
+              type: "column",
+              showInLegend: true,
+              legendMarkerColor: "grey",
+              legendText: "100 answers",
+              dataPoints: charContent
+            }]
+          });
+          chart.render();
       })
     }).fail(function(e) {
       console.log("error");
