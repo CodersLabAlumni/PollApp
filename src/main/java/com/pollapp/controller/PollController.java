@@ -23,6 +23,11 @@ public class PollController {
         return pollRepository.findAll();
     }
     
+    @GetMapping("/closed")
+    public List<Poll> getClosedPoll() {
+        return pollRepository.findAll();
+    }
+    
     @RequestMapping("/set")
     @ResponseBody
     public String setPolls() {
@@ -39,10 +44,9 @@ public class PollController {
     	return "polls set";
     }
 
-    @PostMapping("")
-    public Poll createPoll() {
-        // TODO
-        return null;
+    @PostMapping("/create")
+    public void createPoll(@RequestParam Poll poll) {
+    	pollRepository.save(poll);
     }
 
     @GetMapping("/{pollId}")

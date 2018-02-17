@@ -1,6 +1,8 @@
 $(function() {
   var baseUrl = 'http://localhost:5000/'
-  var ongoingPolls = $('#ongoingPolls')
+  var ongoingPolls = $('#ongoingPolls');
+  var closedPolls = $('#closedPolls');
+  var form = $('#pollForm');
 
   //
   // test();
@@ -9,9 +11,10 @@ $(function() {
   //   factories.append('<li> test </li>');
   // }
   //
-  renderList();
+  renderOpenedList();
+  renderClosedList();
 
-  function renderList() {
+  function renderOpenedList() {
     $.ajax({
       url: baseUrl + 'polls/ongoing/'
     }).done(function(data) {
@@ -39,6 +42,63 @@ $(function() {
       console.log(e);
     });
   }
+
+  function renderClosedList() {
+    $.ajax({
+      url: baseUrl + 'polls/closed/'
+    }).done(function(data) {
+      console.log(data);
+      closedPolls.empty();
+      data.forEach(function(poll) {
+        var pollAnswers = '';
+        poll.answers.forEach(function(answer) {
+          pollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        })
+        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+          poll.question +
+          '</div><div class="card-body">' +
+          '<fieldset class="form-group">' +
+          pollAnswers +
+          '</fieldset></div></div>');
+      })
+    }).fail(function(e) {
+      console.log("error");
+      console.log(e);
+    });
+  }
+
+  form.on('submit', function(e) {
+
+    //process form
+    var data = {};
+    $(this).find('input[type=text]').each(function(index, elem) {
+      data[elem.name] = elem.value
+    });
+
+    console.log(data);
+
+    $.post({
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      url: baseUrl + 'polls/create',
+      data: JSON.stringify(data),
+      dataType: 'json' //potencjalnie to mozna wyrzucic
+    }).done(function(res) {
+      console.log(res);
+      renderList();
+    }).fail(function(xhr, status, error) {
+      console.log(xhr, status, error);
+    })
+
+    this.reset();
+    e.preventDefault();
+  });
 
   var pollCreate = $('#pollCreate');
   var pollForm = $('#pollForm');

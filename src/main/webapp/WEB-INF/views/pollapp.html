@@ -36,11 +36,11 @@
         <legend>Create poll</legend>
         <div class="form-group">
           <label for="exampleInputEmail1">Your question</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter question"><br>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="question" placeholder="Enter question"><br>
           <label for="exampleInputEmail1">Answers</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 1">
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 2">
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter answer 3">
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="answers" placeholder="Enter answer 1">
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="answers" placeholder="Enter answer 2">
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="answers" placeholder="Enter answer 3">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </fieldset>
@@ -53,7 +53,7 @@
       One of three columns
     </div>
     <div class="col-sm-3">
-      One of three columns
+      <div id="closedPolls"></div>
     </div>
     <div class="col-sm-3">
       <div id="ongoingPolls"></div>
