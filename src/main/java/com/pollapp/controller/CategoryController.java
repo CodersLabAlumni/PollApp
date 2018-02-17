@@ -3,6 +3,7 @@ package com.pollapp.controller;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Poll;
 import com.pollapp.repository.CategoryRepository;
+import com.pollapp.repository.PollRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private PollRepository pollRepository;
 
     @GetMapping("")
     public List<Category> getCategories() {
@@ -48,7 +52,6 @@ public class CategoryController {
 
     @GetMapping("/{categoryId}/polls")
     public List<Poll> getPollsByCategory(@PathVariable long categoryId) {
-        // TODO
-        return null;
+        return pollRepository.findAllByCategoryId(categoryId);
     }
 }
