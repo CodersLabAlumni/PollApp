@@ -156,12 +156,6 @@ $(function() {
     $(this).parents('.text-white').fadeOut();
   })
 
-  var closedPollsCategories = $('#closedPollsCategories');
-
-  closedPollsCategories.on('mouseover', function() {
-    console.log(closedPollsCategories);
-    closedPollsCategories.append('<a class="dropdown-item" href="#">test</a>');
-  })
 
 
   // var chart = new CanvasJS.Chart("chartContainer1", {
