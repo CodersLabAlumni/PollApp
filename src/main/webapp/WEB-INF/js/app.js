@@ -12,41 +12,12 @@ $(function() {
   // }
   //
   renderCategoriesList()
-  renderOpenedList();
-  renderClosedList();
+  renderOpenedList('polls/ongoing/');
+  renderClosedList('polls/closed/');
 
-  function renderClosedList() {
+  function renderOpenedList(address) {
     $.ajax({
-      url: baseUrl + 'polls/closed/'
-    }).done(function(data) {
-      console.log(data);
-      closedPolls.empty();
-      data.forEach(function(poll) {
-        var pollAnswers = '';
-        poll.answers.forEach(function(answer) {
-          pollAnswers += '<div class="form-check">' +
-            '<label class="form-check-label">' +
-            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
-            answer.content +
-            '</label>' +
-            '</div>'
-        })
-        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-          poll.question +
-          '</div><div class="card-body">' +
-          '<fieldset class="form-group">' +
-          pollAnswers +
-          '</fieldset></div></div>');
-      })
-    }).fail(function(e) {
-      console.log("error");
-      console.log(e);
-    });
-  }
-
-  function renderOpenedList() {
-    $.ajax({
-      url: baseUrl + 'polls/ongoing/'
+      url: baseUrl + address
     }).done(function(data) {
       console.log(data);
       ongoingPolls.empty();
@@ -99,6 +70,64 @@ $(function() {
     });
   }
 
+  function renderClosedList(address) {
+    $.ajax({
+      url: baseUrl + address
+    }).done(function(data) {
+      console.log(data);
+      closedPolls.empty();
+      data.forEach(function(poll) {
+        var pollAnswers = '';
+        poll.answers.forEach(function(answer) {
+          pollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        })
+        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+          poll.question +
+          '</div><div class="card-body">' +
+          '<fieldset class="form-group">' +
+          pollAnswers +
+          '</fieldset></div></div>');
+      })
+    }).fail(function(e) {
+      console.log("error");
+      console.log(e);
+    });
+  }
+
+  function renderClosedListFromCategory(categoryid) {
+    $.ajax({
+      url: baseUrl + 'categories/' + categoryid + '/polls/'
+    }).done(function(data) {
+      console.log(data);
+      closedPolls.empty();
+      data.forEach(function(poll) {
+        var pollAnswers = '';
+        poll.answers.forEach(function(answer) {
+          pollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        })
+        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+          poll.question +
+          '</div><div class="card-body">' +
+          '<fieldset class="form-group">' +
+          pollAnswers +
+          '</fieldset></div></div>');
+      })
+    }).fail(function(e) {
+      console.log("error");
+      console.log(e);
+    });
+  }
+
   // renderCategoriesList()
 
   var closedPollsCategories = $('#closedPollsCategories');
@@ -109,8 +138,8 @@ $(function() {
       url: baseUrl + 'categories/'
     }).done(function(data) {
       data.forEach(function(category) {
-        openPollsCategories.append('<a class="dropdown-item category-choice" href="#">' + category.name + '</a>');
-        closedPollsCategories.append('<a class="dropdown-item category-choice" data-category="' + category.id + '" href="#">' + category.name + '</a>');
+        openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + category.id + '" href="#">' + category.name + '</a>');
+        closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + category.id + '" href="#">' + category.name + '</a>');
       })
     }).fail(function(e) {
       console.log("error");
@@ -120,11 +149,14 @@ $(function() {
 
   var category = $('.dropdown-menu');
 
-  category.on('mouseover', ".category-choice", function() {
-    console.log(this);
-    console.log($(this).data("category"));
-    // console.log($(this).parents('.text-white'));
-    // $(this).parents('.text-white').fadeOut();
+  category.on('click', ".category-closed", function() {
+    var categoryid = $(this).data("category");
+    renderClosedList('categories/' + categoryid + '/polls/');
+  })
+
+  category.on('click', ".category-open", function() {
+    var categoryid = $(this).data("category");
+    renderOpenedList('categories/' + categoryid + '/polls/'); //TODO once backend disctinction between closed and opened polls is developed, attach it
   })
 
   form.on('submit', function(e) {

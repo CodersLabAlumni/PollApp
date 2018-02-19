@@ -51,7 +51,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}/polls")
-    public List<Poll> getPollsByCategory(@PathVariable long categoryId) {
+    public List<Poll> getPollsByCategory(@PathVariable int categoryId) {
         return pollRepository.findAllByCategoriesId(categoryId);
     }
 }

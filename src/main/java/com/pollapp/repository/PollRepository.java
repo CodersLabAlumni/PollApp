@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
-	List<Poll> findAllByCategoriesId(long categoryId);
+	List<Poll> findAllByCategoriesId(int categoryId);
 }
