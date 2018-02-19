@@ -15,35 +15,6 @@ $(function() {
   renderOpenedList();
   renderClosedList();
 
-  function renderOpenedList() {
-    $.ajax({
-      url: baseUrl + 'polls/ongoing/'
-    }).done(function(data) {
-      console.log(data);
-      ongoingPolls.empty();
-      data.forEach(function(poll) {
-        var pollAnswers = '';
-        poll.answers.forEach(function(answer) {
-          pollAnswers += '<div class="form-check">' +
-            '<label class="form-check-label">' +
-            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
-            answer.content +
-            '</label>' +
-            '</div>'
-        })
-        ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-          poll.question +
-          '</div><div class="card-body">' +
-          '<fieldset class="form-group">' +
-          pollAnswers +
-          '</fieldset></div></div>');
-      })
-    }).fail(function(e) {
-      console.log("error");
-      console.log(e);
-    });
-  }
-
   function renderClosedList() {
     $.ajax({
       url: baseUrl + 'polls/closed/'
@@ -60,7 +31,36 @@ $(function() {
             '</label>' +
             '</div>'
         })
-        closedPolls.append('<div class="card border-danger mb-3" style="max-width: 40rem;">' +
+        closedPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
+          poll.question +
+          '</div><div class="card-body">' +
+          '<fieldset class="form-group">' +
+          pollAnswers +
+          '</fieldset></div></div>');
+      })
+    }).fail(function(e) {
+      console.log("error");
+      console.log(e);
+    });
+  }
+
+  function renderOpenedList() {
+    $.ajax({
+      url: baseUrl + 'polls/ongoing/'
+    }).done(function(data) {
+      console.log(data);
+      ongoingPolls.empty();
+      data.forEach(function(poll) {
+        var pollAnswers = '';
+        poll.answers.forEach(function(answer) {
+          pollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        })
+        ongoingPolls.append('<div class="card border-danger mb-3" style="max-width: 40rem;">' +
           '<div class="card-header">' +
           poll.question +
           '</div>' +
