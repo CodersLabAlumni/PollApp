@@ -109,8 +109,8 @@ $(function() {
       url: baseUrl + 'categories/'
     }).done(function(data) {
       data.forEach(function(category) {
-        closedPollsCategories.append('<a class="dropdown-item category-choice" href="#">' + category.name + '</a>');
         openPollsCategories.append('<a class="dropdown-item category-choice" href="#">' + category.name + '</a>');
+        closedPollsCategories.append('<a class="dropdown-item category-choice" data-category="' + category.id + '" href="#">' + category.name + '</a>');
       })
     }).fail(function(e) {
       console.log("error");
@@ -122,6 +122,7 @@ $(function() {
 
   category.on('mouseover', ".category-choice", function() {
     console.log(this);
+    console.log($(this).data("category"));
     // console.log($(this).parents('.text-white'));
     // $(this).parents('.text-white').fadeOut();
   })
