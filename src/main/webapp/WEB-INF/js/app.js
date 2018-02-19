@@ -163,9 +163,8 @@ $(function() {
 
   var button = $('.form-check-input');
 
-  button.on('click', function() {
-    console.log("test");
-    console.log($(this).parents('.text-white'));
+  closedPolls.on('click', '.form-check-input', function() {
+    console.log(this);
     $(this).parents('.text-white').fadeOut();
   })
 
