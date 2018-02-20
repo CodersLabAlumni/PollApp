@@ -166,7 +166,7 @@ $(function() {
       headers: {
         'Content-Type': 'application/json'
       },
-      url: baseUrl + 'polls/create',
+      url: baseUrl + 'polls',
       data: JSON.stringify(data),
       dataType: 'json' //potencjalnie to mozna wyrzucic
     }).done(function(res) {
