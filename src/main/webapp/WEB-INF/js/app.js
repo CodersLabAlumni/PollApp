@@ -194,6 +194,13 @@ $(function() {
     pollForm.toggle();
   })
 
+  var addAnswer = $('.add-answer');
+  var additionalAsnwer = $('#additional-answer');
+
+  addAnswer.on('click', function() {
+    additionalAsnwer.append('<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="answers" placeholder="Enter answer">');
+  })
+
   var button = $('.form-check-input');
 
   closedPolls.on('click', '.form-check-input', function() {
