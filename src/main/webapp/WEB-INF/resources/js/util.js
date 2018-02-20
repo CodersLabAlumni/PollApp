@@ -9,6 +9,9 @@ Ajax.prototype.ajaxGet = function (endpoint) {
 
 Ajax.prototype.ajaxPost = function(endpoint, data) {
     return $.post({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'))
+        },
         headers: {
             'Content-Type': 'application/json'
         },
@@ -19,6 +22,9 @@ Ajax.prototype.ajaxPost = function(endpoint, data) {
 
 Ajax.prototype.ajaxDelete = function(endpoint) {
     return $.ajax({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'))
+        },
         url: $(location).attr('origin') + endpoint,
         type: 'DELETE'
     })
@@ -26,6 +32,9 @@ Ajax.prototype.ajaxDelete = function(endpoint) {
 
 Ajax.prototype.ajaxPut = function(endpoint, data) {
     return $.ajax({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'))
+        },
         headers: {
             'Content-Type': 'application/json'
         },
@@ -45,5 +54,3 @@ FormUtil.prototype.createObjectFromForm = function(form) {
         });
         return object;
 };
-
-
