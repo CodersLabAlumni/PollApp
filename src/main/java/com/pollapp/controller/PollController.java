@@ -3,24 +3,34 @@ package com.pollapp.controller;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
+import com.pollapp.repository.PollRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/polls")
 public class PollController {
 
-    @GetMapping("")
+	@Autowired
+	private PollRepository pollRepository;
+	
+    @GetMapping("/ongoing")
     public List<Poll> getPoll() {
-        // TODO
-        return null;
+        return pollRepository.findAll();
+    }
+    
+    @GetMapping("/closed")
+    public List<Poll> getClosedPoll() {
+        return pollRepository.findAll();
     }
 
-    @PostMapping("")
-    public Poll createPoll() {
-        // TODO
-        return null;
+    @PostMapping("/")
+    public void createPoll(@RequestParam Poll poll) {
+    	pollRepository.save(poll);
     }
 
     @GetMapping("/{pollId}")

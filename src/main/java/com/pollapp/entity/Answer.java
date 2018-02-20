@@ -1,6 +1,9 @@
 package com.pollapp.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,11 @@ public class Answer {
 
     private String content;
 
+    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "answers")
     private List<UserData> data;
 
+    @JsonBackReference
     @ManyToOne
     private Poll poll;
 
