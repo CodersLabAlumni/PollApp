@@ -28,7 +28,7 @@ public class PollController {
         return pollRepository.findAll();
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public void createPoll(@RequestParam Poll poll) {
     	pollRepository.save(poll);
     }
