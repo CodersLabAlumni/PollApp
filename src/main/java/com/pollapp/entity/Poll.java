@@ -1,8 +1,12 @@
 package com.pollapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "poll")
@@ -18,13 +22,14 @@ public class Poll {
     @ManyToOne(fetch = FetchType.EAGER)
     private UserAccount userAccount;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(joinColumns = {@JoinColumn(name = "poll_id")}, inverseJoinColumns = {
             @JoinColumn(name = "category_id")})
-    private List<Category> categories;
+    private Set<Category> categories;
 
     public Poll() {
-        categories = new ArrayList<>();
+        categories = new HashSet<>();
     }
 
     public long getId() {
@@ -51,11 +56,11 @@ public class Poll {
         this.userAccount = userAccount;
     }
 
-    public List<Category> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 }

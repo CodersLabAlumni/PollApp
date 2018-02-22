@@ -1,6 +1,10 @@
 package com.pollapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "answer")
@@ -14,6 +18,14 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Poll poll;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "answers", cascade = CascadeType.MERGE)
+    private Set<UserData> data;
+
+    public Answer() {
+        data = new HashSet<>();
+    }
 
     public long getId() {
         return id;
@@ -37,5 +49,13 @@ public class Answer {
 
     public void setPoll(Poll poll) {
         this.poll = poll;
+    }
+
+    public Set<UserData> getData() {
+        return data;
+    }
+
+    public void setData(Set<UserData> data) {
+        this.data = data;
     }
 }
