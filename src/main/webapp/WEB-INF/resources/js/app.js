@@ -137,7 +137,9 @@ $(function () {
 
     ongoingPolls.on('click', '.form-check-input', function (e) {
         var userData = {};
-        ajax.ajaxPost('/answers/'+e.target.value+'/data', userData);
+        ajax.ajaxPostCallback('/data', userData, function (data) {
+            ajax.ajaxPost('/answers/' + e.target.value + '/data', data);
+        });
         $(this).parents('.text-white').fadeOut();
     });
 

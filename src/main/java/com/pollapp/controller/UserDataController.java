@@ -21,9 +21,8 @@ public class UserDataController {
     }
 
     @PostMapping("")
-    public UserData createData() {
-        // TODO
-        return null;
+    public UserData createData(@RequestBody UserData userData) {
+        return userDataRepository.save(userData);
     }
 
     @GetMapping("/{dataId}")
