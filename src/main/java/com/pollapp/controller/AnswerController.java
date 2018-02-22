@@ -3,6 +3,9 @@ package com.pollapp.controller;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Poll;
 import com.pollapp.entity.UserData;
+import com.pollapp.repository.AnswerRepository;
+import com.pollapp.repository.UserDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +14,12 @@ import java.util.List;
 @RequestMapping("/answers")
 public class AnswerController {
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
+
     @GetMapping("")
     public List<Answer> getAnswer() {
         // TODO
@@ -18,9 +27,8 @@ public class AnswerController {
     }
 
     @PostMapping("")
-    public Answer createAnswer() {
-        // TODO
-        return null;
+    public Answer createAnswer(@RequestBody Answer answer) {
+        return answerRepository.save(answer);
     }
 
     @GetMapping("/{answerId}")
@@ -45,6 +53,13 @@ public class AnswerController {
     public List<UserData> getDataByAnswer(@PathVariable long answerId) {
         // TODO
         return null;
+    }
+
+    @PostMapping("/{answerId}/data")
+    public UserData addDataToAnswer(@RequestBody UserData userData, @PathVariable long answerId) {
+        UserData data = userDataRepository.save(userData);
+        data.getAnswers().add(answerRepository.findOne(answerId));
+        return userDataRepository.save(data);
     }
 
     @GetMapping("/{answerId}/data/{dataId}")
