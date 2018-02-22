@@ -1,7 +1,5 @@
 package com.pollapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pollapp.enums.Gender;
 
 import javax.persistence.*;
@@ -28,11 +26,9 @@ public class UserData {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @JsonBackReference
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData")
     private UserAccount userAccount;
 
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(joinColumns = {@JoinColumn(name = "data_id")}, inverseJoinColumns = {
             @JoinColumn(name = "answer_id")})

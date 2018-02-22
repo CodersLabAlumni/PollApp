@@ -1,13 +1,8 @@
 package com.pollapp.entity;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "poll")
@@ -23,18 +18,13 @@ public class Poll {
     @ManyToOne(fetch = FetchType.EAGER)
     private UserAccount userAccount;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "poll", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Answer> answers;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(joinColumns = {@JoinColumn(name = "poll_id")}, inverseJoinColumns = {
             @JoinColumn(name = "category_id")})
-    private Set<Category> categories;
+    private List<Category> categories;
 
     public Poll() {
-        answers = new ArrayList<>();
-        categories = new LinkedHashSet<>();
+        categories = new ArrayList<>();
     }
 
     public long getId() {
@@ -61,19 +51,11 @@ public class Poll {
         this.userAccount = userAccount;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 }
