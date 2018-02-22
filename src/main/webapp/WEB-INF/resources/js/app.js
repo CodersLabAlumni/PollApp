@@ -11,12 +11,16 @@ $(function () {
     function renderClosedList(endpoint) {
         closedPolls.empty();
         ajax.ajaxGetCallback(endpoint, function (response) {
-            response.forEach(function (poll) {
+            response.forEach(function (elem) {
+                var poll = elem.poll;
+                var pollData = elem.pollNumberData;
                 var charContent = [];
                 ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
-                    response.forEach(function (answer) {
+                    response.forEach(function (elem) {
+                        var answer = elem.answer;
+                        var answerData = elem.answerNumberData;
                         charContent.push({
-                            y: answer.id,
+                            y: answerData.percent,
                             label: answer.content
                         })
                     });
@@ -40,7 +44,7 @@ $(function () {
                             type: "column",
                             showInLegend: true,
                             legendMarkerColor: "grey",
-                            legendText: "100 answers",
+                            legendText: pollData.totalAnswers + " answers",
                             dataPoints: charContent
                         }]
                     });
@@ -53,13 +57,15 @@ $(function () {
     function renderOpenedList(endpoint) {
         ongoingPolls.empty();
         ajax.ajaxGetCallback(endpoint, function (response) {
-            response.forEach(function (poll) {
+            response.forEach(function (elem) {
+                var poll = elem.poll;
                 var pollAnswers = '';
                 ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
-                    response.forEach(function (answer) {
+                    response.forEach(function (elem) {
+                        var answer = elem.answer;
                         pollAnswers += '<div class="form-check">' +
                             '<label class="form-check-label">' +
-                            '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">' +
+                            '<input type="radio" class="form-check-input" name="optionsRadios" value="' + answer.id + '" checked="">' +
                             answer.content +
                             '</label>' +
                             '</div>'
@@ -129,7 +135,9 @@ $(function () {
         answers.children().last().remove();
     });
 
-    ongoingPolls.on('click', '.form-check-input', function () {
+    ongoingPolls.on('click', '.form-check-input', function (e) {
+        var userData = {};
+        ajax.ajaxPost('/answers/'+e.target.value+'/data', userData);
         $(this).parents('.text-white').fadeOut();
     });
 
