@@ -24,6 +24,10 @@ public class AnswerProcess {
         double one = userDataRepository.countByAnswers(answer);
         double percent = (one / all) * 100;
         DecimalFormat df = new DecimalFormat("##.#");
-        return Double.valueOf(df.format(percent));
+        try {
+            return Double.valueOf(df.format(percent));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }
