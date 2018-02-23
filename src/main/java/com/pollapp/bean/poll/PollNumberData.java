@@ -1,14 +1,16 @@
 package com.pollapp.bean.poll;
 
+import java.math.BigDecimal;
+
 public class PollNumberData {
 
-    private long totalAnswers;
+    private BigDecimal totalAnswers;
 
-    public long getTotalAnswers() {
+    public BigDecimal getTotalAnswers() {
         return totalAnswers;
     }
 
-    public void setTotalAnswers(long totalAnswers) {
+    public void setTotalAnswers(BigDecimal totalAnswers) {
         this.totalAnswers = totalAnswers;
     }
 }

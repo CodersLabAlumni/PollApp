@@ -5,6 +5,8 @@ import com.pollapp.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class PollProcess {
 
@@ -17,7 +19,7 @@ public class PollProcess {
         return pollNumberData;
     }
 
-    private long calculateTotalAnswers(Poll poll) {
-        return userDataRepository.countByAnswersPoll(poll);
+    private BigDecimal calculateTotalAnswers(Poll poll) {
+        return new BigDecimal(userDataRepository.countByAnswersPoll(poll));
     }
 }
