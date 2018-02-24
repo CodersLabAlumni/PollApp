@@ -1,10 +1,10 @@
 package com.pollapp.controller;
 
-import com.pollapp.bean.poll.PollJsonResponse;
-import com.pollapp.bean.poll.PollProcess;
 import com.pollapp.entity.Category;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
+import com.pollapp.response.PollResponse;
+import com.pollapp.response.process.PollProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,10 +52,10 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}/polls")
-    public List<PollJsonResponse> getPollsByCategory(@PathVariable int categoryId) {
-        List<PollJsonResponse> response = new ArrayList<>();
+    public List<PollResponse> getPollsByCategory(@PathVariable int categoryId) {
+        List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
-                response.add(new PollJsonResponse(poll, pollProcess.process(poll))));
+                response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }
 }

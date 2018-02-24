@@ -1,9 +1,5 @@
 package com.pollapp.controller;
 
-import com.pollapp.bean.answer.AnswerJsonResponse;
-import com.pollapp.bean.answer.AnswerProcess;
-import com.pollapp.bean.poll.PollJsonResponse;
-import com.pollapp.bean.poll.PollProcess;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
@@ -11,6 +7,10 @@ import com.pollapp.entity.Poll;
 import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
+import com.pollapp.response.AnswerResponse;
+import com.pollapp.response.PollResponse;
+import com.pollapp.response.process.AnswerProcess;
+import com.pollapp.response.process.PollProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,18 +37,18 @@ public class PollController {
     private PollProcess pollProcess;
 
     @GetMapping("/ongoing")
-    public List<PollJsonResponse> getOpenedPolls() {
-        List<PollJsonResponse> response = new ArrayList<>();
+    public List<PollResponse> getOpenedPolls() {
+        List<PollResponse> response = new ArrayList<>();
         pollRepository.findAll().forEach(poll ->
-                response.add(new PollJsonResponse(poll, pollProcess.process(poll))));
+                response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }
 
     @GetMapping("/closed")
-    public List<PollJsonResponse> getClosedPolls() {
-        List<PollJsonResponse> response = new ArrayList<>();
+    public List<PollResponse> getClosedPolls() {
+        List<PollResponse> response = new ArrayList<>();
         pollRepository.findAll().forEach(poll ->
-                response.add(new PollJsonResponse(poll, pollProcess.process(poll))));
+                response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }
 
@@ -88,10 +88,10 @@ public class PollController {
     }
 
     @GetMapping("/{pollId}/answers")
-    public List<AnswerJsonResponse> getAnswersByPoll(@PathVariable long pollId) {
-        List<AnswerJsonResponse> response = new ArrayList<>();
+    public List<AnswerResponse> getAnswersByPoll(@PathVariable long pollId) {
+        List<AnswerResponse> response = new ArrayList<>();
         answerRepository.findByPollId(pollId).forEach(answer ->
-                response.add(new AnswerJsonResponse(answer, answerProcess.process(answer))));
+                response.add(new AnswerResponse(answer, answerProcess.process(answer))));
         return response;
     }
 
