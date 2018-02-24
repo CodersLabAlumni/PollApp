@@ -7,6 +7,8 @@ $(function () {
     var openPollsCategories = $('#openPollsCategories');
     var pollForm = $('#pollForm');
     var answers = $('#answers');
+    var categories = $('#all-categories');
+    var selectedCategories = $('#selected-categories');
 
     function renderClosedList(endpoint) {
         closedPolls.empty();
@@ -90,6 +92,21 @@ $(function () {
         });
     }
 
+    function renderCategoriesToSelect() {
+        ajax.ajaxGetCallback('/categories', function (response) {
+            response.forEach(function (category) {
+                categories.append('<li data-id="' + category.id + '" class="col-xs-3 list-group-item"> ' + category.name + '</li>')
+            })
+        });
+    }
+
+    function renderAnswers() {
+        var answer = answers.children().last();
+        answers.empty();
+        answers.append(answer);
+        answer.clone().appendTo(answers);
+    }
+
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
         renderClosedList('/categories/' + categoryId + '/polls');
@@ -104,27 +121,34 @@ $(function () {
         e.preventDefault();
         var poll = formUtil.createObjectFromForm($('#poll'));
         var answers = formUtil.createObjectListFromForm($('#answers'));
-        var categories = $('#select-categories').val();
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             answers.forEach(function (answer) {
                 ajax.ajaxPost("/polls/" + response.id + "/answers", answer)
             });
-            categories.forEach(function (category) {
-                ajax.ajaxPost("/polls/" + response.id + "/categories/" + category)
-            })
+            $('#selected-categories').children().each(function (index, category) {
+                ajax.ajaxPost("/polls/" + response.id + "/categories/" + $(category).data('id'))
+            });
+            categories.empty();
+            selectedCategories.empty();
+            renderCategoriesToSelect();
+            renderAnswers();
         });
         this.reset();
     });
 
     $('#pollCreate').on('click', function () {
         pollForm.toggle('hidden');
-        var categoryMenu = $('#select-categories');
-        categoryMenu.empty();
-        ajax.ajaxGetCallback('/categories', function (response) {
-            response.forEach(function (category) {
-                categoryMenu.append('<option value="' + category.id + '"> ' + category.name + '</option>')
-            })
-        });
+        categories.empty();
+        selectedCategories.empty();
+        renderCategoriesToSelect();
+    });
+
+    categories.on('click', 'li', function (e) {
+        selectedCategories.append(e.target);
+    });
+
+    selectedCategories.on('click', 'li', function (e) {
+        categories.append(e.target);
     });
 
     $('.add-answer').on('click', function () {
@@ -132,7 +156,9 @@ $(function () {
     });
 
     $('.remove-answer').on('click', function () {
-        answers.children().last().remove();
+        if (answers.children().length > 2) {
+            answers.children().last().remove();
+        }
     });
 
     ongoingPolls.on('click', '.form-check-input', function (e) {
