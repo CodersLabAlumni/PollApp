@@ -1,19 +1,17 @@
-package com.pollapp.bean.answer;
+package com.pollapp.response;
 
 import com.pollapp.entity.Answer;
+import com.pollapp.response.data.AnswerNumberData;
 
-public class AnswerJsonResponse {
+public class AnswerResponse {
 
     private AnswerNumberData answerNumberData;
 
     private Answer answer;
 
-    public AnswerJsonResponse() {
-        answerNumberData = new AnswerNumberData();
-        answer = new Answer();
-    }
+    public AnswerResponse() {}
 
-    public AnswerJsonResponse(Answer answer, AnswerNumberData answerNumberData) {
+    public AnswerResponse(Answer answer, AnswerNumberData answerNumberData) {
         setAnswer(answer);
         setAnswerNumberData(answerNumberData);
     }

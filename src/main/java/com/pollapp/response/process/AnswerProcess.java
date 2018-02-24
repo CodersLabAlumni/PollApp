@@ -1,7 +1,8 @@
-package com.pollapp.bean.answer;
+package com.pollapp.response.process;
 
 import com.pollapp.entity.Answer;
 import com.pollapp.repository.UserDataRepository;
+import com.pollapp.response.data.AnswerNumberData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

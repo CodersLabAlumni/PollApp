@@ -1,19 +1,18 @@
-package com.pollapp.bean.poll;
+package com.pollapp.response;
 
 import com.pollapp.entity.Poll;
+import com.pollapp.response.data.PollNumberData;
 
-public class PollJsonResponse {
+public class PollResponse {
 
     private PollNumberData pollNumberData;
 
     private Poll poll;
 
-    public PollJsonResponse() {
-        pollNumberData = new PollNumberData();
-        poll = new Poll();
+    public PollResponse() {
     }
 
-    public PollJsonResponse(Poll poll, PollNumberData pollNumberData) {
+    public PollResponse(Poll poll, PollNumberData pollNumberData) {
         setPoll(poll);
         setPollNumberData(pollNumberData);
     }

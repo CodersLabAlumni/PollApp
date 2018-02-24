@@ -1,4 +1,4 @@
-package com.pollapp.bean.poll;
+package com.pollapp.response.data;
 
 import java.math.BigDecimal;
 
