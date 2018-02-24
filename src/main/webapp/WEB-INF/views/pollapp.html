@@ -36,26 +36,40 @@
         <fieldset>
             <legend>Create poll</legend>
             <div class="form-group">
-                <div id="poll">
+                <div id="poll" class="container">
                     <label for="question">Your question</label>
                     <input type="text" class="form-control" aria-describedby="emailHelp"
                            name="question" id="question" placeholder="Enter question"><br>
+                </div>
+                <div class="container">
                     <label for="answers">Answers</label>
                 </div>
-                <div id="answers">
+                <div id="answers" class="container form-group">
                     <input type="text" class="form-control" aria-describedby="emailHelp"
                            name="content" placeholder="Enter answer">
                     <input type="text" class="form-control" aria-describedby="emailHelp"
                            name="content" placeholder="Enter answer">
                 </div>
-                <button type="button" class="btn btn-danger disabled add-answer">ADD ANSWER</button>
-                <button type="button" class="btn btn-danger disabled remove-answer">REMOVE ANSWER</button>
-                <div>
-                    <label for="select-categories">Categories</label>
-                    <select id="select-categories" multiple></select>
+                <div class="container form-group">
+                    <button type="button" class="btn btn-danger disabled add-answer">ADD ANSWER</button>
+                    <button type="button" class="btn btn-danger disabled remove-answer">REMOVE ANSWER</button>
+                </div>
+                <div class="container form-group">
+                    <label for="selected-categories">Selected categories</label>
+                    <div class="container row">
+                        <ul id="selected-categories" class="nav nav-tabs nav-justified"></ul>
+                    </div>
+                </div>
+                <div class="container form-group">
+                    <label for="all-categories">Categories</label>
+                    <div class="container row">
+                        <ul id="all-categories" class="nav nav-tabs nav-justified"></ul>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </fieldset>
     </form>
 </div>
@@ -104,7 +118,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <script src="..\resources\js\util.js"></script>
 <script src="..\resources\js\app.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
