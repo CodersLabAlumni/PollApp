@@ -1,12 +1,11 @@
 package com.pollapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pollapp.enums.Gender;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "data")
@@ -28,18 +27,17 @@ public class UserData {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @JsonBackReference
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData")
     private UserAccount userAccount;
 
-    @JsonManagedReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(joinColumns = {@JoinColumn(name = "data_id")}, inverseJoinColumns = {
             @JoinColumn(name = "answer_id")})
-    private List<Answer> answers;
+    private Set<Answer> answers;
 
     public UserData() {
-        answers = new ArrayList<>();
+        answers = new HashSet<>();
     }
 
     public long getId() {
@@ -98,11 +96,11 @@ public class UserData {
         this.userAccount = userAccount;
     }
 
-    public List<Answer> getAnswers() {
+    public Set<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
 }

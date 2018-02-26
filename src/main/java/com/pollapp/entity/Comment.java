@@ -13,10 +13,10 @@ public class Comment {
     private String content;
 
     @JoinColumn(name = "account_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserAccount userAccount;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Poll poll;
 
     public long getId() {
