@@ -11,4 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
 	List<Poll> findAllByCategoriesId(int categoryId);
+
+	List<Poll> findByIdNotIn(List<Long> pollIdList);
+
+    List<Poll> findByIdNotInAndCategoriesId(List<Long> pollIdList, int categoryId);
 }
