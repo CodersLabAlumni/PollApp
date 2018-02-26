@@ -109,12 +109,12 @@ $(function () {
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        renderClosedList('/categories/' + categoryId + '/polls');
+        renderClosedList('/categories/' + categoryId + '/polls/closed');
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        renderOpenedList('/categories/' + categoryId + '/polls'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
     });
 
     pollForm.on('submit', function (e) {
@@ -162,10 +162,7 @@ $(function () {
     });
 
     ongoingPolls.on('click', '.form-check-input', function (e) {
-        var userData = {};
-        ajax.ajaxPostCallback('/data', userData, function (data) {
-            ajax.ajaxPost('/answers/' + e.target.value + '/data', data);
-        });
+        ajax.ajaxPost('/answers/' + e.target.value + '/data');
         $(this).parents('.text-white').fadeOut();
     });
 
