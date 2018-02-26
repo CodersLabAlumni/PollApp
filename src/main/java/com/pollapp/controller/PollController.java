@@ -1,15 +1,17 @@
 package com.pollapp.controller;
 
 import com.pollapp.bean.Ip;
-import com.pollapp.entity.*;
+import com.pollapp.entity.Answer;
+import com.pollapp.entity.Category;
+import com.pollapp.entity.Comment;
+import com.pollapp.entity.Poll;
 import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
-import com.pollapp.repository.UserDataRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.response.process.AnswerProcess;
-import com.pollapp.response.process.PollProcess;
+import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,9 @@ import java.util.List;
 public class PollController {
 
     @Autowired
+    private PollService pollService;
+
+    @Autowired
     private PollRepository pollRepository;
 
     @Autowired
@@ -30,39 +35,16 @@ public class PollController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private UserDataRepository userDataRepository;
-
-    @Autowired
     private AnswerProcess answerProcess;
-
-    @Autowired
-    private PollProcess pollProcess;
 
     @GetMapping("/ongoing")
     public List<PollResponse> getOpenedPolls() {
-        List<PollResponse> response = new ArrayList<>();
-        if (userDataRepository.existsByIp(Ip.remote())) {
-            UserData userData = userDataRepository.findByIp(Ip.remote());
-            List<Long> pollsId = new ArrayList<>();
-            for (Answer a : userData.getAnswers()) {
-                pollsId.add(a.getPoll().getId());
-            }
-            List<Poll> polls = pollRepository.findByIdNotIn(pollsId);
-            polls.forEach(poll ->
-                    response.add(new PollResponse(poll, pollProcess.process(poll))));
-        } else {
-            pollRepository.findAll().forEach(poll ->
-                    response.add(new PollResponse(poll, pollProcess.process(poll))));
-        }
-        return response;
+        return pollService.getOpenedPollsAvailableToUserByIp(Ip.remote());
     }
 
     @GetMapping("/closed")
     public List<PollResponse> getClosedPolls() {
-        List<PollResponse> response = new ArrayList<>();
-        pollRepository.findAll().forEach(poll ->
-                response.add(new PollResponse(poll, pollProcess.process(poll))));
-        return response;
+        return pollService.getClosedPolls();
     }
 
     @PostMapping("")
