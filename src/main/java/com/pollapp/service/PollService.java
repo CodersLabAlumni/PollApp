@@ -24,6 +24,10 @@ public class PollService {
     @Autowired
     private PollProcess pollProcess;
 
+    public PollResponse createPoll(Poll poll) {
+        return createPollResponse(pollRepository.save(poll));
+    }
+
     public List<PollResponse> getOpenedPollsAvailableToUserByIp(String ip) {
         if (userDataRepository.existsByIp(ip)) {
             return allAvailableOpenedPolls(ip);
@@ -48,10 +52,14 @@ public class PollService {
         return createPollResponseList(pollRepository.findAllByCategoriesId(categoryId));
     }
 
+    public PollResponse createPollResponse(Poll poll) {
+        return new PollResponse(poll, pollProcess.process(poll));
+    }
+
     public List<PollResponse> createPollResponseList(List<Poll> polls) {
         List<PollResponse> response = new ArrayList<>();
         polls.forEach(poll ->
-                response.add(new PollResponse(poll, pollProcess.process(poll))));
+                response.add(createPollResponse(poll)));
         return response;
     }
 
