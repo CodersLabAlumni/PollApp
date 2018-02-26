@@ -1,12 +1,11 @@
 package com.pollapp.controller;
 
-import com.pollapp.entity.Answer;
-import com.pollapp.entity.Category;
-import com.pollapp.entity.Comment;
-import com.pollapp.entity.Poll;
+import com.pollapp.bean.Ip;
+import com.pollapp.entity.*;
 import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
+import com.pollapp.repository.UserDataRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.response.process.AnswerProcess;
@@ -31,6 +30,9 @@ public class PollController {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private UserDataRepository userDataRepository;
+
+    @Autowired
     private AnswerProcess answerProcess;
 
     @Autowired
@@ -39,8 +41,19 @@ public class PollController {
     @GetMapping("/ongoing")
     public List<PollResponse> getOpenedPolls() {
         List<PollResponse> response = new ArrayList<>();
-        pollRepository.findAll().forEach(poll ->
-                response.add(new PollResponse(poll, pollProcess.process(poll))));
+        if (userDataRepository.existsByIp(Ip.remote())) {
+            UserData userData = userDataRepository.findByIp(Ip.remote());
+            List<Long> pollsId = new ArrayList<>();
+            for (Answer a : userData.getAnswers()) {
+                pollsId.add(a.getPoll().getId());
+            }
+            List<Poll> polls = pollRepository.findByIdNotIn(pollsId);
+            polls.forEach(poll ->
+                    response.add(new PollResponse(poll, pollProcess.process(poll))));
+        } else {
+            pollRepository.findAll().forEach(poll ->
+                    response.add(new PollResponse(poll, pollProcess.process(poll))));
+        }
         return response;
     }
 

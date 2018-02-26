@@ -1,5 +1,6 @@
 package com.pollapp.controller;
 
+import com.pollapp.bean.Ip;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Poll;
 import com.pollapp.entity.UserData;
@@ -56,10 +57,16 @@ public class AnswerController {
     }
 
     @PostMapping("/{answerId}/data")
-    public UserData addDataToAnswer(@RequestBody UserData userData, @PathVariable long answerId) {
-        UserData data = userDataRepository.save(userData);
-        data.getAnswers().add(answerRepository.findOne(answerId));
-        return userDataRepository.save(data);
+    public UserData addDataToAnswer(@PathVariable long answerId) {
+        String ip = Ip.remote();
+        UserData userData = new UserData();
+        if (userDataRepository.existsByIp(ip)) {
+            userData = userDataRepository.findByIp(ip);
+        } else {
+            userData.setIp(ip);
+        }
+        userData.getAnswers().add(answerRepository.findOne(answerId));
+        return userDataRepository.save(userData);
     }
 
     @GetMapping("/{answerId}/data/{dataId}")

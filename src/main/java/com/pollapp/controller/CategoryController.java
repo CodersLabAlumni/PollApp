@@ -1,8 +1,13 @@
 package com.pollapp.controller;
 
+import com.pollapp.bean.Ip;
+import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
+import com.pollapp.entity.Poll;
+import com.pollapp.entity.UserData;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
+import com.pollapp.repository.UserDataRepository;
 import com.pollapp.response.PollResponse;
 import com.pollapp.response.process.PollProcess;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +25,9 @@ public class CategoryController {
 
     @Autowired
     private PollRepository pollRepository;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     @Autowired
     private PollProcess pollProcess;
@@ -51,8 +59,28 @@ public class CategoryController {
         return null;
     }
 
-    @GetMapping("/{categoryId}/polls")
-    public List<PollResponse> getPollsByCategory(@PathVariable int categoryId) {
+    @GetMapping("/{categoryId}/polls/ongoing")
+    public List<PollResponse> getOngoingPollsByCategory(@PathVariable int categoryId) {
+        List<PollResponse> response = new ArrayList<>();
+        if (userDataRepository.existsByIp(Ip.remote())) {
+            UserData userData = userDataRepository.findByIp(Ip.remote());
+            List<Long> pollsId = new ArrayList<>();
+            for (Answer a : userData.getAnswers()) {
+                pollsId.add(a.getPoll().getId());
+            }
+            List<Poll> polls = pollRepository.findByIdNotInAndCategoriesId(pollsId, categoryId);
+            polls.forEach(poll ->
+                    response.add(new PollResponse(poll, pollProcess.process(poll))));
+            return response;
+        } else {
+            pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
+                    response.add(new PollResponse(poll, pollProcess.process(poll))));
+            return response;
+        }
+    }
+
+    @GetMapping("/{categoryId}/polls/closed")
+    public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
