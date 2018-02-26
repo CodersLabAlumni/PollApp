@@ -32,8 +32,20 @@ public class PollService {
         }
     }
 
+    public List<PollResponse> getOpenedPollsAvailableToUserByIpAndCategoryId(String ip, int categoryId) {
+        if (userDataRepository.existsByIp(ip)) {
+            return allAvailableOpenedPollsByCategory(ip, categoryId);
+        } else {
+            return allOpenedPollsByCategory(categoryId);
+        }
+    }
+
     public List<PollResponse> getClosedPolls() {
         return createPollResponseList(pollRepository.findAll());
+    }
+
+    public List<PollResponse> getClosedPollsByCategoryId(int categoryId) {
+        return createPollResponseList(pollRepository.findAllByCategoriesId(categoryId));
     }
 
     public List<PollResponse> createPollResponseList(List<Poll> polls) {
@@ -57,5 +69,14 @@ public class PollService {
     private List<PollResponse> allAvailableOpenedPolls(String ip) {
         List<Long> pollsIdList = createPollsIdList(userDataRepository.findByIp(ip));
         return createPollResponseList(pollRepository.findByIdNotIn(pollsIdList));
+    }
+
+    private List<PollResponse> allOpenedPollsByCategory(int categoryId) {
+        return createPollResponseList(pollRepository.findAllByCategoriesId(categoryId));
+    }
+
+    private List<PollResponse> allAvailableOpenedPollsByCategory(String ip, int categoryId) {
+        List<Long> pollsIdList = createPollsIdList(userDataRepository.findByIp(ip));
+        return createPollResponseList(pollRepository.findByIdNotInAndCategoriesId(pollsIdList, categoryId));
     }
 }
