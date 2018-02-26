@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl("/")
 			.deleteCookies("JSESSIONID").invalidateHttpSession(true)
 			.and()
-		    .exceptionHandling().accessDeniedPage("/403");
+		    .exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
 	}
 
 	@Override

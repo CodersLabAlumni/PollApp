@@ -2,8 +2,6 @@ package com.pollapp.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "account")
 public class UserAccount {
@@ -23,11 +21,14 @@ public class UserAccount {
     @JoinColumn(name = "role_id")
     private UserRole userRole;
 
-    @JsonManagedReference
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "data_id")
     @MapsId
     private UserData userData;
+
+    public UserAccount() {
+        userData = new UserData();
+    }
 
     public long getId() {
         return id;
