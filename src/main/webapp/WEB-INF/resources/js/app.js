@@ -133,10 +133,10 @@ $(function () {
         var answers = formUtil.createObjectListFromForm($('#answers'));
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             answers.forEach(function (answer) {
-                ajax.ajaxPost("/polls/" + response.id + "/answers", answer)
+                ajax.ajaxPost("/polls/" + response.poll.id + "/answers", answer)
             });
             $('#selected-categories').children().each(function (index, category) {
-                ajax.ajaxPost("/polls/" + response.id + "/categories/" + $(category).data('id'))
+                ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
             });
             categories.empty();
             selectedCategories.empty();
