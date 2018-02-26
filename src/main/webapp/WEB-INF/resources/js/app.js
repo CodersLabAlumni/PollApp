@@ -84,6 +84,8 @@ $(function () {
     }
 
     function renderCategoriesList() {
+        openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + "0" + '" href="#">' + "All" + '</a>');
+        closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + "0" + '" href="#">' + "All" + '</a>');
         ajax.ajaxGetCallback('/categories', function (response) {
             response.forEach(function (category) {
                 openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + category.id + '" href="#">' + category.name + '</a>');
@@ -109,12 +111,20 @@ $(function () {
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        renderClosedList('/categories/' + categoryId + '/polls/closed');
+        if (categoryId === 0) {
+            renderClosedList('/polls/closed');
+        } else {
+            renderClosedList('/categories/' + categoryId + '/polls/closed');
+        }
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        if (categoryId === 0) {
+            renderOpenedList('/polls/ongoing');
+        } else {
+            renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        }
     });
 
     pollForm.on('submit', function (e) {
