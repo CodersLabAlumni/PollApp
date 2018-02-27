@@ -73,7 +73,7 @@ $(function () {
                             '</div>'
                     });
                     ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-                        poll.question +
+                        poll.question + ' ' + poll.created +
                         '</div><div class="card-body">' +
                         '<fieldset class="form-group">' +
                         pollAnswers +

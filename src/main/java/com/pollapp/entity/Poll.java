@@ -1,13 +1,24 @@
 package com.pollapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "poll")
@@ -19,9 +30,9 @@ public class Poll {
 
     private String question;
     
-    private LocalTime created;
+    private Calendar created;
     
-    private LocalTime closed;
+    private Calendar closed;
 
     @JoinColumn(name = "account_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -35,8 +46,8 @@ public class Poll {
 
     public Poll() {
         categories = new HashSet<>();
-        created = LocalTime.now();
-        closed = LocalTime.now().plusHours(5);
+        created = Calendar.getInstance();
+        closed = Calendar.getInstance();
     }
 
     public long getId() {
@@ -55,19 +66,19 @@ public class Poll {
         this.question = question;
     }
 
-	public LocalTime getCreated() {
+	public Calendar getCreated() {
 		return created;
 	}
 
-	public void setCreated(LocalTime created) {
+	public void setCreated(Calendar created) {
 		this.created = created;
 	}
 
-	public LocalTime getClosed() {
+	public Calendar getClosed() {
 		return closed;
 	}
 
-	public void setClosed(LocalTime closed) {
+	public void setClosed(Calendar closed) {
 		this.closed = closed;
 	}
 
