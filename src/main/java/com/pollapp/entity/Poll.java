@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,9 @@ public class Poll {
 
     private String question;
     
-    private Date created;
+    private LocalTime created;
+    
+    private LocalTime closed;
 
     @JoinColumn(name = "account_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -32,7 +35,8 @@ public class Poll {
 
     public Poll() {
         categories = new HashSet<>();
-        created = new Date();
+        created = LocalTime.now();
+        closed = LocalTime.now().plusHours(5);
     }
 
     public long getId() {
@@ -51,12 +55,20 @@ public class Poll {
         this.question = question;
     }
 
-    public Date getCreated() {
+	public LocalTime getCreated() {
 		return created;
 	}
 
-	public void setCreated(Date created) {
+	public void setCreated(LocalTime created) {
 		this.created = created;
+	}
+
+	public LocalTime getClosed() {
+		return closed;
+	}
+
+	public void setClosed(LocalTime closed) {
+		this.closed = closed;
 	}
 
 	public UserAccount getUserAccount() {
