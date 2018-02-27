@@ -3,6 +3,8 @@ package com.pollapp.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +17,8 @@ public class Poll {
     private long id;
 
     private String question;
+    
+    private Date created;
 
     @JoinColumn(name = "account_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,6 +32,7 @@ public class Poll {
 
     public Poll() {
         categories = new HashSet<>();
+        created = new Date();
     }
 
     public long getId() {
@@ -46,7 +51,15 @@ public class Poll {
         this.question = question;
     }
 
-    public UserAccount getUserAccount() {
+    public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public UserAccount getUserAccount() {
         return userAccount;
     }
 
