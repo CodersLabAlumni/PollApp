@@ -48,7 +48,7 @@ public class PollController {
     @GetMapping("/closed")
     public List<PollResponse> getClosedPolls() {
         List<PollResponse> response = new ArrayList<>();
-        pollRepository.findAllByClosedBefore(Calendar.getInstance()).forEach(poll ->
+        pollRepository.findAllByClosedBeforeOrClosedIsNull(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }

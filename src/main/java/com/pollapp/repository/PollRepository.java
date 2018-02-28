@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
 	List<Poll> findAllByClosedAfter(Calendar date);
-	List<Poll> findAllByClosedBefore(Calendar date);
+	List<Poll> findAllByClosedBeforeOrClosedIsNull(Calendar date);
 	List<Poll> findAllByCategoriesId(int categoryId);
 }
