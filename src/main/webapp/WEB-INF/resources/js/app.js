@@ -10,6 +10,7 @@ $(function () {
     var answers = $('#answers');
     var categories = $('#all-categories');
     var selectedCategories = $('#selected-categories');
+    var showPollsAddress = "/closed";
 
     function renderClosedList(endpoint) {
         closedPolls.empty();
@@ -126,18 +127,18 @@ $(function () {
     }
     
     showPolls.on('click', function (e) {
-        var address = $(e.target).data('address');
-        renderClosedList('/polls/' + address);
+    	showPollsAddress = $(e.target).data('address');
+        renderClosedList('/polls/' + showPollsAddress);
     });
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        renderClosedList('/categories/' + categoryId + '/closedPolls');
+        renderClosedList('/categories/' + categoryId + '/'+ showPollsAddress);
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        renderOpenedList('/categories/' + categoryId + '/ongoingPolls'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        renderOpenedList('/categories/' + categoryId + '/ongoing');
     });
 
     pollForm.on('submit', function (e) {
