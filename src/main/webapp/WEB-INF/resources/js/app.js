@@ -132,12 +132,12 @@ $(function () {
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        renderClosedList('/categories/' + categoryId + '/polls');
+        renderClosedList('/categories/' + categoryId + '/closedPolls');
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        renderOpenedList('/categories/' + categoryId + '/polls'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        renderOpenedList('/categories/' + categoryId + '/ongoingPolls'); //TODO once backend disctinction between closed and opened polls is developed, attach it
     });
 
     pollForm.on('submit', function (e) {
