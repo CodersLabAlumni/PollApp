@@ -72,12 +72,28 @@ $(function () {
                             '</label>' +
                             '</div>'
                     });
+
+                    var getClock = setInterval(function(){
+                        var now = new Date().getTime();
+	                    var closed = poll.closed;
+	                    var distance = closed - now;
+	                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	                    var clock = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+	                    document.getElementById("clock" + poll.id).innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                    }, 1000);
+                    
                     ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-                        poll.question + ' ' + poll.created +
+                        poll.question + '<br\>' + 
                         '</div><div class="card-body">' +
                         '<fieldset class="form-group">' +
-                        pollAnswers +
-                        '</fieldset></div></div>');
+                        pollAnswers + 
+                        '</fieldset>' +
+                        '<div>Time left:</div>' +
+                        '<div id="clock' + poll.id +'"></div>' +
+                    	'</div></div>');
                 });
             })
         });

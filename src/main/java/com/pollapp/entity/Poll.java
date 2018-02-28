@@ -1,8 +1,6 @@
 package com.pollapp.entity;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +46,7 @@ public class Poll {
         categories = new HashSet<>();
         created = Calendar.getInstance();
         closed = Calendar.getInstance();
+        closed.add(Calendar.HOUR_OF_DAY, 5);
     }
 
     public long getId() {
