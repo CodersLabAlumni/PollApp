@@ -129,16 +129,22 @@ $(function () {
     showPolls.on('click', function (e) {
     	showPollsAddress = $(e.target).data('address');
         renderClosedList('/polls/' + showPollsAddress);
+        document.getElementById("showPollsButton").innerHTML = showPollsAddress + " POLLS";
+        document.getElementById("closedPollsCategoryButton").innerHTML = "CATEGORIES";
     });
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
+        var categoryName = $(e.target).html();
         renderClosedList('/categories/' + categoryId + '/'+ showPollsAddress);
+        document.getElementById("closedPollsCategoryButton").innerHTML = categoryName;
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
+        var categoryName = $(e.target).html();
         renderOpenedList('/categories/' + categoryId + '/ongoing');
+        document.getElementById("ongoingPollsCategoryButton").innerHTML = categoryName;
     });
 
     pollForm.on('submit', function (e) {
