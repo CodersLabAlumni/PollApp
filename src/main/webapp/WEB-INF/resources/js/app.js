@@ -5,6 +5,7 @@ $(function () {
     var closedPolls = $('#closedPolls');
     var closedPollsCategories = $('#closedPollsCategories');
     var openPollsCategories = $('#openPollsCategories');
+    var showPolls = $('#showPolls');
     var pollForm = $('#pollForm');
     var answers = $('#answers');
     var categories = $('#all-categories');
@@ -123,6 +124,11 @@ $(function () {
         answers.append(answer);
         answer.clone().appendTo(answers);
     }
+    
+    showPolls.on('click', function (e) {
+        var address = $(e.target).data('address');
+        renderClosedList('/polls/' + address);
+    });
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');

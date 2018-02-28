@@ -37,6 +37,14 @@ public class PollController {
     @Autowired
     private PollProcess pollProcess;
 
+    @GetMapping("/all")
+    public List<PollResponse> getAllPolls() {
+        List<PollResponse> response = new ArrayList<>();
+        pollRepository.findAll().forEach(poll ->
+                response.add(new PollResponse(poll, pollProcess.process(poll))));
+        return response;
+    }
+    
     @GetMapping("/ongoing")
     public List<PollResponse> getOpenedPolls() {
         List<PollResponse> response = new ArrayList<>();
