@@ -96,4 +96,8 @@ public class Poll {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
+    
+    public boolean getStatus() {
+    	return this.closed.before(Calendar.getInstance());
+    }
 }

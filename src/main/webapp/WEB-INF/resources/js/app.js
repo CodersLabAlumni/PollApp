@@ -91,8 +91,9 @@ $(function () {
                         '<fieldset class="form-group">' +
                         pollAnswers + 
                         '</fieldset>' +
-                        '<div>Time left:</div>' +
-                        '<div id="clock' + poll.id +'"></div>' +
+                    	'</div><div class="card-header">'+
+                    	'<div>Time left:</div>' +
+                    	'<div id="clock' + poll.id +'"></div>' +
                     	'</div></div>');
                 });
             })
