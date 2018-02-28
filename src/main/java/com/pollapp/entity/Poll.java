@@ -46,7 +46,7 @@ public class Poll {
         categories = new HashSet<>();
         created = Calendar.getInstance();
         closed = Calendar.getInstance();
-        closed.add(Calendar.HOUR_OF_DAY, 5);
+        closed.add(Calendar.HOUR_OF_DAY, 24);
     }
 
     public long getId() {
@@ -95,9 +95,5 @@ public class Poll {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
-    }
-    
-    public boolean getStatus() {
-    	return this.closed.before(Calendar.getInstance());
     }
 }

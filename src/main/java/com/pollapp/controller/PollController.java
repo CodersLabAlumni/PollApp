@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -39,7 +40,7 @@ public class PollController {
     @GetMapping("/ongoing")
     public List<PollResponse> getOpenedPolls() {
         List<PollResponse> response = new ArrayList<>();
-        pollRepository.findAll().forEach(poll ->
+        pollRepository.findAllByClosedAfter(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }
@@ -47,7 +48,7 @@ public class PollController {
     @GetMapping("/closed")
     public List<PollResponse> getClosedPolls() {
         List<PollResponse> response = new ArrayList<>();
-        pollRepository.findAll().forEach(poll ->
+        pollRepository.findAllByClosedBefore(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
     }
