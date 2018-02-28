@@ -51,6 +51,14 @@ public class CategoryController {
         // TODO
         return null;
     }
+    
+    @GetMapping("/{categoryId}/all")
+    public List<PollResponse> getAllPollsByCategory(@PathVariable int categoryId) {
+        List<PollResponse> response = new ArrayList<>();
+        pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
+                response.add(new PollResponse(poll, pollProcess.process(poll))));
+        return response;
+    }
 
     @GetMapping("/{categoryId}/closed")
     public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
