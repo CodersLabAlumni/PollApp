@@ -9,7 +9,6 @@ public class Ip {
 
     public static String remote() {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                .getRequest().getRemoteAddr();
+                .getRequest().getHeader("X-FORWARDED-FOR");
     }
-
 }
