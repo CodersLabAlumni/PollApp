@@ -37,7 +37,7 @@ public class PollController {
     @Autowired
     private PollProcess pollProcess;
 
-    @GetMapping("/all")
+    @GetMapping("/polls")
     public List<PollResponse> getAllPolls() {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAll().forEach(poll ->
