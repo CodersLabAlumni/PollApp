@@ -44,7 +44,7 @@ public class PollController {
     }
 
     @GetMapping("/closed")
-    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "2") int size) {
+    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
         return pollService.getClosedPolls(new PageRequest(page, size));
     }
 

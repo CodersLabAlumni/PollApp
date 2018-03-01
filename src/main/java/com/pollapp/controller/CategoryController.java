@@ -55,7 +55,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}/polls/closed")
-    public Page<PollResponse> getClosedPollsByCategory(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "2") int size, @PathVariable int categoryId) {
+    public Page<PollResponse> getClosedPollsByCategory(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @PathVariable int categoryId) {
         return pollService.getClosedPollsByCategoryId(categoryId, new PageRequest(page, size));
     }
 }
