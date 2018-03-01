@@ -52,7 +52,7 @@ public class CategoryController {
         return null;
     }
     
-    @GetMapping("/{categoryId}/all")
+    @GetMapping("/{categoryId}/polls")
     public List<PollResponse> getAllPollsByCategory(@PathVariable int categoryId) {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
