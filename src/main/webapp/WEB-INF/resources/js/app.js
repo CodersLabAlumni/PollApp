@@ -136,14 +136,14 @@ $(function () {
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
         var categoryName = $(e.target).html();
-        renderClosedList('/categories/' + categoryId + '/'+ showPollsAddress);
+        renderClosedList('/categories/' + categoryId + '/polls/'+ showPollsAddress);
         document.getElementById("closedPollsCategoryButton").innerHTML = categoryName;
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
         var categoryName = $(e.target).html();
-        renderOpenedList('/categories/' + categoryId + '/ongoing');
+        renderOpenedList('/categories/' + categoryId + '/polls/ongoing');
         document.getElementById("ongoingPollsCategoryButton").innerHTML = categoryName;
     });
 

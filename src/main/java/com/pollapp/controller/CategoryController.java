@@ -52,7 +52,7 @@ public class CategoryController {
         return null;
     }
     
-    @GetMapping("/{categoryId}/all")
+    @GetMapping("/{categoryId}/polls/")
     public List<PollResponse> getAllPollsByCategory(@PathVariable int categoryId) {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
@@ -60,7 +60,7 @@ public class CategoryController {
         return response;
     }
 
-    @GetMapping("/{categoryId}/closed")
+    @GetMapping("/{categoryId}/polls/closed")
     public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByClosedBeforeOrClosedIsNullAndCategoriesId(Calendar.getInstance(), categoryId).forEach(poll ->
@@ -68,7 +68,7 @@ public class CategoryController {
         return response;
     }
     
-    @GetMapping("/{categoryId}/ongoing")
+    @GetMapping("/{categoryId}/polls/ongoing")
     public List<PollResponse> getOngoingPollsByCategory(@PathVariable int categoryId) {
         List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByCategoriesIdAndClosedAfter(categoryId, Calendar.getInstance()).forEach(poll ->
