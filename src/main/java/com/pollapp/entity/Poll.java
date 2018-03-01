@@ -46,7 +46,6 @@ public class Poll {
         categories = new HashSet<>();
         created = Calendar.getInstance();
         closed = Calendar.getInstance();
-        closed.add(Calendar.HOUR_OF_DAY, 24);
     }
 
     public long getId() {

@@ -86,12 +86,12 @@ $(function () {
 	                    var clock = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
 	                    document.getElementById("clock" + poll.id).innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
                     }, 1000);
-                    
+
                     ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-                        poll.question + '<br\>' + 
+                        poll.question + '<br\>' +
                         '</div><div class="card-body">' +
                         '<fieldset class="form-group">' +
-                        pollAnswers + 
+                        pollAnswers +
                         '</fieldset>' +
                     	'</div><div class="card-header">'+
                     	'<div>Time left:</div>' +
@@ -125,7 +125,7 @@ $(function () {
         answers.append(answer);
         answer.clone().appendTo(answers);
     }
-    
+
     showPolls.on('click', function (e) {
     	showPollsAddress = $(e.target).data('address');
         renderClosedList('/polls/' + showPollsAddress);
@@ -151,6 +151,8 @@ $(function () {
         e.preventDefault();
         var poll = formUtil.createObjectFromForm($('#poll'));
         var answers = formUtil.createObjectListFromForm($('#answers'));
+        var days = $('#days').children().first().val();
+        var hours = $('#hours').children().first().val();
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             answers.forEach(function (answer) {
                 ajax.ajaxPost("/polls/" + response.id + "/answers", answer)
@@ -158,6 +160,7 @@ $(function () {
             $('#selected-categories').children().each(function (index, category) {
                 ajax.ajaxPost("/polls/" + response.id + "/categories/" + $(category).data('id'))
             });
+              ajax.ajaxPost("/polls/" + response.id + "/closed/0" + days + "/0" + hours);
             categories.empty();
             selectedCategories.empty();
             renderCategoriesToSelect();

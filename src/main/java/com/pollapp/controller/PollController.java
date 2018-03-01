@@ -95,6 +95,18 @@ public class PollController {
         poll.getCategories().add(categoryRepository.findOne(categoryId));
         return pollRepository.save(poll);
     }
+    
+    @PostMapping("/{pollId}/closed/{days}/{hours}")
+    public Poll addHoursToPoll(@PathVariable long pollId, @PathVariable int days, @PathVariable int hours) {
+    	Poll poll = pollRepository.findOne(pollId);
+    	if (days + hours <= 0) {
+    		poll.getClosed().add(Calendar.HOUR_OF_DAY, 24);
+    	} else {    		
+    	poll.getClosed().add(Calendar.DAY_OF_MONTH, days);
+    	poll.getClosed().add(Calendar.HOUR_OF_DAY, hours);
+    	}
+    	return pollRepository.save(poll);
+    }
 
     @GetMapping("/{pollId}/answers")
     public List<AnswerResponse> getAnswersByPoll(@PathVariable long pollId) {
