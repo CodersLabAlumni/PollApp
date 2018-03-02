@@ -14,7 +14,7 @@ import com.pollapp.entity.Poll;
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
 	List<Poll> findAllByClosedAfter(Calendar date);
-	List<Poll> findAllByClosedBeforeOrClosedIsNull(Calendar date);
+	Page<Poll> findAllByClosedBeforeOrClosedIsNull(Calendar date, Pageable pageable);
 	List<Poll> findAllByCategoriesId(int categoryId);
 	Page<Poll> findAllByCategoriesId(int categoryId, Pageable pageable);
 	List<Poll> findAllByCategoriesIdAndClosedAfter(int categoryId, Calendar instance);

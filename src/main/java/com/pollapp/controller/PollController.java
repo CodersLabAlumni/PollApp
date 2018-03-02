@@ -16,6 +16,7 @@ import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -64,12 +65,14 @@ public class PollController {
     @GetMapping("/closed")
     public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
         //return pollService.getClosedPolls(new PageRequest(page, size));
-    public List<PollResponse> getClosedPolls() {
-        List<PollResponse> response = new ArrayList<>();
+    //public List<PollResponse> getClosedPolls() {
+        /*List<PollResponse> response = new ArrayList<>();
         pollRepository.findAllByClosedBeforeOrClosedIsNull(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
-        return response;
+        return response;*/
         //return pollService.getClosedPolls();
+        Pageable pageable = new PageRequest(page, size);
+        return pollService.createPollResponsePageableList(pollRepository.findAllByClosedBeforeOrClosedIsNull(Calendar.getInstance(), pageable), pageable);
     }
 
     @PostMapping("")
