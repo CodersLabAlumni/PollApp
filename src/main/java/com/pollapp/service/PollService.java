@@ -7,6 +7,9 @@ import com.pollapp.repository.UserDataRepository;
 import com.pollapp.response.PollResponse;
 import com.pollapp.response.process.PollProcess;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,8 +51,16 @@ public class PollService {
         return createPollResponseList(pollRepository.findAll());
     }
 
+    public Page<PollResponse> getClosedPolls(Pageable pageable) {
+        return createPollResponsePageableList(pollRepository.findAll(pageable), pageable);
+    }
+
     public List<PollResponse> getClosedPollsByCategoryId(int categoryId) {
         return createPollResponseList(pollRepository.findAllByCategoriesId(categoryId));
+    }
+
+    public Page<PollResponse> getClosedPollsByCategoryId(int categoryId, Pageable pageable) {
+        return createPollResponsePageableList(pollRepository.findAllByCategoriesId(categoryId, pageable), pageable);
     }
 
     public PollResponse createPollResponse(Poll poll) {
@@ -61,6 +72,13 @@ public class PollService {
         polls.forEach(poll ->
                 response.add(createPollResponse(poll)));
         return response;
+    }
+
+    public Page<PollResponse> createPollResponsePageableList(Page<Poll> polls, Pageable pageable) {
+        List<PollResponse> list = new ArrayList<>();
+        polls.forEach(poll ->
+                list.add(createPollResponse(poll)));
+        return new PageImpl<>(list, pageable, polls.getTotalElements());
     }
 
     private List<Long> createPollsIdList(UserData userData) {

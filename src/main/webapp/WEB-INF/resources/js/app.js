@@ -10,51 +10,72 @@ $(function () {
     var answers = $('#answers');
     var categories = $('#all-categories');
     var selectedCategories = $('#selected-categories');
+    var $pagination = $('#pagination-demo');
+
+    var defaultOpts = {
+        totalPages: 10,
+        visiblePages: 10,
+        startPage: 1
+    };
+    $pagination.twbsPagination(defaultOpts);
     var showPollsAddress = "/closed";
 
     function renderClosedList(endpoint) {
-        closedPolls.empty();
         ajax.ajaxGetCallback(endpoint, function (response) {
-            response.forEach(function (elem) {
-                var poll = elem.poll;
-                var pollData = elem.pollNumberData;
-                var charContent = [];
-                ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
-                    response.forEach(function (elem) {
-                        var answer = elem.answer;
-                        var answerData = elem.answerNumberData;
-                        charContent.push({
-                            y: answerData.percent,
-                            label: answer.content
+            var totalPages = response.totalPages;
+            if (totalPages <= 0) {
+                totalPages = 1;
+            }
+            $pagination.twbsPagination('destroy');
+            $pagination.twbsPagination($.extend({}, defaultOpts, {
+                totalPages: totalPages,
+                onPageClick: function (evt, page) {
+                    closedPolls.empty();
+                    ajax.ajaxGetCallback(endpoint + "?page=" + (page - 1), function (response) {
+                        var data = response.content;
+                        data.forEach(function (elem) {
+                            var poll = elem.poll;
+                            var pollData = elem.pollNumberData;
+                            var charContent = [];
+                            ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
+                                response.forEach(function (elem) {
+                                    var answer = elem.answer;
+                                    var answerData = elem.answerNumberData;
+                                    charContent.push({
+                                        y: answerData.percent,
+                                        label: answer.content
+                                    })
+                                });
+                                closedPolls.append('<div class="card border-danger mb-3" style="max-width: 40rem;">' +
+                                    '<div class="card-header">' +
+                                    poll.question +
+                                    '</div>' +
+                                    '<div class="card-body">' +
+                                    '<div id="chartContainer' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
+                                    '</div></div>');
+                                var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
+                                    animationEnabled: true,
+                                    theme: "light2", // "light1", "light2", "dark1", "dark2"
+                                    title: {
+                                        text: ""
+                                    },
+                                    axisY: {
+                                        title: "%"
+                                    },
+                                    data: [{
+                                        type: "column",
+                                        showInLegend: true,
+                                        legendMarkerColor: "grey",
+                                        legendText: pollData.totalAnswers + " answers",
+                                        dataPoints: charContent
+                                    }]
+                                });
+                                chart.render();
+                            });
                         })
                     });
-                    closedPolls.append('<div class="card border-danger mb-3" style="max-width: 40rem;">' +
-                        '<div class="card-header">' +
-                        poll.question +
-                        '</div>' +
-                        '<div class="card-body">' +
-                        '<div id="chartContainer' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
-                        '</div></div>');
-                    var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
-                        animationEnabled: true,
-                        theme: "light2", // "light1", "light2", "dark1", "dark2"
-                        title: {
-                            text: ""
-                        },
-                        axisY: {
-                            title: "%"
-                        },
-                        data: [{
-                            type: "column",
-                            showInLegend: true,
-                            legendMarkerColor: "grey",
-                            legendText: pollData.totalAnswers + " answers",
-                            dataPoints: charContent
-                        }]
-                    });
-                    chart.render();
-                });
-            })
+                }
+            }));
         });
     }
 
@@ -214,5 +235,4 @@ $(function () {
     renderCategoriesList();
     renderOpenedList('/polls/ongoing');
     renderClosedList('/polls/closed');
-
 });
