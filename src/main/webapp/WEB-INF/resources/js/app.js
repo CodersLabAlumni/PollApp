@@ -122,7 +122,6 @@ $(function () {
                             document.getElementById("clock" + poll.id).innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
                         }
                     }, 1000);
-                    //}
                 });
             })
         });
