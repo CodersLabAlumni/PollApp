@@ -6,6 +6,8 @@ import com.pollapp.repository.CategoryRepository;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -62,9 +64,10 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}/polls/closed")
-    public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
-        return pollService.getClosedPollsByCategoryId(categoryId);
-
+    public Page<PollResponse> getClosedPollsByCategory(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @PathVariable int categoryId) {
+        return pollService.getClosedPollsByCategoryId(categoryId, new PageRequest(page, size));
+    //public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
+        //return pollService.getClosedPollsByCategoryId(categoryId);
     }
 
     @GetMapping("/{categoryId}/polls/closed")
