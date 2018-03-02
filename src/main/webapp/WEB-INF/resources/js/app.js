@@ -193,7 +193,7 @@ $(function () {
             $('#selected-categories').children().each(function (index, category) {
                 ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
             });
-              ajax.ajaxPost("/polls/" + response.id + "/closed/0" + days + "/0" + hours);
+              ajax.ajaxPost("/polls/" + response.poll.id + "/closed/0" + days + "/0" + hours);
             categories.empty();
             selectedCategories.empty();
             renderCategoriesToSelect();
