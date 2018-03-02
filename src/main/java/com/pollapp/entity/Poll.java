@@ -1,10 +1,22 @@
 package com.pollapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "poll")
@@ -15,6 +27,10 @@ public class Poll {
     private long id;
 
     private String question;
+    
+    private Calendar created;
+    
+    private Calendar closed;
 
     @JoinColumn(name = "account_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -28,6 +44,8 @@ public class Poll {
 
     public Poll() {
         categories = new HashSet<>();
+        created = Calendar.getInstance();
+        closed = Calendar.getInstance();
     }
 
     public long getId() {
@@ -46,7 +64,23 @@ public class Poll {
         this.question = question;
     }
 
-    public UserAccount getUserAccount() {
+	public Calendar getCreated() {
+		return created;
+	}
+
+	public void setCreated(Calendar created) {
+		this.created = created;
+	}
+
+	public Calendar getClosed() {
+		return closed;
+	}
+
+	public void setClosed(Calendar closed) {
+		this.closed = closed;
+	}
+
+	public UserAccount getUserAccount() {
         return userAccount;
     }
 
