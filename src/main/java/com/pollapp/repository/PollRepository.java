@@ -16,4 +16,6 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
 	List<Poll> findAllByCategoriesId(int categoryId);
 	List<Poll> findAllByCategoriesIdAndClosedAfter(int categoryId, Calendar instance);
 	List<Poll> findAllByClosedBeforeOrClosedIsNullAndCategoriesId(Calendar instance, int categoryId);
+	List<Poll> findByIdNotIn(List<Long> pollIdList);
+  List<Poll> findByIdNotInAndCategoriesId(List<Long> pollIdList, int categoryId);
 }

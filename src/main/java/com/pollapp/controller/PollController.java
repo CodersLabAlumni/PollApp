@@ -1,5 +1,6 @@
 package com.pollapp.controller;
 
+import com.pollapp.bean.Ip;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
@@ -9,8 +10,8 @@ import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
-import com.pollapp.response.process.AnswerProcess;
-import com.pollapp.response.process.PollProcess;
+import com.pollapp.service.AnswerService;
+import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ import java.util.List;
 public class PollController {
 
     @Autowired
+    private PollService pollService;
+
+    @Autowired
     private PollRepository pollRepository;
 
     @Autowired
@@ -32,10 +36,7 @@ public class PollController {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private AnswerProcess answerProcess;
-
-    @Autowired
-    private PollProcess pollProcess;
+    private AnswerService answerService;
 
     @GetMapping("")
     public List<PollResponse> getAllPolls() {
@@ -51,6 +52,7 @@ public class PollController {
         pollRepository.findAllByClosedAfter(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
+        //return pollService.getOpenedPollsAvailableToUserByIp(Ip.remote());
     }
 
     @GetMapping("/closed")
@@ -59,16 +61,17 @@ public class PollController {
         pollRepository.findAllByClosedBeforeOrClosedIsNull(Calendar.getInstance()).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
+        //return pollService.getClosedPolls();
     }
 
     @PostMapping("")
-    public Poll createPoll(@RequestBody Poll poll) {
-        return pollRepository.save(poll);
+    public PollResponse createPoll(@RequestBody Poll poll) {
+        return pollService.createPoll(poll);
     }
 
     @GetMapping("/{pollId}")
-    public Poll getPoll(@PathVariable long pollId) {
-        return pollRepository.findOne(pollId);
+    public PollResponse getPoll(@PathVariable long pollId) {
+        return pollService.createPollResponse(pollRepository.findOne(pollId));
     }
 
     @PutMapping("/{pollId}")
@@ -90,10 +93,10 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/categories/{categoryId}")
-    public Poll addCategoryToPoll(@PathVariable long pollId, @PathVariable int categoryId) {
+    public PollResponse addCategoryToPoll(@PathVariable long pollId, @PathVariable int categoryId) {
         Poll poll = pollRepository.findOne(pollId);
         poll.getCategories().add(categoryRepository.findOne(categoryId));
-        return pollRepository.save(poll);
+        return pollService.createPollResponse(pollRepository.save(poll));
     }
     
     @PostMapping("/{pollId}/closed/{days}/{hours}")
@@ -110,17 +113,14 @@ public class PollController {
 
     @GetMapping("/{pollId}/answers")
     public List<AnswerResponse> getAnswersByPoll(@PathVariable long pollId) {
-        List<AnswerResponse> response = new ArrayList<>();
-        answerRepository.findByPollId(pollId).forEach(answer ->
-                response.add(new AnswerResponse(answer, answerProcess.process(answer))));
-        return response;
+        return answerService.createAnswerResponseList(answerRepository.findByPollId(pollId));
     }
 
     @PostMapping("/{pollId}/answers")
-    public Answer addAnswerToPoll(@RequestBody Answer answer, @PathVariable long pollId) {
+    public AnswerResponse addAnswerToPoll(@RequestBody Answer answer, @PathVariable long pollId) {
         Poll p = pollRepository.findOne(pollId);
         answer.setPoll(p);
-        return answerRepository.save(answer);
+        return answerService.createAnswerResponse(answerRepository.save(answer));
     }
 
     @GetMapping("/{pollId}/comments")
