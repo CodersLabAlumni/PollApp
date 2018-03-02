@@ -84,6 +84,8 @@ $(function () {
     }
 
     function renderCategoriesList() {
+        openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + "0" + '" href="#">' + "All" + '</a>');
+        closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + "0" + '" href="#">' + "All" + '</a>');
         ajax.ajaxGetCallback('/categories', function (response) {
             response.forEach(function (category) {
                 openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + category.id + '" href="#">' + category.name + '</a>');
@@ -109,12 +111,20 @@ $(function () {
 
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        renderClosedList('/categories/' + categoryId + '/polls');
+        if (categoryId === 0) {
+            renderClosedList('/polls/closed');
+        } else {
+            renderClosedList('/categories/' + categoryId + '/polls/closed');
+        }
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        renderOpenedList('/categories/' + categoryId + '/polls'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        if (categoryId === 0) {
+            renderOpenedList('/polls/ongoing');
+        } else {
+            renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        }
     });
 
     pollForm.on('submit', function (e) {
@@ -123,10 +133,10 @@ $(function () {
         var answers = formUtil.createObjectListFromForm($('#answers'));
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             answers.forEach(function (answer) {
-                ajax.ajaxPost("/polls/" + response.id + "/answers", answer)
+                ajax.ajaxPost("/polls/" + response.poll.id + "/answers", answer)
             });
             $('#selected-categories').children().each(function (index, category) {
-                ajax.ajaxPost("/polls/" + response.id + "/categories/" + $(category).data('id'))
+                ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
             });
             categories.empty();
             selectedCategories.empty();
@@ -162,10 +172,7 @@ $(function () {
     });
 
     ongoingPolls.on('click', '.form-check-input', function (e) {
-        var userData = {};
-        ajax.ajaxPostCallback('/data', userData, function (data) {
-            ajax.ajaxPost('/answers/' + e.target.value + '/data', data);
-        });
+        ajax.ajaxPost('/answers/' + e.target.value + '/data');
         $(this).parents('.text-white').fadeOut();
     });
 

@@ -1,10 +1,11 @@
 package com.pollapp.controller;
 
+import com.pollapp.bean.Ip;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Poll;
 import com.pollapp.entity.UserData;
-import com.pollapp.repository.AnswerRepository;
-import com.pollapp.repository.UserDataRepository;
+import com.pollapp.response.AnswerResponse;
+import com.pollapp.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +16,17 @@ import java.util.List;
 public class AnswerController {
 
     @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
-    private UserDataRepository userDataRepository;
+    private AnswerService answerService;
 
     @GetMapping("")
-    public List<Answer> getAnswer() {
+    public List<Answer> getAnswers() {
         // TODO
         return null;
     }
 
     @PostMapping("")
-    public Answer createAnswer(@RequestBody Answer answer) {
-        return answerRepository.save(answer);
+    public AnswerResponse createAnswer(@RequestBody Answer answer) {
+        return answerService.createAnswer(answer);
     }
 
     @GetMapping("/{answerId}")
@@ -56,10 +54,8 @@ public class AnswerController {
     }
 
     @PostMapping("/{answerId}/data")
-    public UserData addDataToAnswer(@RequestBody UserData userData, @PathVariable long answerId) {
-        UserData data = userDataRepository.save(userData);
-        data.getAnswers().add(answerRepository.findOne(answerId));
-        return userDataRepository.save(data);
+    public UserData addDataToAnswer(@PathVariable long answerId) {
+        return answerService.vote(Ip.remote(), answerId);
     }
 
     @GetMapping("/{answerId}/data/{dataId}")

@@ -17,4 +17,7 @@ public interface UserDataRepository extends JpaRepository<UserData, Long> {
 
     long countByAnswers(Answer answer);
 
+    boolean existsByIp(String ip);
+
+    UserData findByIp(String ip);
 }
