@@ -5,6 +5,7 @@ $(function () {
     var closedPolls = $('#closedPolls');
     var closedPollsCategories = $('#closedPollsCategories');
     var openPollsCategories = $('#openPollsCategories');
+    var showPolls = $('#showPolls');
     var pollForm = $('#pollForm');
     var answers = $('#answers');
     var categories = $('#all-categories');
@@ -17,6 +18,7 @@ $(function () {
         startPage: 1
     };
     $pagination.twbsPagination(defaultOpts);
+    var showPollsAddress = "/closed";
 
     function renderClosedList(endpoint) {
         ajax.ajaxGetCallback(endpoint, function (response) {
@@ -93,12 +95,29 @@ $(function () {
                             '</label>' +
                             '</div>'
                     });
+
+                    var getClock = setInterval(function(){
+                        var now = new Date().getTime();
+	                    var closed = poll.closed;
+	                    var distance = closed - now;
+	                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+	                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	                    var clock = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+	                    document.getElementById("clock" + poll.id).innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                    }, 1000);
+
                     ongoingPolls.append('<div class="text-white bg-secondary mb-3" style="max-width: 40rem;"><div class="card-header">' +
-                        poll.question +
+                        poll.question + '<br\>' +
                         '</div><div class="card-body">' +
                         '<fieldset class="form-group">' +
                         pollAnswers +
-                        '</fieldset></div></div>');
+                        '</fieldset>' +
+                    	'</div><div class="card-header">'+
+                    	'<div>Time left:</div>' +
+                    	'<div id="clock' + poll.id +'"></div>' +
+                    	'</div></div>');
                 });
             })
         });
@@ -130,28 +149,43 @@ $(function () {
         answer.clone().appendTo(answers);
     }
 
+    showPolls.on('click', function (e) {
+    	showPollsAddress = $(e.target).data('address');
+        renderClosedList('/polls/' + showPollsAddress);
+        document.getElementById("showPollsButton").innerHTML = showPollsAddress + " POLLS";
+        document.getElementById("closedPollsCategoryButton").innerHTML = "CATEGORIES";
+    });
+
     closedPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data('category');
-        if (categoryId === 0) {
-            renderClosedList('/polls/closed');
-        } else {
-            renderClosedList('/categories/' + categoryId + '/polls/closed');
-        }
+        var categoryName = $(e.target).html();
+        renderClosedList('/categories/' + categoryId + '/polls/'+ showPollsAddress);
+        document.getElementById("closedPollsCategoryButton").innerHTML = categoryName;
+        //if (categoryId === 0) {
+            //renderClosedList('/polls/closed');
+        //} else {
+            //renderClosedList('/categories/' + categoryId + '/polls/closed');
+        //}
     });
 
     openPollsCategories.on('click', function (e) {
         var categoryId = $(e.target).data("category");
-        if (categoryId === 0) {
-            renderOpenedList('/polls/ongoing');
-        } else {
-            renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
-        }
+        var categoryName = $(e.target).html();
+        renderOpenedList('/categories/' + categoryId + '/polls/ongoing');
+        document.getElementById("ongoingPollsCategoryButton").innerHTML = categoryName;
+        //if (categoryId === 0) {
+            //renderOpenedList('/polls/ongoing');
+        //} else {
+            //renderOpenedList('/categories/' + categoryId + '/polls/ongoing'); //TODO once backend disctinction between closed and opened polls is developed, attach it
+        //}
     });
 
     pollForm.on('submit', function (e) {
         e.preventDefault();
         var poll = formUtil.createObjectFromForm($('#poll'));
         var answers = formUtil.createObjectListFromForm($('#answers'));
+        var days = $('#days').children().first().val();
+        var hours = $('#hours').children().first().val();
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             answers.forEach(function (answer) {
                 ajax.ajaxPost("/polls/" + response.poll.id + "/answers", answer)
@@ -159,6 +193,7 @@ $(function () {
             $('#selected-categories').children().each(function (index, category) {
                 ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
             });
+              ajax.ajaxPost("/polls/" + response.id + "/closed/0" + days + "/0" + hours);
             categories.empty();
             selectedCategories.empty();
             renderCategoriesToSelect();
