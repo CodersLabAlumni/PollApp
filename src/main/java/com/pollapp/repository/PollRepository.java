@@ -18,11 +18,11 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
 
     Page<Poll> findAllByCategoriesIdAndClosedAfter(int categoryId, Calendar instance, Pageable pageable);
 
-    Page<Poll> findAllByCategoriesIdAndClosedAfterAndIdNotIn(int categoryId, Calendar instance, List<Long> pollIdList, Pageable pageable);
+    List<Poll> findAllByClosedAfterAndCategoriesId(Calendar instance, int categoryId);
 
     Page<Poll> findAllByClosedAfter(Calendar instance, Pageable pageable);
 
-    Page<Poll> findAllByClosedAfterAndIdNotIn(Calendar instance, List<Long> pollIdList, Pageable pageable);
+    List<Poll> findAllByClosedAfter(Calendar instance);
 
     Page<Poll> findAllByClosedBeforeOrClosedIsNullAndCategoriesId(Calendar instance, int categoryId, Pageable pageable);
 }
