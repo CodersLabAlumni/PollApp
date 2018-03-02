@@ -10,6 +10,7 @@ import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
+import com.pollapp.response.process.PollProcess;
 import com.pollapp.service.AnswerService;
 import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class PollController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private PollProcess pollProcess;
 
     @GetMapping("")
     public List<PollResponse> getAllPolls() {

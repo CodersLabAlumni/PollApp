@@ -3,7 +3,9 @@ package com.pollapp.controller;
 import com.pollapp.bean.Ip;
 import com.pollapp.entity.Category;
 import com.pollapp.repository.CategoryRepository;
+import com.pollapp.repository.PollRepository;
 import com.pollapp.response.PollResponse;
+import com.pollapp.response.process.PollProcess;
 import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,12 @@ public class CategoryController {
 
     @Autowired
     private PollService pollService;
+
+    @Autowired
+    private PollRepository pollRepository;
+
+    @Autowired
+    private PollProcess pollProcess;
 
     @GetMapping("")
     public List<Category> getCategories() {
@@ -55,8 +63,9 @@ public class CategoryController {
         pollRepository.findAllByCategoriesId(categoryId).forEach(poll ->
                 response.add(new PollResponse(poll, pollProcess.process(poll))));
         return response;
+    }
 
-    @GetMapping("/{categoryId}/polls/ongoing")
+    /*@GetMapping("/{categoryId}/polls/ongoing")
     public List<PollResponse> getOngoingPollsByCategory(@PathVariable int categoryId) {
         return pollService.getOpenedPollsAvailableToUserByIpAndCategoryId(Ip.remote(), categoryId);
     }
@@ -64,8 +73,7 @@ public class CategoryController {
     @GetMapping("/{categoryId}/polls/closed")
     public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
         return pollService.getClosedPollsByCategoryId(categoryId);
-
-    }
+    }*/
 
     @GetMapping("/{categoryId}/polls/closed")
     public List<PollResponse> getClosedPollsByCategory(@PathVariable int categoryId) {
