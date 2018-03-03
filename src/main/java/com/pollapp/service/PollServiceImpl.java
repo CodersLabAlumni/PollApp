@@ -107,14 +107,9 @@ public class PollServiceImpl implements PollService {
         return pollResponse.create(new PageImpl<>(polls, pageable, polls.size()), pageable);
     }
 
-    private void removeAlreadyVoted(List<Poll> polls, List<Long> pollsId) {
-        for (int i = 0; i < polls.size(); i++) {
-            for (Long id : pollsId) {
-                if (id == polls.get(i).getId()) {
-                    polls.remove(i);
-                }
-            }
-        }
+    private List<Poll> removeAlreadyVoted(List<Poll> polls, List<Long> pollsId) {
+        pollsId.forEach(id -> polls.removeIf(poll -> poll.getId() == id));
+        return polls;
     }
 
     private boolean isAllCategories(int categoryId) {
