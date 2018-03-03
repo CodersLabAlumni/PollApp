@@ -1,21 +1,28 @@
 package com.pollapp.repository;
 
-import java.util.Calendar;
-import java.util.List;
-
+import com.pollapp.entity.Poll;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.pollapp.entity.Poll;
+import java.util.Calendar;
+import java.util.List;
 
 @Repository
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
-	List<Poll> findAllByClosedAfter(Calendar date);
-	List<Poll> findAllByClosedBeforeOrClosedIsNull(Calendar date);
-	List<Poll> findAllByCategoriesId(int categoryId);
-	List<Poll> findAllByCategoriesIdAndClosedAfter(int categoryId, Calendar instance);
-	List<Poll> findAllByClosedBeforeOrClosedIsNullAndCategoriesId(Calendar instance, int categoryId);
-	List<Poll> findByIdNotIn(List<Long> pollIdList);
-  List<Poll> findByIdNotInAndCategoriesId(List<Long> pollIdList, int categoryId);
+    Page<Poll> findAllByClosedBeforeOrClosedIsNull(Calendar date, Pageable pageable);
+
+    Page<Poll> findAllByCategoriesId(int categoryId, Pageable pageable);
+
+    Page<Poll> findAllByCategoriesIdAndClosedAfter(int categoryId, Calendar instance, Pageable pageable);
+
+    List<Poll> findAllByClosedAfterAndCategoriesId(Calendar instance, int categoryId);
+
+    Page<Poll> findAllByClosedAfter(Calendar instance, Pageable pageable);
+
+    List<Poll> findAllByClosedAfter(Calendar instance);
+
+    Page<Poll> findAllByClosedBeforeOrClosedIsNullAndCategoriesId(Calendar instance, int categoryId, Pageable pageable);
 }
