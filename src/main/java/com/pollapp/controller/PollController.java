@@ -13,6 +13,7 @@ import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
@@ -35,18 +36,18 @@ public class PollController {
     private AnswerService answerService;
 
     @GetMapping("")
-    public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getPolls(new PageRequest(page, size));
+    public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @GetMapping("/ongoing")
-    public Page<PollResponse> getOpenedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getOnGoingPolls(new PageRequest(page, size));
+    public Page<PollResponse> getOpenedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getOnGoingPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @GetMapping("/closed")
-    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getClosedPolls(new PageRequest(page, size));
+    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getClosedPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @PostMapping("")
