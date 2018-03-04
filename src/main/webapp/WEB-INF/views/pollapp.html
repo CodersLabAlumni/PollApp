@@ -113,6 +113,19 @@
                 </div>
             </div>
         </div>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id="showPollsSortButton" type="button" class="btn btn-danger">LATEST</button>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"></button>
+                <div id="showPollsSort" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" data-sort="created" data-direction="desc" href="#">LATEST</a>
+                    <a class="dropdown-item" data-sort="created" data-direction="asc" href="#">OLDEST</a>
+                    <a class="dropdown-item" data-sort="question" data-direction="asc" href="#">ALPHABETICALLY</a>
+                </div>
+            </div>
+        </div>
         <br/><br/>
         <div id="closedPolls"></div>
         <div id="pager">
