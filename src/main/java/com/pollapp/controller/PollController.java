@@ -4,7 +4,6 @@ import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
-import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
@@ -28,9 +27,6 @@ public class PollController {
 
     @Autowired
     private PollRepository pollRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
 
     @Autowired
     private AnswerService answerService;
@@ -97,14 +93,12 @@ public class PollController {
 
     @GetMapping("/{pollId}/answers")
     public List<AnswerResponse> getAnswersByPoll(@PathVariable long pollId) {
-        return answerService.createAnswerResponseList(answerRepository.findByPollId(pollId));
+        return answerService.getAnswersByPoll(pollId);
     }
 
     @PostMapping("/{pollId}/answers")
     public AnswerResponse addAnswerToPoll(@RequestBody Answer answer, @PathVariable long pollId) {
-        Poll p = pollRepository.findOne(pollId);
-        answer.setPoll(p);
-        return answerService.createAnswerResponse(answerRepository.save(answer));
+        return answerService.addAnswerToPoll(answer, pollId);
     }
 
     @GetMapping("/{pollId}/comments")
