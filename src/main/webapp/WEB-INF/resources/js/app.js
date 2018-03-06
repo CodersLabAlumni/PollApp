@@ -243,12 +243,24 @@ $(function () {
     $('#register').on('click', function () {
         registerForm.toggle('hidden');
         registerForm.trigger('reset');
+        registerForm.find('.text-success').remove();
+        registerForm.find('.text-danger').remove();
     });
 
     registerForm.on('submit', function (e) {
         e.preventDefault();
+        registerForm.find('.text-success').remove();
+        registerForm.find('.text-danger').remove();
         var account = formUtil.createObjectFromForm($('#register-form'));
-        console.log(account);
+        ajax.ajaxPostCallback("/accounts", account, function (response) {
+            if (response.status === 'OK') {
+                registerForm.append('<p class="text-success">' + response.successMsg + '</p>');
+            } else {
+                $.each(response.errors, function (key, value) {
+                    registerForm.find('#' + key).parent().append('<p class="text-danger">' + value + '</p>');
+                });
+            }
+        });
         this.reset();
     });
 
