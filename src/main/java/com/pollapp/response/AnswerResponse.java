@@ -24,10 +24,10 @@ public class AnswerResponse {
 
     private Answer answer;
 
-    public AnswerResponse() {
+    private AnswerResponse() {
     }
 
-    public AnswerResponse(Answer answer, AnswerNumberData answerNumberData) {
+    private AnswerResponse(Answer answer, AnswerNumberData answerNumberData) {
         setAnswer(answer);
         setAnswerNumberData(answerNumberData);
     }
