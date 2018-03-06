@@ -1,6 +1,11 @@
 package com.pollapp.entity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "account")
@@ -9,13 +14,22 @@ public class UserAccount {
     @Id
     private long id;
 
+    @NotBlank
+    @Size(min = 5, max = 25)
     @Column(unique = true)
     private String username;
 
+    @NotEmpty
+    @Email
     @Column(unique = true)
     private String email;
 
+    @NotBlank
+    @Size(min = 5, max = 100)
     private String password;
+
+    @Transient
+    private String passwordConfirmation;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
@@ -76,5 +90,13 @@ public class UserAccount {
 
     public void setUserData(UserData userData) {
         this.userData = userData;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
     }
 }
