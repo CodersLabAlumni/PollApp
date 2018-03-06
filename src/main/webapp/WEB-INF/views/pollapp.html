@@ -24,7 +24,7 @@
                 <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
+                <a id="register" class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>
@@ -79,6 +79,34 @@
                 </div>
             </div>
             <div class="container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+    <form class="hidden" method="post" id="register-form">
+        <fieldset>
+            <legend>Registration</legend>
+            <div class="container form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="username" id="username" placeholder="Enter your username">
+            </div>
+            <div class="container form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="container form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
+                <label for="password-confirm">Confirm password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="passwordConfirmation" id="password-confirm" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </fieldset>
