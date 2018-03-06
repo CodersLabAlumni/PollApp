@@ -15,7 +15,7 @@ $(function () {
     var showPollsAddress = "";
     var pollSortProperty = "created";
     var pollSortDirection = "desc";
-
+    var registerForm = $('#register-form');
 
     var defaultOpts = {
         totalPages: 10,
@@ -238,6 +238,18 @@ $(function () {
     ongoingPolls.on('click', '.form-check-input', function (e) {
         ajax.ajaxPost('/answers/' + e.target.value + '/data');
         $(this).parents('.text-white').fadeOut();
+    });
+
+    $('#register').on('click', function () {
+        registerForm.toggle('hidden');
+        registerForm.trigger('reset');
+    });
+
+    registerForm.on('submit', function (e) {
+        e.preventDefault();
+        var account = formUtil.createObjectFromForm($('#register-form'));
+        console.log(account);
+        this.reset();
     });
 
     renderCategoriesList();
