@@ -4,7 +4,6 @@ import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
-import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
@@ -13,6 +12,7 @@ import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
@@ -29,24 +29,21 @@ public class PollController {
     private PollRepository pollRepository;
 
     @Autowired
-    private AnswerRepository answerRepository;
-
-    @Autowired
     private AnswerService answerService;
 
     @GetMapping("")
-    public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getPolls(new PageRequest(page, size));
+    public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @GetMapping("/ongoing")
-    public Page<PollResponse> getOpenedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getOnGoingPolls(new PageRequest(page, size));
+    public Page<PollResponse> getOpenedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getOnGoingPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @GetMapping("/closed")
-    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
-        return pollService.getClosedPolls(new PageRequest(page, size));
+    public Page<PollResponse> getClosedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
+        return pollService.getClosedPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @PostMapping("")
@@ -96,14 +93,12 @@ public class PollController {
 
     @GetMapping("/{pollId}/answers")
     public List<AnswerResponse> getAnswersByPoll(@PathVariable long pollId) {
-        return answerService.createAnswerResponseList(answerRepository.findByPollId(pollId));
+        return answerService.getAnswersByPoll(pollId);
     }
 
     @PostMapping("/{pollId}/answers")
     public AnswerResponse addAnswerToPoll(@RequestBody Answer answer, @PathVariable long pollId) {
-        Poll p = pollRepository.findOne(pollId);
-        answer.setPoll(p);
-        return answerService.createAnswerResponse(answerRepository.save(answer));
+        return answerService.addAnswerToPoll(answer, pollId);
     }
 
     @GetMapping("/{pollId}/comments")
