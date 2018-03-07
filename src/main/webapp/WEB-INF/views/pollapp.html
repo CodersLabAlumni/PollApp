@@ -19,14 +19,22 @@
     </button>
     <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a id="register" class="nav-link" href="#">Register <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
+        <form method="post" id="login-form">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active p-1">
+                    <label class="text-white" for="username-login">Username</label>
+                    <input type="text" id="username-login" name="username"/>
+                </li>
+                <li class="nav-item active p-1">
+                    <label class="text-white" for="password-login">Password</label>
+                    <input type="password" id="password-login" name="password"/>
+                </li>
+            </ul>
+            <div class="container p-1">
+                <button class="btn btn-default" type="submit">Login</button>
+                <a id="register" class="btn btn-default text-white">Register</a>
+            </div>
+        </form>
     </div>
 </nav>
 
