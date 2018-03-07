@@ -264,6 +264,12 @@ $(function () {
         this.reset();
     });
 
+    $('#login-form').on('submit', function (e) {
+        e.preventDefault();
+        var credentials = formUtil.createObjectFromForm(this);
+        this.reset();
+    });
+
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/categories/' + 0 + '/polls');
