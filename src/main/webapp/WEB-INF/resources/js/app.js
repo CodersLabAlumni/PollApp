@@ -13,6 +13,9 @@ $(function () {
     var $pagination = $('#pagination-demo');
     var categoryId = 0;
     var showPollsAddress = "";
+    var pollSortProperty = "created";
+    var pollSortDirection = "desc";
+
 
     var defaultOpts = {
         totalPages: 10,
@@ -32,7 +35,11 @@ $(function () {
                 totalPages: totalPages,
                 onPageClick: function (evt, page) {
                     closedPolls.empty();
-                    ajax.ajaxGetCallback(endpoint + "?page=" + (page - 1), function (response) {
+                    var param = '?page=' + (page - 1);
+                    if (endpoint.includes('?')) {
+                        param = '&page=' + (page - 1);
+                    }
+                    ajax.ajaxGetCallback(endpoint + param, function (response) {
                         var data = response.content;
                         data.forEach(function (elem) {
                             var poll = elem.poll;
@@ -155,15 +162,23 @@ $(function () {
 
     showPolls.on('click', function (e) {
         showPollsAddress = $(e.target).data('address');
-        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress);
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
         $('#showPollsButton').html($(e.target).html() + ' POLLS');
     });
 
     closedPollsCategories.on('click', function (e) {
         categoryId = $(e.target).data('category');
         var categoryName = $(e.target).html();
-        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress);
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
         $('#closedPollsCategoryButton').html('CATEGORY ' + categoryName);
+    });
+
+    $('#showPollsSort').on('click', function (e) {
+        pollSortProperty = $(e.target).data('sort');
+        pollSortDirection = $(e.target).data('direction');
+        var sortName = $(e.target).html();
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
+        $('#showPollsSortButton').html(sortName);
     });
 
     openPollsCategories.on('click', function (e) {

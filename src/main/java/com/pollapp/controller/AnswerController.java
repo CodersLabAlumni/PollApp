@@ -1,6 +1,5 @@
 package com.pollapp.controller;
 
-import com.pollapp.bean.Ip;
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Poll;
 import com.pollapp.entity.UserData;
@@ -26,7 +25,7 @@ public class AnswerController {
 
     @PostMapping("")
     public AnswerResponse createAnswer(@RequestBody Answer answer) {
-        return answerService.createAnswer(answer);
+        return answerService.save(answer);
     }
 
     @GetMapping("/{answerId}")
@@ -55,7 +54,7 @@ public class AnswerController {
 
     @PostMapping("/{answerId}/data")
     public UserData addDataToAnswer(@PathVariable long answerId) {
-        return answerService.vote(Ip.remote(), answerId);
+        return answerService.vote(answerId);
     }
 
     @GetMapping("/{answerId}/data/{dataId}")

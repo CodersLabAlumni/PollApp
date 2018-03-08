@@ -3,7 +3,8 @@ var Ajax = function () {
 
 Ajax.prototype.ajaxGet = function (endpoint) {
     return $.getJSON({
-        url: $(location).attr('origin') + endpoint
+        url: $(location).attr('origin') + endpoint,
+        async: false
     })
 };
 
@@ -22,7 +23,8 @@ Ajax.prototype.ajaxPost = function (endpoint, data) {
             'Content-Type': 'application/json'
         },
         url: $(location).attr('origin') + endpoint,
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
+        async: false
     })
 };
 
@@ -38,7 +40,8 @@ Ajax.prototype.ajaxPostCallback = function (endpoint, data, callback) {
 Ajax.prototype.ajaxDelete = function (endpoint) {
     return $.ajax({
         url: $(location).attr('origin') + endpoint,
-        type: 'DELETE'
+        type: 'DELETE',
+        async: false
     })
 };
 
@@ -58,7 +61,8 @@ Ajax.prototype.ajaxPut = function (endpoint, data) {
         },
         url: $(location).attr('origin') + endpoint,
         type: 'PUT',
-        data: JSON.stringify(data)
+        data: JSON.stringify(data),
+        async: false
     })
 };
 
