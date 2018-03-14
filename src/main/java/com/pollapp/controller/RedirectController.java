@@ -15,7 +15,7 @@ public class RedirectController {
 
     @GetMapping("/login")
     String login() {
-        return "after_login";
+        return "pollapp_logged";
     }
 
     @GetMapping("/logout")
