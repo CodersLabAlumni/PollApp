@@ -16,6 +16,7 @@ $(function () {
     var pollSortProperty = "created";
     var pollSortDirection = "desc";
     var registerForm = $('#register-form');
+    var loginForm = $('#login-form');
 
     var defaultOpts = {
         totalPages: 10,
@@ -264,13 +265,30 @@ $(function () {
         this.reset();
     });
 
-    $('#login-form').on('submit', function (e) {
-        e.preventDefault();
-        var credentials = formUtil.createObjectFromForm(this);
-        this.reset();
+    loginForm.on('submit', function () {
+        removeLoginError();
     });
+
+    $(window).on('beforeunload', function () {
+        removeLoginError();
+    });
+
+    function handleLoginError() {
+        var d = Cookies.get('logged_error');
+        if (d !== undefined) {
+            var error = 'Invalid credentials';
+            loginForm.find('div').append('<span class="text-white">' + error + '</span>');
+        }
+    }
+
+    function removeLoginError() {
+        loginForm.find('div').children().last().remove();
+        Cookies.remove('logged_error');
+    }
 
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/categories/' + 0 + '/polls');
+    handleLoginError();
+
 });
