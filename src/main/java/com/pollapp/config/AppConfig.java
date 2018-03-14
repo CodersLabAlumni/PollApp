@@ -1,5 +1,6 @@
 package com.pollapp.config;
 
+import com.pollapp.entity.wrapper.CustomUserDetails;
 import com.pollapp.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

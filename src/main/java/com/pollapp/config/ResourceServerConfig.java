@@ -1,5 +1,6 @@
 package com.pollapp.config;
 
+import com.pollapp.config.handler.AuthenticationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 @Configuration
 @EnableResourceServer
@@ -17,32 +17,26 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private UserDetailsService customUserDetailsService;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public ResourceServerConfig() {
-    }
+    @Autowired
+    private AuthenticationHandler authenticationHandler;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        /*http.requestMatchers()
-                .antMatchers("/private")
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .permitAll();*/
-        http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/private/**").authenticated()
+        http.authorizeRequests().antMatchers("/**").permitAll()
                 .and().formLogin().loginPage("/")
-                //.defaultSuccessUrl("/", true)
-                //.failureUrl("/t/f")
+                .successHandler(authenticationHandler.successHandler())
+                .failureHandler(authenticationHandler.failureHandler())
+                .and().logout().logoutUrl("/logout")
+                .deleteCookies("logged_user").clearAuthentication(true).logoutSuccessUrl("/")
                 .permitAll()
-        .and().csrf().disable();
+                .and().csrf().disable();
     }
 
     @Override
