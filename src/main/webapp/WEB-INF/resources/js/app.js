@@ -265,8 +265,9 @@ $(function () {
         this.reset();
     });
 
-    loginForm.on('submit', function () {
+    $('#login').on('click', function () {
         removeLoginError();
+        loginForm.submit();
     });
 
     $(window).on('beforeunload', function () {
@@ -274,15 +275,13 @@ $(function () {
     });
 
     function handleLoginError() {
-        var d = Cookies.get('logged_error');
-        if (d !== undefined) {
-            var error = 'Invalid credentials';
-            loginForm.find('div').append('<span class="text-white">' + error + '</span>');
+        if (Cookies.get('logged_error') !== undefined) {
+            $('#login-error').text('Invalid credentials');
         }
     }
 
     function removeLoginError() {
-        loginForm.find('div').children().last().remove();
+        $('#login-error').remove();
         Cookies.remove('logged_error');
     }
 
