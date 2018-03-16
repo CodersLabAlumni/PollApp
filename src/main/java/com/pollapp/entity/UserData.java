@@ -1,6 +1,7 @@
 package com.pollapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pollapp.enums.Gender;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class UserData {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @JsonManagedReference
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "userData")
     private UserAccount userAccount;
 
