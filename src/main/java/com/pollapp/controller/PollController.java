@@ -8,6 +8,7 @@ import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.AnswerService;
+import com.pollapp.service.CommentService;
 import com.pollapp.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class PollController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("")
     public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
@@ -103,7 +107,11 @@ public class PollController {
 
     @GetMapping("/{pollId}/comments")
     public List<Comment> getCommentsByPoll(@PathVariable long pollId) {
-        // TODO
-        return null;
+        return commentService.getCommentsByPollId(pollId);
+    }
+
+    @PostMapping("/{pollId}/comments")
+    public Comment addCommentToPoll(@PathVariable long pollId, @CookieValue("logged_user") String username, @RequestBody Comment comment) {
+        return commentService.add(pollId, username, comment);
     }
 }
