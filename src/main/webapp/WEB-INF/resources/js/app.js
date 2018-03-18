@@ -20,6 +20,10 @@ $(function() {
   var gameQuestion = $('#gameQuestion');
   var gameAnswers = $('#gameAnswers');
   var gameClock = $('#gameClock');
+  var wrongAnswers = $('#wrongAnswers');
+  var correctAnswers = $('#correctAnswers');
+  var correctAnswersScore = 0;
+  var wrongAnswersScore = 0;
 
 
   var defaultOpts = {
@@ -284,6 +288,11 @@ $(function() {
 
   gameAnswers.on('click', '.form-check-input', function(e) {
     renderGameQuestion();
+    correctAnswersScore += 1;
+    correctAnswers.empty();
+    correctAnswers.append(correctAnswersScore);
+    wrongAnswers.empty();
+    wrongAnswers.append(wrongAnswersScore);
   })
 
   renderGame();
