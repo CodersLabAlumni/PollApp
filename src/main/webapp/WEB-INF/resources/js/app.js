@@ -19,6 +19,7 @@ $(function() {
   var pollList = [];
   var gameQuestion = $('#gameQuestion');
   var gameAnswers = $('#gameAnswers');
+  var gameClock = $('#gameClock');
 
 
   var defaultOpts = {
@@ -249,6 +250,16 @@ $(function() {
   renderOpenedList('/categories/' + 0 + '/polls/available');
   renderClosedList('/categories/' + 0 + '/polls');
 
+  function renderGame() {
+    var gameClockTimer = 60;
+    renderGameQuestion();
+    setInterval(function() {
+      gameClock.empty();
+      gameClock.append(gameClockTimer + ' s');
+      gameClockTimer -= 1;
+
+    }, 1000);
+  }
   // console.log(pollList);
   function renderGameQuestion() {
     var randomPoll = pollList[Math.floor(Math.random() * pollList.length)];
@@ -270,5 +281,6 @@ $(function() {
       gameAnswers.append(randomPollAnswers);
     })
   }
-  renderGameQuestion();
+
+  renderGame();
 });
