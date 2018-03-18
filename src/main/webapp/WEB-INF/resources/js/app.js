@@ -16,6 +16,9 @@ $(function () {
     var pollSortProperty = "created";
     var pollSortDirection = "desc";
 
+    var pollList = [];
+    var gameQuestion = $('#gameQuestion');
+
 
     var defaultOpts = {
         totalPages: 10,
@@ -43,6 +46,7 @@ $(function () {
                         var data = response.content;
                         data.forEach(function (elem) {
                             var poll = elem.poll;
+                            pollList.push(poll);
                             var pollData = elem.pollNumberData;
                             var charContent = [];
                             ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
@@ -243,4 +247,13 @@ $(function () {
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/categories/' + 0 + '/polls');
+
+    // console.log(pollList);
+    function renderGameQuestion() {
+      var randomPoll = pollList[Math.floor(Math.random()*pollList.length)];
+      console.log(randomPoll);
+      gameQuestion.empty();
+      gameQuestion.append(randomPoll.question);
+    }
+    renderGameQuestion();
 });
