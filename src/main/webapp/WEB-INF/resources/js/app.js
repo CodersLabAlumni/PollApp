@@ -282,5 +282,9 @@ $(function() {
     })
   }
 
+  gameAnswers.on('click', '.form-check-input', function(e) {
+    renderGameQuestion();
+  })
+
   renderGame();
 });
