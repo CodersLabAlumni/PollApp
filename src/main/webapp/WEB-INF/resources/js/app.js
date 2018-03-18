@@ -255,12 +255,20 @@ $(function() {
   renderClosedList('/categories/' + 0 + '/polls');
 
   function renderGame() {
-    var gameClockTimer = 60;
+    var gameClockTimer = 10;
     renderGameQuestion();
     setInterval(function() {
       gameClock.empty();
       gameClock.append(gameClockTimer + ' s');
-      gameClockTimer -= 1;
+      if (gameClockTimer > 0) {
+        gameClockTimer -= 1;
+      } else {
+        gameClock.empty();
+        gameClock.append("TIME'S UP");
+        gameQuestion.empty();
+        gameQuestion.append("GAME OVER");
+        gameAnswers.empty();
+      }
 
     }, 1000);
   }
