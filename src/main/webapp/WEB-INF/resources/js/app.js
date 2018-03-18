@@ -251,9 +251,14 @@ $(function () {
     // console.log(pollList);
     function renderGameQuestion() {
       var randomPoll = pollList[Math.floor(Math.random()*pollList.length)];
-      console.log(randomPoll);
+      // console.log(randomPoll);
       gameQuestion.empty();
       gameQuestion.append(randomPoll.question);
+      ajax.ajaxGetCallback('/polls/' + randomPoll.id + '/answers', function (response) {
+          response.forEach(function (elem) {
+            console.log(elem);
+          })
+        })
     }
     renderGameQuestion();
 });
