@@ -23,6 +23,7 @@ $(function() {
   var wrongAnswers = $('#wrongAnswers');
   var correctAnswers = $('#correctAnswers');
   var startGame = $('#startGame');
+  var closeGame = $('#closeGame');
   var gameBoard = $('#gameBoard');
   var correctAnswersScore = 0;
   var wrongAnswersScore = 0;
@@ -309,8 +310,23 @@ $(function() {
 
   startGame.on('click', function(e) {
     gameBoard.toggle('hidden');
+    closeGame.toggle('hidden');
+    startGame.toggle('hidden');
     $('#pollsResults').toggle('hidden');
     renderGame();
+  })
+
+  closeGame.on('click', function(e) {
+    gameBoard.toggle('hidden');
+    closeGame.toggle('hidden');
+    startGame.toggle('hidden');
+    correctAnswersScore = 0;
+    wrongAnswersScore = 0;
+    correctAnswers.empty();
+    correctAnswers.append(correctAnswersScore);
+    wrongAnswers.empty();
+    wrongAnswers.append(wrongAnswersScore);
+    gameClock.empty();
   })
 
 });
