@@ -24,6 +24,7 @@ $(function() {
   var correctAnswers = $('#correctAnswers');
   var startGame = $('#startGame');
   var closeGame = $('#closeGame');
+  var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
   var correctAnswersScore = 0;
   var wrongAnswersScore = 0;
@@ -309,17 +310,30 @@ $(function() {
   })
 
   startGame.on('click', function(e) {
-    gameBoard.toggle('hidden');
-    closeGame.toggle('hidden');
-    startGame.toggle('hidden');
+    toggleGameView();
     $('#pollsResults').toggle('hidden');
     renderGame();
   })
 
   closeGame.on('click', function(e) {
+    toggleGameView();
+    resetGame();
+  })
+
+  nextGame.on('click', function() {
+    $('#pollsResults').toggle('hidden');
+    resetGame();
+    renderGame();
+  })
+
+  function toggleGameView() {
     gameBoard.toggle('hidden');
     closeGame.toggle('hidden');
     startGame.toggle('hidden');
+    nextGame.toggle('hidden');
+  }
+
+  function resetGame() {
     correctAnswersScore = 0;
     wrongAnswersScore = 0;
     correctAnswers.empty();
@@ -327,6 +341,6 @@ $(function() {
     wrongAnswers.empty();
     wrongAnswers.append(wrongAnswersScore);
     gameClock.empty();
-  })
+  }
 
 });
