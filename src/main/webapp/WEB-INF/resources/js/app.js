@@ -17,6 +17,7 @@ $(function() {
   var pollSortDirection = "desc";
 
   var pollList = [];
+  var gamePollList;
   var gameQuestion = $('#gameQuestion');
   var gameAnswers = $('#gameAnswers');
   var gameClock = $('#gameClock');
@@ -27,7 +28,7 @@ $(function() {
   var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
   var previousGamePoll = $('#previousGamePoll');
-  var radnomPoll;
+  var randomPoll;
   var previousRandomPoll;
   var correctAnswersScore = 0;
   var wrongAnswersScore = 0;
@@ -262,6 +263,8 @@ $(function() {
   renderClosedList('/categories/' + 0 + '/polls');
 
   function renderGame() {
+    gamePollList = pollList.slice();
+    console.log(gamePollList);
     var gameClockTimer = 10;
     renderGameQuestion();
     var gameTimer = setInterval(function() {
@@ -284,24 +287,38 @@ $(function() {
   }
   // console.log(pollList);
   function renderGameQuestion() {
-    randomPoll = pollList[Math.floor(Math.random() * pollList.length)];
-    // console.log(randomPoll);
-    gameQuestion.empty();
-    gameQuestion.append(randomPoll.question);
-    var randomPollAnswers = '';
-    ajax.ajaxGetCallback('/polls/' + randomPoll.id + '/answers', function(response) {
-      response.forEach(function(elem) {
-        var answer = elem.answer;
-        randomPollAnswers += '<div class="form-check">' +
-          '<label class="form-check-label">' +
-          '<input type="radio" class="form-check-input" name="optionsRadios" value="' + answer.id + '" checked="">' +
-          answer.content +
-          '</label>' +
-          '</div>'
-      });
+    if (randomPoll != null) {
+      previousRandomPoll = randomPoll;
+    }
+    console.log(gamePollList);
+    console.log(gamePollList.length);
+    console.log(gamePollList.length > 0);
+    if (gamePollList.length > 0) {
+
+      randomPoll = gamePollList.pop(randomPoll);
+      // randomPoll = gamePollList[Math.floor(Math.random() * gamePollList.length)];
+      // gamePollList.pop(randomPoll);
+      // console.log(randomPoll);
+      gameQuestion.empty();
+      gameQuestion.append(randomPoll.question);
+      var randomPollAnswers = '';
+      ajax.ajaxGetCallback('/polls/' + randomPoll.id + '/answers', function(response) {
+        response.forEach(function(elem) {
+          var answer = elem.answer;
+          randomPollAnswers += '<div class="form-check">' +
+            '<label class="form-check-label">' +
+            '<input type="radio" class="form-check-input" name="optionsRadios" value="' + answer.id + '" checked="">' +
+            answer.content +
+            '</label>' +
+            '</div>'
+        });
+        gameAnswers.empty();
+        gameAnswers.append(randomPollAnswers);
+      })
+    } else {
       gameAnswers.empty();
-      gameAnswers.append(randomPollAnswers);
-    })
+      gameAnswers.append("no more questions left");
+    }
   }
 
   gameAnswers.on('click', '.form-check-input', function(e) {
@@ -316,7 +333,7 @@ $(function() {
 
     // var pollData = randomPoll.pollNumberData;
     if (previousRandomPoll != null) {
-
+      // previousRandomPoll = randomPoll;
       var charContent = [];
       ajax.ajaxGetCallback('/polls/' + previousRandomPoll.id + '/answers', function(response) {
         response.forEach(function(elem) {
@@ -327,7 +344,7 @@ $(function() {
             label: answer.content
           })
         });
-        previousGamePoll.append('<div class="card border-danger mb-3" style="max-width: 100%;">' +
+        previousGamePoll.append('<p>Answers from previous poll:</p><div class="card border-danger mb-3" style="max-width: 100%;">' +
           '<div class="card-header">' +
           previousRandomPoll.question +
           '</div>' +
@@ -354,7 +371,7 @@ $(function() {
         chart.render();
       });
     }
-    previousRandomPoll = randomPoll;
+
 
   })
 
