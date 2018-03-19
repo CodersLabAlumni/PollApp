@@ -27,6 +27,8 @@ $(function() {
   var closeGame = $('#closeGame');
   var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
+  var noGameView = $('#noGameView');
+  var afterGameView = $('#afterGameView')
   var previousGamePoll = $('#previousGamePoll');
   var randomPoll;
   var previousRandomPoll;
@@ -398,9 +400,11 @@ $(function() {
 
   function toggleGameView() {
     gameBoard.toggle('hidden');
-    closeGame.toggle('hidden');
-    startGame.toggle('hidden');
-    nextGame.toggle('hidden');
+    noGameView.toggle('hidden');
+    afterGameView.toggle('hidden');
+    // closeGame.toggle('hidden');
+    // startGame.toggle('hidden');
+    // nextGame.toggle('hidden');
   }
 
   function resetGame() {

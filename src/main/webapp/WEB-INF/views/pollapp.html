@@ -99,8 +99,8 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <div class="container">
       <h3 class="text-center">Welcome to <strong>PollApp</strong>.</h3>
-      <p class="text-center">A platform which lets you share your oppinion in various more or less important matters via short poll method. You can take part in as many polls as you want. You can also create your own question and see
-        what the world thinks about it. If you need more information on how it works this  <button type="button" class="btn btn-primary" id="guideButton"> Guide </button>  may be helpfull.</p>
+      <p class="text-center">A platform which lets you share your oppinion in various more or less important matters via short poll method. You can take part in as many polls as you want. You can also create your own question and see what the world thinks about it. If you need
+        more information on how it works this <button type="button" class="btn btn-primary" id="guideButton"> Guide </button> may be helpfull.</p>
     </div>
     <br>
     <div class="guide hidden">
@@ -169,15 +169,33 @@
   <div class="row" id="pollsResults">
     <div class="col-sm-3">
       <div class="jumbotron">
-        <h2 class="display-6 text-center">Do you want to play <br> a game?</h2>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
+        <div id="noGameView">
+          <h3 class="display-6 text-center">Do you want to play <br> a game?</h3>
+          <br>
+          <p class="lead text-center">Click the button bellow for a PollApp challenge.</p>
+          <p class="lead text-center">Various polls, 60 seconds, your guess.</p>
+          <p class="lead text-center">Good luck!</p>
+          <hr class="my-4">
+          <p>You will be presented with a set of random poll questions. Try to guess the most popular answer. After each answer you will be able to see the actual results of the poll.</p>
+          <p class="lead">
+            <button type="button" class="btn btn-primary" id="startGame">Start Game</button>
+          </p>
+        </div>
+        <div class="hidden" id="afterGameView">
+          <h3 class="display-6 text-center">You have finished <br> the game</h3>
+          <br>
+          <p class="lead text-center">Click the button bellow for a PollApp challenge.</p>
+          <p class="lead text-center">Various polls, 60 seconds, your guess.</p>
+          <p class="lead text-center">Good luck!</p>
+          <hr class="my-4">
+          <p>You will be presented with a set of random poll questions. Try to guess the most popular answer. After each answer you will be able to see the actual results of the poll.</p>
+          <p class="lead">
+            <button type="button" class="btn btn-primary" id="closeGame">Close Game</button>
+            <button type="button" class="btn btn-primary" id="nextGame">I want another go</button>
+          </p>
+        </div>
       </div>
-      <button type="button" class="btn btn-primary" id="startGame">Start Game</button>
+
       <button type="button" class="btn btn-primary hidden" id="closeGame">Close Game</button>
       <button type="button" class="btn btn-primary hidden" id="nextGame">I want another go</button>
     </div>
