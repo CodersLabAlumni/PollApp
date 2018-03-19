@@ -413,4 +413,8 @@ $(function() {
     gameClock.empty();
   }
 
+  $('#guideButton').on('click', function() {
+    $('.guide').toggle('hidden');
+  })
+
 });

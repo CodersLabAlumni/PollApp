@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="..\resources\css\bootstrap.min.css">
   <link rel="stylesheet" href="..\resources\css\style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <title>Poll App</title>
 </head>
@@ -29,9 +30,9 @@
     </div>
   </nav>
 
-  <br><br>
   <div class="container">
     <form class="hidden" method="post" id="pollForm">
+      <br><br>
       <fieldset>
         <legend>Create poll</legend>
         <div class="form-group">
@@ -78,6 +79,43 @@
       </fieldset>
     </form>
   </div>
+  <div class="alert alert-dismissible alert-light">
+    <div class="guide hidden">
+      <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+          <p class="text-center"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+          <p class="text-center"><em>Click here to create your own poll. Set the question, possible answers and time you wish the poll to stay opened for voting.</em></p>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="container">
+      <p class="text-center">Welcome to <strong>PollApp</strong>.<br>A platform which lets you share your oppinion in various more or less important matters via short poll method. You can take part in as many polls as you want. You can also create your own question and see
+        what the world thinks about it. If you need more information on how it works this <button type="button" class="btn btn-primary" id="guideButton">Guide</button> may be helpfull.</p>
+    </div>
+    <div class="guide hidden">
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="text-center"><em>Take part in a game, where you have to guess the most popular answer from random polls.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center"><em>See the results of PollApp polls. You can choose to see closed, ongoing or all polls, select category and sort them to your liking.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center">TEST</p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center">TEST</p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+      </div>
+    </div>
+  </div>
   <br>
   <div class="container hidden" id="gameBoard">
     <div class="row">
@@ -122,6 +160,15 @@
   <br>
   <div class="row" id="pollsResults">
     <div class="col-sm-3">
+      <div class="jumbotron">
+        <h2 class="display-6 text-center">Do you want to play <br> a game?</h2>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+      </div>
       <button type="button" class="btn btn-primary" id="startGame">Start Game</button>
       <button type="button" class="btn btn-primary hidden" id="closeGame">Close Game</button>
       <button type="button" class="btn btn-primary hidden" id="nextGame">I want another go</button>
