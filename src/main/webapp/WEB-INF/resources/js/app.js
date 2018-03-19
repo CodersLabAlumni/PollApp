@@ -264,6 +264,7 @@ $(function() {
 
   function renderGame() {
     gamePollList = pollList.slice();
+    shuffleArray(gamePollList);
     console.log(gamePollList);
     var gameClockTimer = 10;
     renderGameQuestion();
@@ -285,6 +286,15 @@ $(function() {
 
     }, 1000);
   }
+
+  function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  }
   // console.log(pollList);
   function renderGameQuestion() {
     if (randomPoll != null) {
@@ -294,11 +304,7 @@ $(function() {
     console.log(gamePollList.length);
     console.log(gamePollList.length > 0);
     if (gamePollList.length > 0) {
-
       randomPoll = gamePollList.pop(randomPoll);
-      // randomPoll = gamePollList[Math.floor(Math.random() * gamePollList.length)];
-      // gamePollList.pop(randomPoll);
-      // console.log(randomPoll);
       gameQuestion.empty();
       gameQuestion.append(randomPoll.question);
       var randomPollAnswers = '';
@@ -331,9 +337,7 @@ $(function() {
     previousGamePoll.empty();
 
 
-    // var pollData = randomPoll.pollNumberData;
     if (previousRandomPoll != null) {
-      // previousRandomPoll = randomPoll;
       var charContent = [];
       ajax.ajaxGetCallback('/polls/' + previousRandomPoll.id + '/answers', function(response) {
         response.forEach(function(elem) {
