@@ -25,6 +25,11 @@ $(function () {
     };
     $pagination.twbsPagination(defaultOpts);
 
+    function createCommentInfoLink(commentsAmount) {
+        return '<div class="container text-right">' +
+            '<a class="btn">Comments (' + commentsAmount + ')</a></div>'
+    }
+
     function renderClosedList(endpoint) {
         ajax.ajaxGetCallback(endpoint, function (response) {
             var totalPages = response.totalPages;
@@ -60,8 +65,10 @@ $(function () {
                                     poll.question +
                                     '</div>' +
                                     '<div class="card-body">' +
-                                    '<div id="chartContainer' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
-                                    '</div></div>');
+                                    '<div id="chartContainer' + poll.id + '" data-id="' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
+                                    '</div>' +
+                                    createCommentInfoLink(pollData.comments) +
+                                    '</div>');
                                 var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
                                     animationEnabled: true,
                                     theme: "light2", // "light1", "light2", "dark1", "dark2"
