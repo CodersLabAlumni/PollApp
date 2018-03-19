@@ -260,7 +260,7 @@ $(function() {
 
   renderCategoriesList();
   renderOpenedList('/categories/' + 0 + '/polls/available');
-  renderClosedList('/categories/' + 0 + '/polls');
+  renderClosedList('/categories/' + 0 + '/polls/closed');
 
   function renderGame() {
     gamePollList = pollList.slice();
