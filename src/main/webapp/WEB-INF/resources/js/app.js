@@ -284,6 +284,8 @@ $(function() {
         $('#pollsResults').toggle('hidden');
         clearInterval(gameTimer);
         previousGamePoll.empty();
+        $('#scoreMessage').empty();
+        $('#scoreMessage').append("Your score is " + correctAnswersScore + " correct answers and " + wrongAnswersScore + " wrong answers. <br>You think you can do better?");
       }
 
     }, 1000);
