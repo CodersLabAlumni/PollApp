@@ -26,6 +26,9 @@ $(function() {
   var closeGame = $('#closeGame');
   var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
+  var previousGamePoll = $('#previousGamePoll');
+  var radnomPoll;
+  var previousRandomPoll;
   var correctAnswersScore = 0;
   var wrongAnswersScore = 0;
 
@@ -274,13 +277,14 @@ $(function() {
         gameAnswers.empty();
         $('#pollsResults').toggle('hidden');
         clearInterval(gameTimer);
+        previousGamePoll.empty();
       }
 
     }, 1000);
   }
   // console.log(pollList);
   function renderGameQuestion() {
-    var randomPoll = pollList[Math.floor(Math.random() * pollList.length)];
+    randomPoll = pollList[Math.floor(Math.random() * pollList.length)];
     // console.log(randomPoll);
     gameQuestion.empty();
     gameQuestion.append(randomPoll.question);
@@ -307,6 +311,51 @@ $(function() {
     correctAnswers.append(correctAnswersScore);
     wrongAnswers.empty();
     wrongAnswers.append(wrongAnswersScore);
+    previousGamePoll.empty();
+
+
+    // var pollData = randomPoll.pollNumberData;
+    if (previousRandomPoll != null) {
+
+      var charContent = [];
+      ajax.ajaxGetCallback('/polls/' + previousRandomPoll.id + '/answers', function(response) {
+        response.forEach(function(elem) {
+          var answer = elem.answer;
+          var answerData = elem.answerNumberData;
+          charContent.push({
+            y: answerData.percent,
+            label: answer.content
+          })
+        });
+        previousGamePoll.append('<div class="card border-danger mb-3" style="max-width: 100%;">' +
+          '<div class="card-header">' +
+          previousRandomPoll.question +
+          '</div>' +
+          '<div class="card-body">' +
+          '<div id="chartContainer' + previousRandomPoll.id + '" style="height: 370px; width: 100%;"></div>' +
+          '</div></div>');
+        var chart = new CanvasJS.Chart("chartContainer" + previousRandomPoll.id, {
+          animationEnabled: true,
+          theme: "light2", // "light1", "light2", "dark1", "dark2"
+          title: {
+            text: ""
+          },
+          axisY: {
+            title: "%"
+          },
+          data: [{
+            type: "column",
+            showInLegend: true,
+            legendMarkerColor: "grey",
+            // legendText: pollData.totalAnswers + " answers",
+            dataPoints: charContent
+          }]
+        });
+        chart.render();
+      });
+    }
+    previousRandomPoll = randomPoll;
+
   })
 
   startGame.on('click', function(e) {
