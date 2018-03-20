@@ -69,7 +69,7 @@ $(function () {
                                     '</div>' +
                                     createCommentInfoLink(pollData.comments, poll.id) +
                                     '<div class="container comments hidden"></div>' +
-                                    '<div class="pager-comments container hidden">' +
+                                    '<div class="pager-comments hidden">' +
                                     '<ul class="pagination-comments pagination-sm"></ul></div>' +
                                     '</div>');
                                 var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
@@ -310,7 +310,16 @@ $(function () {
                     ajax.ajaxGetCallback('/polls/' + pollId + '/comments?page=' + (page - 1), function (response) {
                         var comments = response.content;
                         comments.forEach(function (comment) {
-                            $(elem).append('<div class="container"><span>' + comment.content + '</span></div>')
+                            var date = new Date(comment.created).toLocaleString();
+                            $(elem).append('<div class="container">' +
+                                '<div class="card">' +
+                                '<div class="card-header">' +
+                                '<strong>' + comment.userAccount.username + " commented on " + date + '</strong>' +
+                                '</div>' +
+                                '<div class="card-body">' +
+                                '<span class="card-text">' + comment.content + '</span>' +
+                                '</div>' +
+                                '</div>')
                         })
                     });
 
