@@ -5,9 +5,9 @@ import com.pollapp.repository.CommentRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentsByPollId(long pollId) {
-        return commentRepository.findByPollId(pollId);
+    public Page<Comment> getCommentsByPollId(long pollId, Pageable pageable) {
+        return commentRepository.findByPollId(pollId, pageable);
     }
 }

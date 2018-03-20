@@ -106,8 +106,8 @@ public class PollController {
     }
 
     @GetMapping("/{pollId}/comments")
-    public List<Comment> getCommentsByPoll(@PathVariable long pollId) {
-        return commentService.getCommentsByPollId(pollId);
+    public Page<Comment> getPollComments(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction, @PathVariable long pollId) {
+        return commentService.getCommentsByPollId(pollId, new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 
     @PostMapping("/{pollId}/comments")
