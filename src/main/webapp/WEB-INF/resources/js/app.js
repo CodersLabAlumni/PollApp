@@ -25,9 +25,9 @@ $(function () {
     };
     $pagination.twbsPagination(defaultOpts);
 
-    function createCommentInfoLink(commentsAmount) {
-        return '<div class="container text-right">' +
-            '<a class="btn">Comments (' + commentsAmount + ')</a></div>'
+    function createCommentInfoLink(commentsAmount, pollId) {
+        return '<div class="container text-right toggle-comments">' +
+            '<a class="btn" data-poll=' + pollId + '>Comments (' + commentsAmount + ')</a></div>'
     }
 
     function renderClosedList(endpoint) {
@@ -67,7 +67,10 @@ $(function () {
                                     '<div class="card-body">' +
                                     '<div id="chartContainer' + poll.id + '" data-id="' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
                                     '</div>' +
-                                    createCommentInfoLink(pollData.comments) +
+                                    createCommentInfoLink(pollData.comments, poll.id) +
+                                    '<div class="container comments hidden"></div>' +
+                                    '<div class="pager-comments container hidden">' +
+                                    '<ul class="pagination-comments pagination-sm"></ul></div>' +
                                     '</div>');
                                 var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
                                     animationEnabled: true,
@@ -291,6 +294,40 @@ $(function () {
         $('#login-error').remove();
         Cookies.remove('logged_error');
     }
+
+    function renderComments(elem, pollId) {
+        var commentPager = elem.siblings('.pager-comments').find('.pagination-comments');
+        ajax.ajaxGetCallback('/polls/' + pollId + '/comments', function (response) {
+            var totalPages = response.totalPages;
+            if (totalPages <= 0) {
+                totalPages = 1;
+            }
+            commentPager.twbsPagination('destroy');
+            commentPager.twbsPagination($.extend({}, defaultOpts, {
+                totalPages: totalPages,
+                onPageClick: function (evt, page) {
+                    elem.empty();
+                    ajax.ajaxGetCallback('/polls/' + pollId + '/comments?page=' + (page - 1), function (response) {
+                        var comments = response.content;
+                        comments.forEach(function (comment) {
+                            $(elem).append('<div class="container"><span>' + comment.content + '</span></div>')
+                        })
+                    });
+
+                }
+            }));
+
+        });
+    }
+
+    closedPolls.on('click', '.toggle-comments', function (e) {
+        var comments = $(e.target).parent().siblings('.comments');
+        var pollId = $(e.target).data("poll");
+        comments.toggle('hidden');
+        comments.siblings('.pager-comments').toggle('hidden');
+        renderComments(comments, pollId);
+
+    });
 
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
