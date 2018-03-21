@@ -10,7 +10,7 @@ $(function () {
     var answers = $('#answers');
     var categories = $('#all-categories');
     var selectedCategories = $('#selected-categories');
-    var $pagination = $('#pagination-demo');
+    var $pagination = $('.pagination-polls');
     var categoryId = 0;
     var showPollsAddress = "";
     var pollSortProperty = "created";
