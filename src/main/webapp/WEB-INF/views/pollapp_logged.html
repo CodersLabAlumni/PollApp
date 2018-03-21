@@ -19,23 +19,12 @@
     </button>
     <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <form method="post" id="login-form">
-            <table>
-                <tr>
-                    <td class="text-white">Username</td>
-                    <td class="text-white">Password</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="username-login" name="username"/></td>
-                    <td><input type="password" id="password-login" name="password"/></td>
-                    <td><a class="btn text-white" id="login">Login</a></td>
-                    <td><a id="register" class="btn text-white">Register</a></td>
-                </tr>
-            </table>
-            <span id="login-error" class="bg-light text-danger"></span>
-        </form>
+        <table>
+            <tr>
+                <td><a id="username-logged" class="btn text-white"></a></td>
+                <td><a class="btn text-white" href="/logout" id="logout">Logout</a></td>
+            </tr>
+        </table>
     </div>
 </nav>
 
@@ -204,6 +193,7 @@
 <script src="..\resources\js\jquery.twbsPagination.min.js"></script>
 <script src="..\resources\js\util.js"></script>
 <script src="..\resources\js\app.js"></script>
+<script src="..\resources\js\app_logged.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 

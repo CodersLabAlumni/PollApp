@@ -15,7 +15,8 @@ $(function () {
     var showPollsAddress = "";
     var pollSortProperty = "created";
     var pollSortDirection = "desc";
-
+    var registerForm = $('#register-form');
+    var loginForm = $('#login-form');
 
     var defaultOpts = {
         totalPages: 10,
@@ -240,7 +241,53 @@ $(function () {
         $(this).parents('.text-white').fadeOut();
     });
 
+    $('#register').on('click', function () {
+        registerForm.toggle('hidden');
+        registerForm.trigger('reset');
+        registerForm.find('.text-success').remove();
+        registerForm.find('.text-danger').remove();
+    });
+
+    registerForm.on('submit', function (e) {
+        e.preventDefault();
+        registerForm.find('.text-success').remove();
+        registerForm.find('.text-danger').remove();
+        var account = formUtil.createObjectFromForm($('#register-form'));
+        ajax.ajaxPostCallback("/accounts", account, function (response) {
+            if (response.status === 'OK') {
+                registerForm.append('<p class="text-success">' + response.successMsg + '</p>');
+            } else {
+                $.each(response.errors, function (key, value) {
+                    registerForm.find('#' + key).parent().append('<p class="text-danger">' + value + '</p>');
+                });
+            }
+        });
+        this.reset();
+    });
+
+    $('#login').on('click', function () {
+        removeLoginError();
+        loginForm.submit();
+    });
+
+    $(window).on('beforeunload', function () {
+        removeLoginError();
+    });
+
+    function handleLoginError() {
+        if (Cookies.get('logged_error') !== undefined) {
+            $('#login-error').text('Invalid credentials');
+        }
+    }
+
+    function removeLoginError() {
+        $('#login-error').remove();
+        Cookies.remove('logged_error');
+    }
+
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/categories/' + 0 + '/polls');
+    handleLoginError();
+
 });
