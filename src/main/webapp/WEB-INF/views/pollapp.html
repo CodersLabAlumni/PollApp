@@ -19,6 +19,23 @@
     </button>
     <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
     <div class="collapse navbar-collapse" id="navbarColor01">
+        <form method="post" id="login-form">
+            <table>
+                <tr>
+                    <td class="text-white">Username</td>
+                    <td class="text-white">Password</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="username-login" name="username"/></td>
+                    <td><input type="password" id="password-login" name="password"/></td>
+                    <td><a class="btn text-white" id="login">Login</a></td>
+                    <td><a id="register" class="btn text-white">Register</a></td>
+                </tr>
+            </table>
+            <span id="login-error" class="bg-light text-danger"></span>
+        </form>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
@@ -78,6 +95,44 @@
         </div>
       </fieldset>
     </form>
+<<<<<< master
+</div>
+<div class="container">
+    <form class="hidden" method="post" id="register-form">
+        <fieldset>
+            <legend>Registration</legend>
+            <div class="container form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="username" id="username" placeholder="Enter your username">
+            </div>
+            <div class="container form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="container form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
+                <label for="password-confirm">Confirm password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="passwordConfirmation" id="password-confirm" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm-3">
+        GAME?
+=======
   </div>
   <div class="alert alert-dismissible alert-light">
     <div class="guide hidden">
@@ -97,6 +152,7 @@
           <p class="text-right"><em>Create your account and log in for more options.</em></p>
         </div>
       </div>
+>>>>>> master
     </div>
     <br>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -218,6 +274,15 @@
           <div id="closedPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">
           </div>
         </div>
+<<<<<< master
+        <br/><br/>
+        <div class="pager">
+            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+        </div>
+        <div id="closedPolls"></div>
+        <div class="pager">
+            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+=======
       </div>
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
         <button id="showPollsSortButton" type="button" class="btn btn-danger">LATEST</button>
@@ -228,6 +293,7 @@
             <a class="dropdown-item" data-sort="created" data-direction="asc" href="#">OLDEST</a>
             <a class="dropdown-item" data-sort="question" data-direction="asc" href="#">ALPHABETICALLY</a>
           </div>
+>>>>>> master
         </div>
       </div>
       <br/><br/>
@@ -253,14 +319,22 @@
     </div>
   </div>
 
-  <!-- scripts -->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="..\resources\js\jquery.twbsPagination.min.js"></script>
-  <script src="..\resources\js\util.js"></script>
-  <script src="..\resources\js\app.js"></script>
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- scripts -->
+<script src="..\resources\js\js.cookie-2.2.0.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="..\resources\js\jquery.twbsPagination.min.js"></script>
+<script src="..\resources\js\util.js"></script>
+<script src="..\resources\js\app.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
 </html>

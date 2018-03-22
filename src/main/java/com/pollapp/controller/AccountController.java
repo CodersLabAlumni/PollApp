@@ -4,13 +4,21 @@ import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
 import com.pollapp.entity.UserAccount;
 import com.pollapp.entity.UserData;
+import com.pollapp.response.RegisterResponse;
+import com.pollapp.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
+
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("")
     public List<UserAccount> getAccounts() {
@@ -19,9 +27,8 @@ public class AccountController {
     }
 
     @PostMapping("")
-    public UserAccount createAccount() {
-        // TODO
-        return null;
+    public RegisterResponse createAccount(@Valid @RequestBody UserAccount userAccount, BindingResult bindingResult) {
+        return accountService.register(userAccount, bindingResult);
     }
 
     @GetMapping("/{accountId}")

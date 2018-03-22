@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="..\resources\css\bootstrap.min.css">
+    <link rel="stylesheet" href="..\resources\css\style.css">
+
+    <title>Poll App</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <a class="navbar-brand" href="#">PollApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <table>
+            <tr>
+                <td><a id="username-logged" class="btn text-white"></a></td>
+                <td><a class="btn text-white" href="/logout" id="logout">Logout</a></td>
+            </tr>
+        </table>
+    </div>
+</nav>
+
+<br><br>
+<div class="container">
+    <form class="hidden" method="post" id="pollForm">
+        <fieldset>
+            <legend>Create poll</legend>
+            <div class="form-group">
+                <div id="poll" class="container">
+                    <label for="question">Your question</label>
+                    <input type="text" class="form-control" aria-describedby="emailHelp"
+                           name="question" id="question" placeholder="Enter question"><br>
+                </div>
+                <div class="container">
+                    <label for="answers">Answers</label>
+                </div>
+                <div id="answers" class="container form-group">
+                    <input type="text" class="form-control" aria-describedby="emailHelp"
+                           name="content" placeholder="Enter answer">
+                    <input type="text" class="form-control" aria-describedby="emailHelp"
+                           name="content" placeholder="Enter answer">
+                </div>
+                <div class="container form-group">
+                    <button type="button" class="btn btn-danger disabled add-answer">ADD ANSWER</button>
+                    <button type="button" class="btn btn-danger disabled remove-answer">REMOVE ANSWER</button>
+                </div>
+                <div class="container form-group">
+                    <label for="selected-categories">Selected categories</label>
+                    <div class="container row">
+                        <ul id="selected-categories" class="nav nav-tabs nav-justified"></ul>
+                    </div>
+                </div>
+                <div class="container form-group">
+                    <label for="all-categories">Categories</label>
+                    <div class="container row">
+                        <ul id="all-categories" class="nav nav-tabs nav-justified"></ul>
+                    </div>
+                </div>
+                <div class="container">
+                    <label for="answers">Poll time (if left empty, the poll will stay opened for 24 hours)</label>
+                </div>
+                <div id="days" class="container form-group">
+                    <input type="text" class="form-control" aria-describedby="emailHelp"
+                           name="content" placeholder="days">
+                </div>
+                <div id="hours" class="container form-group">
+                    <input type="text" class="form-control" aria-describedby="emailHelp"
+                           name="content" placeholder="hours">
+                </div>
+            </div>
+            <div class="container">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="container">
+    <form class="hidden" method="post" id="register-form">
+        <fieldset>
+            <legend>Registration</legend>
+            <div class="container form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="username" id="username" placeholder="Enter your username">
+            </div>
+            <div class="container form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" aria-describedby="emailHelp"
+                       name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="container form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="password" id="password" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
+                <label for="password-confirm">Confirm password</label>
+                <input type="password" class="form-control" aria-describedby="emailHelp"
+                       name="passwordConfirmation" id="password-confirm" placeholder="Enter your password">
+            </div>
+            <div class="container form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm-3">
+        GAME?
+    </div>
+    <div class="col-sm-3">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id="showPollsButton" type="button" class="btn btn-danger">ALL POLLS</button>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop4" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"></button>
+                <div id="showPolls" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" data-address="closed" href="#">Closed</a>
+                    <a class="dropdown-item" data-address="ongoing" href="#">Ongoing</a>
+                    <a class="dropdown-item" data-address="" href="#">All</a>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id="closedPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"></button>
+                <div id="closedPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                </div>
+            </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id="showPollsSortButton" type="button" class="btn btn-danger">LATEST</button>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"></button>
+                <div id="showPollsSort" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start"
+                     style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" data-sort="created" data-direction="desc" href="#">LATEST</a>
+                    <a class="dropdown-item" data-sort="created" data-direction="asc" href="#">OLDEST</a>
+                    <a class="dropdown-item" data-sort="question" data-direction="asc" href="#">ALPHABETICALLY</a>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="pager">
+            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+        </div>
+        <div id="closedPolls"></div>
+        <div class="pager">
+            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button id="ongoingPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop2" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"></button>
+                <div id="openPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+        <div id="ongoingPolls"></div>
+    </div>
+    <div class="col-sm-3">
+        Auhors details
+    </div>
+</div>
+
+<!-- scripts -->
+<script src="..\resources\js\js.cookie-2.2.0.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="..\resources\js\jquery.twbsPagination.min.js"></script>
+<script src="..\resources\js\util.js"></script>
+<script src="..\resources\js\app.js"></script>
+<script src="..\resources\js\app_logged.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+
+</html>
