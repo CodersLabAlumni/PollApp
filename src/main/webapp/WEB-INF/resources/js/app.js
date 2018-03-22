@@ -340,7 +340,7 @@ $(function () {
     function renderGame() {
       gamePollList = pollList.slice();
       shuffleArray(gamePollList);
-      console.log(gamePollList);
+      // console.log(gamePollList);
       var gameClockTimer = 10;
       renderGameQuestion();
       var gameTimer = setInterval(function() {
@@ -377,9 +377,9 @@ $(function () {
       if (randomPoll != null) {
         previousRandomPoll = randomPoll;
       }
-      console.log(gamePollList);
-      console.log(gamePollList.length);
-      console.log(gamePollList.length > 0);
+      // console.log(gamePollList);
+      // console.log(gamePollList.length);
+      // console.log(gamePollList.length > 0);
       if (gamePollList.length > 0) {
         randomPoll = gamePollList.pop(randomPoll);
         gameQuestion.empty();
@@ -388,9 +388,10 @@ $(function () {
         ajax.ajaxGetCallback('/polls/' + randomPoll.id + '/answers', function(response) {
           response.forEach(function(elem) {
             var answer = elem.answer;
+            var answerData = elem.answerNumberData;
             randomPollAnswers += '<div class="form-check">' +
               '<label class="form-check-label">' +
-              '<input type="radio" class="form-check-input" name="optionsRadios" value="' + answer.id + '" checked="">' +
+              '<input type="radio" class="form-check-input" name="optionsRadios" value="' + answer.id + '" max= ' + answerData.top + ' checked="">' +
               answer.content +
               '</label>' +
               '</div>'
@@ -405,12 +406,17 @@ $(function () {
     }
 
     gameAnswers.on('click', '.form-check-input', function(e) {
+      console.log(e.target.max);
+      if (e.target.max === 'true') {
+        correctAnswersScore += 1;
+        correctAnswers.empty();
+        correctAnswers.append(correctAnswersScore);
+      } else {
+        wrongAnswersScore += 1;
+        wrongAnswers.empty();
+        wrongAnswers.append(wrongAnswersScore);
+      }
       renderGameQuestion();
-      correctAnswersScore += 1;
-      correctAnswers.empty();
-      correctAnswers.append(correctAnswersScore);
-      wrongAnswers.empty();
-      wrongAnswers.append(wrongAnswersScore);
       previousGamePoll.empty();
 
 
