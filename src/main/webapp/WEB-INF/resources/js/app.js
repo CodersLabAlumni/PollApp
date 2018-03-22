@@ -317,42 +317,23 @@ $(function () {
 
 
 
-    function getGamePolls() {
-      $.getJSON({
-        url: 'polls/game'
-      }).done(function(data) {
-        data.forEach(function(poll) {
+    // function getGamePolls() {
+    //   $.getJSON({
+    //     url: 'polls/game'
+    //   }).done(function(data) {
+    //     data.forEach(function(poll) {
+    //       pollList.push(poll);
+    //     })
+    //   });
+    // }
+
+    function getGamePolls(endpoint) {
+      ajax.ajaxGetCallback(endpoint, function(response) {
+        response.forEach(function(poll) {
           pollList.push(poll);
         })
       });
     }
-
-    // function getGamePolls(endpoint) {
-    //   ajax.ajaxGetCallback(endpoint, function(response) {
-    //     var totalPages = response.totalPages;
-    //     if (totalPages <= 0) {
-    //       totalPages = 1;
-    //     }
-    //     $pagination.twbsPagination('destroy');
-    //     $pagination.twbsPagination($.extend({}, defaultOpts, {
-    //       totalPages: totalPages,
-    //       onPageClick: function(evt, page) {
-    //         closedPolls.empty();
-    //         var param = '?page=' + (page - 1);
-    //         if (endpoint.includes('?')) {
-    //           param = '&page=' + (page - 1);
-    //         }
-    //         ajax.ajaxGetCallback(endpoint + param, function(response) {
-    //           var data = response.content;
-    //           data.forEach(function(elem) {
-    //             var poll = elem.poll;
-    //
-    //           })
-    //         });
-    //       }
-    //     }));
-    //   });
-    // }
 
     getGamePolls('/polls/game');
 
