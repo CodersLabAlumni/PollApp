@@ -314,6 +314,8 @@ $(function () {
     var correctAnswersScore = 0;
     var wrongAnswersScore = 0;
     var pollList = [];
+    var gameTimer;
+    var gameClockTimer;
 
 
 
@@ -331,9 +333,9 @@ $(function () {
     function renderGame() {
       gamePollList = pollList.slice();
       shuffleArray(gamePollList);
-      var gameClockTimer = 10;
+      gameClockTimer = 10;
       renderGameQuestion();
-      var gameTimer = setInterval(function() {
+      gameTimer = setInterval(function() {
         gameClock.empty();
         gameClock.append(gameClockTimer + ' s');
         if (gameClockTimer > 0) {
@@ -387,8 +389,11 @@ $(function () {
           gameAnswers.append(randomPollAnswers);
         })
       } else {
+        gameQuestion.empty();
+        gameQuestion.append("GAME OVER");
         gameAnswers.empty();
-        gameAnswers.append("no more questions left");
+        gameAnswers.append("You have finished ahead of time, with " + gameClockTimer + " s left to spare");
+        clearInterval(gameTimer);
       }
     }
 
