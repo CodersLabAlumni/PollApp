@@ -20,7 +20,7 @@ $(function () {
 
     var defaultOpts = {
         totalPages: 10,
-        visiblePages: 10,
+        visiblePages: 5,
         startPage: 1
     };
     $pagination.twbsPagination(defaultOpts);
@@ -68,7 +68,7 @@ $(function () {
                                     '<div id="chartContainer' + poll.id + '" data-id="' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
                                     '</div>' +
                                     createCommentInfoLink(pollData.comments, poll.id) +
-                                    '<div class="container comments hidden"></div>' +
+                                    '<div class="container comments hidden p-2"></div>' +
                                     '<div class="pager-comments hidden">' +
                                     '<ul class="pagination-comments pagination-sm"></ul></div>' +
                                     '</div>');
