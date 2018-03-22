@@ -317,15 +317,6 @@ $(function () {
 
 
 
-    // function getGamePolls() {
-    //   $.getJSON({
-    //     url: 'polls/game'
-    //   }).done(function(data) {
-    //     data.forEach(function(poll) {
-    //       pollList.push(poll);
-    //     })
-    //   });
-    // }
 
     function getGamePolls(endpoint) {
       ajax.ajaxGetCallback(endpoint, function(response) {
@@ -340,7 +331,6 @@ $(function () {
     function renderGame() {
       gamePollList = pollList.slice();
       shuffleArray(gamePollList);
-      // console.log(gamePollList);
       var gameClockTimer = 10;
       renderGameQuestion();
       var gameTimer = setInterval(function() {
@@ -372,14 +362,11 @@ $(function () {
         array[j] = temp;
       }
     }
-    // console.log(pollList);
+
     function renderGameQuestion() {
       if (randomPoll != null) {
         previousRandomPoll = randomPoll;
       }
-      // console.log(gamePollList);
-      // console.log(gamePollList.length);
-      // console.log(gamePollList.length > 0);
       if (gamePollList.length > 0) {
         randomPoll = gamePollList.pop(randomPoll);
         gameQuestion.empty();
@@ -483,9 +470,6 @@ $(function () {
       gameBoard.toggle('hidden');
       noGameView.toggle('hidden');
       afterGameView.toggle('hidden');
-      // closeGame.toggle('hidden');
-      // startGame.toggle('hidden');
-      // nextGame.toggle('hidden');
     }
 
     function resetGame() {
