@@ -241,11 +241,6 @@ $(function () {
     $(this).parents('.text-white').fadeOut();
   });
 
-  renderCategoriesList();
-  renderOpenedList('/categories/' + 0 + '/polls/available');
-  renderClosedList('/categories/' + 0 + '/polls/closed');
-
-
     $('#register').on('click', function () {
         registerForm.toggle('hidden');
         registerForm.trigger('reset');
@@ -292,7 +287,7 @@ $(function () {
 
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
-    renderClosedList('/categories/' + 0 + '/polls');
+    renderClosedList('/polls/closed');
     handleLoginError();
 
 
