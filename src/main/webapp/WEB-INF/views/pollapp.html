@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="..\resources\css\bootstrap.min.css">
-    <link rel="stylesheet" href="..\resources\css\style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="..\resources\css\bootstrap.min.css">
+  <link rel="stylesheet" href="..\resources\css\style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>Poll App</title>
+  <title>Poll App</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-    <a class="navbar-brand" href="#">PollApp</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <a class="navbar-brand" href="http://localhost:5000/">PollApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
     </button>
     <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
@@ -37,60 +37,55 @@
             <span id="login-error" class="bg-light text-danger"></span>
         </form>
     </div>
-</nav>
+  </nav>
 
-<br><br>
-<div class="container">
+  <div class="container">
     <form class="hidden" method="post" id="pollForm">
-        <fieldset>
-            <legend>Create poll</legend>
-            <div class="form-group">
-                <div id="poll" class="container">
-                    <label for="question">Your question</label>
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                           name="question" id="question" placeholder="Enter question"><br>
-                </div>
-                <div class="container">
-                    <label for="answers">Answers</label>
-                </div>
-                <div id="answers" class="container form-group">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                           name="content" placeholder="Enter answer">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                           name="content" placeholder="Enter answer">
-                </div>
-                <div class="container form-group">
-                    <button type="button" class="btn btn-danger disabled add-answer">ADD ANSWER</button>
-                    <button type="button" class="btn btn-danger disabled remove-answer">REMOVE ANSWER</button>
-                </div>
-                <div class="container form-group">
-                    <label for="selected-categories">Selected categories</label>
-                    <div class="container row">
-                        <ul id="selected-categories" class="nav nav-tabs nav-justified"></ul>
-                    </div>
-                </div>
-                <div class="container form-group">
-                    <label for="all-categories">Categories</label>
-                    <div class="container row">
-                        <ul id="all-categories" class="nav nav-tabs nav-justified"></ul>
-                    </div>
-                </div>
-                <div class="container">
-                    <label for="answers">Poll time (if left empty, the poll will stay opened for 24 hours)</label>
-                </div>
-                <div id="days" class="container form-group">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                           name="content" placeholder="days">
-                </div>
-                <div id="hours" class="container form-group">
-                    <input type="text" class="form-control" aria-describedby="emailHelp"
-                           name="content" placeholder="hours">
-                </div>
+      <br><br>
+      <fieldset>
+        <legend>Create poll</legend>
+        <div class="form-group">
+          <div id="poll" class="container">
+            <label for="question">Your question</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="question" id="question" placeholder="Enter question"><br>
+          </div>
+          <div class="container">
+            <label for="answers">Answers</label>
+          </div>
+          <div id="answers" class="container form-group">
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="content" placeholder="Enter answer">
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="content" placeholder="Enter answer">
+          </div>
+          <div class="container form-group">
+            <button type="button" class="btn btn-danger disabled add-answer">ADD ANSWER</button>
+            <button type="button" class="btn btn-danger disabled remove-answer">REMOVE ANSWER</button>
+          </div>
+          <div class="container form-group">
+            <label for="selected-categories">Selected categories</label>
+            <div class="container row">
+              <ul id="selected-categories" class="nav nav-tabs nav-justified"></ul>
             </div>
-            <div class="container">
-                <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          <div class="container form-group">
+            <label for="all-categories">Categories</label>
+            <div class="container row">
+              <ul id="all-categories" class="nav nav-tabs nav-justified"></ul>
             </div>
-        </fieldset>
+          </div>
+          <div class="container">
+            <label for="answers">Poll time (if left empty, the poll will stay opened for 24 hours)</label>
+          </div>
+          <div id="days" class="container form-group">
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="content" placeholder="days">
+          </div>
+          <div id="hours" class="container form-group">
+            <input type="text" class="form-control" aria-describedby="emailHelp" name="content" placeholder="hours">
+          </div>
+        </div>
+        <div class="container">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </fieldset>
     </form>
 </div>
 <div class="container">
@@ -125,46 +120,158 @@
 </div>
 <br>
 
-<div class="row">
+
+  <div class="alert alert-dismissible alert-light">
+    <div class="guide hidden">
+      <div class="row">
+        <div class="col-sm-2">
+          <!-- <p class="text-left"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+          <p class="text-left"><em>Reload page.</em></p> -->
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <p class="text-center"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+          <p class="text-center"><em>Click here to create your own poll. Set the question, possible answers and time you wish the poll to stay opened for voting.</em></p>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+          <p class="text-right"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+          <p class="text-right"><em>Create your account and log in for more options.</em></p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="container">
+      <h3 class="text-center">Welcome to <strong>PollApp</strong>.</h3>
+      <p class="text-center">A platform which lets you share your oppinion in various more or less important matters via short poll method. You can take part in as many polls as you want. You can also create your own question and see what the world thinks about it. If you need
+        more information on how it works this <button type="button" class="btn btn-primary" id="guideButton"> Guide </button> may be helpfull.</p>
+    </div>
+    <br>
+    <div class="guide hidden">
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="text-center"><em>Take part in a game, where you have to guess the most popular answers to random polls.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center"><em>See the results of PollApp polls. You can choose to see closed, ongoing or all polls, select category and sort them to your liking.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center"><em>Here you can share your oppinion in ongoing polls. You can select categories or answer random polls.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+        <div class="col-sm-3">
+          <p class="text-center"><em>Checkout the details of PollApp's authors and contributors.</em></p>
+          <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container hidden" id="gameBoard">
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card text-white bg-success mb-3" style="max-width: 100%;">
+          <div class="card-header">Correct answers</div>
+          <div class="card-body">
+            <h4 class="card-title" id="correctAnswers">0</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
+          <div class="card-header">Wrong answers</div>
+          <div class="card-body">
+            <h4 class="card-title" id="wrongAnswers">0</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card text-white bg-info mb-3" style="max-width: 100%;">
+          <div class="card-header">Time left</div>
+          <div class="card-body">
+            <h4 class="card-title" id="gameClock">60 s</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card bg-light mb-3" style="max-width: 100%;">
+          <div class="card-header" id="gameQuestion">Header</div>
+          <div class="card-body">
+            <fieldset class="form-group" id="gameAnswers">
+            </fieldset>
+          </div>
+        </div>
+        <div id="previousGamePoll"></div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row" id="pollsResults">
     <div class="col-sm-3">
-        GAME?
+      <div class="jumbotron">
+        <div id="noGameView">
+          <h3 class="display-6 text-center">PollApp challenge</h3>
+          <br>
+          <p class="lead text-center">Various polls, 60 seconds, your guess...</p>
+          <p class="lead text-center">Good luck!</p>
+          <hr class="my-4">
+          <p>You will be presented with a set of random poll questions. Try to guess the most popular answer. After each answer you will be able to see the actual results of the poll.</p>
+          <p class="lead">
+            <button type="button" class="btn btn-primary" id="startGame">Start Game</button>
+          </p>
+        </div>
+        <div class="hidden" id="afterGameView">
+          <h3 class="display-6 text-center">PollApp challenge completed</h3>
+          <br>
+          <p class="lead text-center" id="scoreMessage">You think you can do better?</p>
+          <hr class="my-4">
+          <p>You can close the game or try again.</p>
+          <p class="lead">
+            <button type="button" class="btn btn-primary" id="closeGame">Close Game</button>
+            <button type="button" class="btn btn-primary" id="nextGame">I want another go</button>
+          </p>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary hidden" id="closeGame">Close Game</button>
+      <button type="button" class="btn btn-primary hidden" id="nextGame">I want another go</button>
     </div>
     <div class="col-sm-3">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id="showPollsButton" type="button" class="btn btn-danger">ALL POLLS</button>
-            <div class="btn-group" role="group">
-                <button id="btnGroupDrop4" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"></button>
-                <div id="showPolls" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start"
-                     style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" data-address="closed" href="#">Closed</a>
-                    <a class="dropdown-item" data-address="ongoing" href="#">Ongoing</a>
-                    <a class="dropdown-item" data-address="" href="#">All</a>
-                </div>
-            </div>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button id="showPollsButton" type="button" class="btn btn-danger">CLOSED POLLS</button>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop4" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div id="showPolls" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <a class="dropdown-item" data-address="closed" href="#">Closed</a>
+            <a class="dropdown-item" data-address="ongoing" href="#">Ongoing</a>
+            <a class="dropdown-item" data-address="" href="#">All</a>
+          </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id="closedPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
-            <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"></button>
-                <div id="closedPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                </div>
-            </div>
+      </div>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button id="closedPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div id="closedPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          </div>
         </div>
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id="showPollsSortButton" type="button" class="btn btn-danger">LATEST</button>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"></button>
-                <div id="showPollsSort" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start"
-                     style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" data-sort="created" data-direction="desc" href="#">LATEST</a>
-                    <a class="dropdown-item" data-sort="created" data-direction="asc" href="#">OLDEST</a>
-                    <a class="dropdown-item" data-sort="question" data-direction="asc" href="#">ALPHABETICALLY</a>
-                </div>
-            </div>
+      </div>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button id="showPollsSortButton" type="button" class="btn btn-danger">LATEST</button>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div id="showPollsSort" class="dropdown-menu" aria-labelledby="btnGroupDrop4" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <a class="dropdown-item" data-sort="created" data-direction="desc" href="#">LATEST</a>
+            <a class="dropdown-item" data-sort="created" data-direction="asc" href="#">OLDEST</a>
+            <a class="dropdown-item" data-sort="question" data-direction="asc" href="#">ALPHABETICALLY</a>
+          </div>
         </div>
+      </div>
         <br/><br/>
         <div class="pager">
             <ul class="pagination-polls sync-pagination pagination-sm"></ul>
@@ -172,25 +279,24 @@
         <div id="closedPolls"></div>
         <div class="pager">
             <ul class="pagination-polls sync-pagination pagination-sm"></ul>
-        </div>
+      </div>
     </div>
     <div class="col-sm-3">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id="ongoingPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
-            <div class="btn-group" role="group">
-                <button id="btnGroupDrop2" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false"></button>
-                <div id="openPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                </div>
-            </div>
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button id="ongoingPollsCategoryButton" type="button" class="btn btn-danger">CATEGORY ALL</button>
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop2" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+          <div id="openPollsCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+          </div>
         </div>
-        <br/><br/>
-        <div id="ongoingPolls"></div>
+      </div>
+      <br/><br/>
+      <div id="ongoingPolls"></div>
     </div>
     <div class="col-sm-3">
-        Auhors details
+      Auhors details
     </div>
-</div>
+  </div>
 
 <!-- scripts -->
 <script src="..\resources\js\js.cookie-2.2.0.min.js"></script>
@@ -207,6 +313,7 @@
 <script src="..\resources\js\jquery.twbsPagination.min.js"></script>
 <script src="..\resources\js\util.js"></script>
 <script src="..\resources\js\app.js"></script>
+<script src="..\resources\js\game.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
