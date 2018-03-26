@@ -41,9 +41,8 @@ public class AnswerController {
     }
 
     @DeleteMapping("/{answerId}")
-    public Answer deleteAnswer(@PathVariable long answerId) {
-        // TODO
-        return null;
+    public void deleteAnswer(@PathVariable long answerId) {
+        answerService.delete(answerId);
     }
 
     @GetMapping("/{answerId}/data")
