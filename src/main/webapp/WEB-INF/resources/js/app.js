@@ -130,120 +130,150 @@ $(function () {
                             document.getElementById("clock" + poll.id).innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
                         }
                     }, 1000);
+                });
+            })
         });
-      })
-    });
-  }
-
-  function renderCategoriesList() {
-    openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + "0" + '" href="#">' + "All" + '</a>');
-    closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + "0" + '" href="#">' + "All" + '</a>');
-    ajax.ajaxGetCallback('/categories', function(response) {
-      response.forEach(function(category) {
-        openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + category.id + '" href="#">' + category.name + '</a>');
-        closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + category.id + '" href="#">' + category.name + '</a>');
-      })
-    });
-  }
-
-  function renderCategoriesToSelect() {
-    ajax.ajaxGetCallback('/categories', function(response) {
-      response.forEach(function(category) {
-        categories.append('<li data-id="' + category.id + '" class="col-xs-3 list-group-item"> ' + category.name + '</li>')
-      })
-    });
-  }
-
-  function renderAnswers() {
-    var answer = answers.children().last();
-    answers.empty();
-    answers.append(answer);
-    answer.clone().appendTo(answers);
-  }
-
-  showPolls.on('click', function(e) {
-    showPollsAddress = $(e.target).data('address');
-    renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
-    $('#showPollsButton').html($(e.target).html() + ' POLLS');
-  });
-
-  closedPollsCategories.on('click', function(e) {
-    categoryId = $(e.target).data('category');
-    var categoryName = $(e.target).html();
-    renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
-    $('#closedPollsCategoryButton').html('CATEGORY ' + categoryName);
-  });
-
-  $('#showPollsSort').on('click', function(e) {
-    pollSortProperty = $(e.target).data('sort');
-    pollSortDirection = $(e.target).data('direction');
-    var sortName = $(e.target).html();
-    renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
-    $('#showPollsSortButton').html(sortName);
-  });
-
-  openPollsCategories.on('click', function(e) {
-    categoryId = $(e.target).data("category");
-    var categoryName = $(e.target).html();
-    renderOpenedList('/categories/' + categoryId + '/polls/available');
-    $('#ongoingPollsCategoryButton').html('CATEGORY ' + categoryName);
-  });
-
-  pollForm.on('submit', function(e) {
-    e.preventDefault();
-    var poll = formUtil.createObjectFromForm($('#poll'));
-    var answers = formUtil.createObjectListFromForm($('#answers'));
-    var days = $('#days').children().first().val();
-    var hours = $('#hours').children().first().val();
-    ajax.ajaxPostCallback("/polls", poll, function(response) {
-      answers.forEach(function(answer) {
-        ajax.ajaxPost("/polls/" + response.poll.id + "/answers", answer)
-      });
-      $('#selected-categories').children().each(function(index, category) {
-        ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
-      });
-      ajax.ajaxPost("/polls/" + response.poll.id + "/closed/0" + days + "/0" + hours);
-      categories.empty();
-      selectedCategories.empty();
-      renderCategoriesToSelect();
-      renderAnswers();
-    });
-    this.reset();
-  });
-
-  $('#pollCreate').on('click', function() {
-    pollForm.toggle('hidden');
-    categories.empty();
-    selectedCategories.empty();
-    renderCategoriesToSelect();
-  });
-
-  categories.on('click', 'li', function(e) {
-    selectedCategories.append(e.target);
-  });
-
-  selectedCategories.on('click', 'li', function(e) {
-    categories.append(e.target);
-  });
-
-  $('.add-answer').on('click', function() {
-    answers.children().last().clone().appendTo(answers).val('');
-  });
-
-  $('.remove-answer').on('click', function() {
-    if (answers.children().length > 2) {
-      answers.children().last().remove();
     }
-  });
 
-  ongoingPolls.on('click', '.form-check-input', function(e) {
-    ajax.ajaxPost('/answers/' + e.target.value + '/data');
-    $(this).parents('.text-white').fadeOut();
-  });
+    function renderCategoriesList() {
+        openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + "0" + '" href="#">' + "All" + '</a>');
+        closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + "0" + '" href="#">' + "All" + '</a>');
+        ajax.ajaxGetCallback('/categories', function (response) {
+            response.forEach(function (category) {
+                openPollsCategories.append('<a class="dropdown-item category-open" data-category="' + category.id + '" href="#">' + category.name + '</a>');
+                closedPollsCategories.append('<a class="dropdown-item category-closed" data-category="' + category.id + '" href="#">' + category.name + '</a>');
+            })
+        });
+    }
 
-  renderCategoriesList();
-  renderOpenedList('/categories/' + 0 + '/polls/available');
-  renderClosedList('/categories/' + 0 + '/polls/closed');
+    function renderCategoriesToSelect() {
+        ajax.ajaxGetCallback('/categories', function (response) {
+            response.forEach(function (category) {
+                categories.append('<li data-id="' + category.id + '" class="col-xs-3 list-group-item"> ' + category.name + '</li>')
+            })
+        });
+    }
+
+    function renderAnswers() {
+        var answer = answers.children().last();
+        answers.empty();
+        answers.append(answer);
+        answer.clone().appendTo(answers);
+    }
+
+    showPolls.on('click', function (e) {
+        showPollsAddress = $(e.target).data('address');
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
+        $('#showPollsButton').html($(e.target).html() + ' POLLS');
+    });
+
+    closedPollsCategories.on('click', function (e) {
+        categoryId = $(e.target).data('category');
+        var categoryName = $(e.target).html();
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
+        $('#closedPollsCategoryButton').html('CATEGORY ' + categoryName);
+    });
+
+    $('#showPollsSort').on('click', function (e) {
+        pollSortProperty = $(e.target).data('sort');
+        pollSortDirection = $(e.target).data('direction');
+        var sortName = $(e.target).html();
+        renderClosedList('/categories/' + categoryId + '/polls/' + showPollsAddress + '?sort=' + pollSortProperty + '&dir=' + pollSortDirection);
+        $('#showPollsSortButton').html(sortName);
+    });
+
+    openPollsCategories.on('click', function (e) {
+        categoryId = $(e.target).data("category");
+        var categoryName = $(e.target).html();
+        renderOpenedList('/categories/' + categoryId + '/polls/available');
+        $('#ongoingPollsCategoryButton').html('CATEGORY ' + categoryName);
+    });
+
+    pollForm.on('submit', function (e) {
+        e.preventDefault();
+        pollForm.find('.text-success').remove();
+        pollForm.find('.text-danger').remove();
+        var poll = formUtil.createObjectFromForm($('#poll'));
+        var answers = $('#answers').children();
+        var days = $('#days').children().first().val();
+        var hours = $('#hours').children().first().val();
+        var valid = true;
+        ajax.ajaxPostCallback("/polls", poll, function (response) {
+            if (response.status !== 'OK') {
+                valid = false;
+                $.each(response.errors, function (key, value) {
+                    pollForm.find('#' + key).parent().append('<p class="text-danger">' + value + '</p>');
+                });
+            } else {
+                $('#selected-categories').children().each(function (index, category) {
+                    ajax.ajaxPost("/polls/" + response.pollId + "/categories/" + $(category).data('id'))
+                });
+                ajax.ajaxPost("/polls/" + response.pollId + "/closed/0" + days + "/0" + hours);
+            }
+            answers.each(function (index, elem) {
+                var answer = {content: $(elem).val()};
+                ajax.ajaxPostCallback("/polls/" + response.pollId + "/answers", answer, function (response) {
+                    if (response.status !== 'OK') {
+                        valid = false;
+                        $.each(response.errors, function (key, value) {
+                            $(elem).after('<p class="text-danger">' + value + '</p>');
+                        });
+                    } else if (valid === false) {
+                        ajax.ajaxDelete('/answers/' + response.answerId);
+                    }
+                });
+            });
+            if (valid === true) {
+                categories.empty();
+                selectedCategories.empty();
+                renderCategoriesToSelect();
+                pollForm.trigger('reset');
+                pollForm.append('<p class="text-success">' + response.successMsg + '</p>')
+            } else {
+                if (response.pollId !== 0) {
+                    ajax.ajaxDelete('/polls/' + response.pollId);
+                }
+            }
+        });
+    });
+
+    $('#pollCreate').on('click', function () {
+        pollForm.toggle('hidden');
+        categories.empty();
+        selectedCategories.empty();
+        renderCategoriesToSelect();
+        pollForm.find('.text-success').remove();
+        pollForm.find('.text-danger').remove();
+    });
+
+    categories.on('click', 'li', function (e) {
+        selectedCategories.append(e.target);
+    });
+
+    selectedCategories.on('click', 'li', function (e) {
+        categories.append(e.target);
+    });
+
+    $('.add-answer').on('click', function () {
+        answers.find('input').first().clone().appendTo(answers).val('');
+    });
+
+    $('.remove-answer').on('click', function () {
+        if (answers.find('input').length > 2) {
+            var answer = answers.find('input').last();
+            answer.next().remove();
+            answer.remove();
+        }
+    });
+
+    ongoingPolls.on('click', '.form-check-input', function (e) {
+        ajax.ajaxPost('/answers/' + e.target.value + '/data');
+        $(this).parents('.text-white').fadeOut();
+    });
+
+    renderCategoriesList();
+    renderOpenedList('/categories/' + 0 + '/polls/available');
+    renderClosedList('/categories/' + 0 + '/polls/closed');
 
 
     $('#register').on('click', function () {
@@ -294,6 +324,5 @@ $(function () {
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/categories/' + 0 + '/polls');
     handleLoginError();
-
 
 });
