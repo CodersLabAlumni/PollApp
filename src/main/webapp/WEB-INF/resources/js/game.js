@@ -51,7 +51,13 @@ $(function() {
         gameQuestion.empty();
         gameQuestion.append("GAME OVER");
         gameAnswers.empty();
-        gameAnswers.append('<button type="submit" class="btn btn-primary">Submit Score</button>');
+        gameAnswers.append('<form><fieldset>' +
+        '<div class="form-group">' +
+        '<label for="exampleInputEmail1">Enter name</label>' +
+        '<input type="email" class="form-control" id="scoreName" aria-describedby="scoreName" placeholder="Enter name">' +
+        '</div>' +
+        '<button type="submit" class="btn btn-primary">Submit Score</button>' +
+        '</fieldset></form>');
         $('#pollsResults').toggle('hidden');
         clearInterval(gameTimer);
         previousGamePoll.empty();
@@ -196,6 +202,12 @@ $(function() {
 
   $('#guideButton').on('click', function() {
     $('.guide').toggle('hidden');
+  })
+
+  gameAnswers.on('submit', function(e) {
+    e.preventDefault();
+    alert("it works");
+    console.log("it works");
   })
 
 
