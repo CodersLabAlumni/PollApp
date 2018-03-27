@@ -51,11 +51,14 @@ $(function() {
         gameQuestion.empty();
         gameQuestion.append("GAME OVER");
         gameAnswers.empty();
+        gameAnswers.append('<button type="submit" class="btn btn-primary">Submit Score</button>');
         $('#pollsResults').toggle('hidden');
         clearInterval(gameTimer);
         previousGamePoll.empty();
         $('#scoreMessage').empty();
-        $('#scoreMessage').append("Your score is " + correctAnswersScore + " correct answers and " + wrongAnswersScore + " wrong answers. <br>You think you can do better?");
+        $('#scoreMessage').append("Your score is " + correctAnswersScore +
+        " correct answers and " + wrongAnswersScore +
+        " wrong answers. <br>You think you can do better?");
       }
 
     }, 1000);
