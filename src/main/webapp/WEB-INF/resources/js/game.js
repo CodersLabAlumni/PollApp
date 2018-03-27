@@ -211,9 +211,9 @@ $(function() {
     e.preventDefault();
     var gameScore = formUtil.createObjectFromForm($('#score'));
     // var gameScore.score = gamePoints;
-    console.log(endScore);
+    // console.log(endScore);
     ajax.ajaxGetCallback("/gameScores", gameScore, function(response) {
-
+      // console.log(gameScore);
     });
     // alert($('#scoreName'));
     // console.log($('#score'));

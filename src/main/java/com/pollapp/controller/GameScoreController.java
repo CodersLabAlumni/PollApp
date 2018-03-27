@@ -1,6 +1,9 @@
 package com.pollapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,11 @@ public class GameScoreController {
 
 	@Autowired
 	private GameScoreRepository gameScoreRepository;
+	
+	@GetMapping("")
+	public List<GameScore> getAllGameScore() {
+		return gameScoreRepository.findAll();
+	}
 	
 	@PostMapping("")
 	public GameScore createGameScore (@RequestBody GameScore gameScore) {
