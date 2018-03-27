@@ -39,8 +39,8 @@ $(function () {
     });
 
     closedPolls.on('click', '.toggle-comments', function (e) {
-        $(e.target).parent().find('.text-success').remove();
-        $(e.target).parent().find('.text-danger').remove();
+        $(e.target).parent().siblings('.comment-add').find('.text-success').remove();
+        $(e.target).parent().siblings('.comment-add').find('.text-danger').remove();
         var commentAddNode = $(e.target).parent().siblings('.comment-add');
         if (commentAddNode.length === 0) {
             $(e.target).parent().siblings('.pager-comments').after(renderAddCommentForm());
