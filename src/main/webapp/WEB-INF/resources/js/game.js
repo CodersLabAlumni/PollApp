@@ -1,6 +1,7 @@
 $(function() {
 
   var ajax = new Ajax();
+  var formUtil = new FormUtil();
   var gamePollList;
   var gameQuestion = $('#gameQuestion');
   var gameAnswers = $('#gameAnswers');
@@ -51,11 +52,11 @@ $(function() {
         gameQuestion.empty();
         gameQuestion.append("GAME OVER");
         gameAnswers.empty();
-        gameAnswers.append('<form><fieldset>' +
-        '<div class="form-group">' +
+        gameAnswers.append('<form method="post" id="gameScoreForm"><fieldset>' +
+        '<div class="form-group"><div id="score">' +
         '<label for="exampleInputEmail1">Enter name</label>' +
-        '<input type="email" class="form-control" id="scoreName" aria-describedby="scoreName" placeholder="Enter name">' +
-        '</div>' +
+        '<input type="text" class="form-control" name="name" id="name"" aria-describedby="scoreName" placeholder="Enter name">' +
+        '</div></div>' +
         '<button type="submit" class="btn btn-primary">Submit Score</button>' +
         '</fieldset></form>');
         $('#pollsResults').toggle('hidden');
@@ -206,8 +207,10 @@ $(function() {
 
   gameAnswers.on('submit', function(e) {
     e.preventDefault();
-    alert("it works");
-    console.log("it works");
+    var score = formUtil.createObjectFromForm($('#score'));
+    console.log(score);
+    // alert($('#scoreName'));
+    // console.log($('#score'));
   })
 
 
