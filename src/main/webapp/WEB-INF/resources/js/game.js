@@ -212,7 +212,7 @@ $(function() {
     var gameScore = formUtil.createObjectFromForm($('#score'));
     // var gameScore.score = gamePoints;
     // console.log(endScore);
-    ajax.ajaxGetCallback("/gameScores", gameScore, function(response) {
+    ajax.ajaxPostCallback("/gameScores", gameScore, function(response) {
       // console.log(gameScore);
     });
     // alert($('#scoreName'));
