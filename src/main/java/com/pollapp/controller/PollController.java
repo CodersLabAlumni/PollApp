@@ -6,6 +6,7 @@ import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.response.AnswerResponse;
+import com.pollapp.response.CommentValidationResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.AnswerService;
 import com.pollapp.service.CommentService;
@@ -14,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Calendar;
 import java.util.List;
 
@@ -111,7 +114,7 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/comments")
-    public Comment addCommentToPoll(@PathVariable long pollId, @CookieValue("logged_user") String username, @RequestBody Comment comment) {
-        return commentService.add(pollId, username, comment);
+    public CommentValidationResponse addCommentToPoll(@PathVariable long pollId, @CookieValue("logged_user") String username, @Valid @RequestBody Comment comment, BindingResult bindingResult) {
+        return commentService.add(pollId, username, comment, bindingResult);
     }
 }

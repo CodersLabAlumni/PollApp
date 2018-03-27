@@ -1,5 +1,8 @@
 package com.pollapp.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -11,6 +14,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty
+    @NotBlank
     private String content;
 
     private Calendar created;
