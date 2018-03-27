@@ -22,6 +22,7 @@ $(function() {
   var pollList = [];
   var gameTimer;
   var gameClockTimer;
+  var gamePoints = 0;
 
 
 
@@ -66,6 +67,7 @@ $(function() {
         $('#scoreMessage').append("Your score is " + correctAnswersScore +
         " correct answers and " + wrongAnswersScore +
         " wrong answers. <br>You think you can do better?");
+        gamePoints = (correctAnswersScore * 100) - (wrongAnswersScore * 100);
       }
 
     }, 1000);
@@ -207,8 +209,12 @@ $(function() {
 
   gameAnswers.on('submit', function(e) {
     e.preventDefault();
-    var score = formUtil.createObjectFromForm($('#score'));
-    console.log(score);
+    var gameScore = formUtil.createObjectFromForm($('#score'));
+    // var gameScore.score = gamePoints;
+    console.log(endScore);
+    ajax.ajaxGetCallback("/gameScores", gameScore, function(response) {
+
+    });
     // alert($('#scoreName'));
     // console.log($('#score'));
   })
