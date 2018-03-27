@@ -210,13 +210,9 @@ $(function() {
   gameAnswers.on('submit', function(e) {
     e.preventDefault();
     var gameScore = formUtil.createObjectFromForm($('#score'));
-    // var gameScore.score = gamePoints;
-    // console.log(endScore);
+    gameScore.score = gamePoints;
     ajax.ajaxPostCallback("/gameScores", gameScore, function(response) {
-      // console.log(gameScore);
     });
-    // alert($('#scoreName'));
-    // console.log($('#score'));
   })
 
 
