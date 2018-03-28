@@ -52,7 +52,6 @@ $(function() {
         gameClock.append("TIME'S UP");
         gameAnswers.empty();
         endGame();
-        gamePoints = (correctAnswersScore * 100) - (wrongAnswersScore * 100);
       }
 
     }, 1000);
@@ -75,6 +74,7 @@ $(function() {
     $('#scoreMessage').append("Your score is " + correctAnswersScore +
     " correct answers and " + wrongAnswersScore +
     " wrong answers. <br>You think you can do better?");
+    gamePoints = (correctAnswersScore * 100) - (wrongAnswersScore * 100) + gameClockTimer * 5;
   }
 
   function shuffleArray(array) {
@@ -110,12 +110,11 @@ $(function() {
         gameAnswers.append(randomPollAnswers);
       })
     } else {
-      // gameQuestion.empty();
-      // gameQuestion.append("GAME OVER");
+      gameClock.empty();
+      gameClock.append(gameClockTimer);
       gameAnswers.empty();
       gameAnswers.append("You have finished ahead of time, with " + gameClockTimer + " s left to spare");
       endGame();
-      // clearInterval(gameTimer);
     }
   }
 
