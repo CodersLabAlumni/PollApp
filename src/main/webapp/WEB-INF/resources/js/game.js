@@ -216,8 +216,14 @@ $(function() {
   })
 
   function renderScoreBoard(endpoint) {
+    var rank = 1;
     ajax.ajaxGetCallback(endpoint, function (response) {
-      console.log(response);
+      response.forEach(function(nameScore) {
+        $('#scoreBoard').append('<tr><th scope="row"> ' + rank + '</th>' +
+      '<td>' + nameScore.name + '</td>' +
+      '<td>' + nameScore.score + '</td></tr>')
+      rank++;
+      })
     })
   }
 
