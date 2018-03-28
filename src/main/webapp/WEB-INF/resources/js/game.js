@@ -50,27 +50,31 @@ $(function() {
       } else {
         gameClock.empty();
         gameClock.append("TIME'S UP");
-        gameQuestion.empty();
-        gameQuestion.append("GAME OVER");
         gameAnswers.empty();
-        gameAnswers.append('<form method="post" id="gameScoreForm"><fieldset>' +
-        '<div class="form-group"><div id="score">' +
-        '<label for="exampleInputEmail1">Enter name</label>' +
-        '<input type="text" class="form-control" name="name" id="name"" aria-describedby="scoreName" placeholder="Enter name">' +
-        '</div></div>' +
-        '<button type="submit" class="btn btn-primary">Submit Score</button>' +
-        '</fieldset></form>');
-        $('#pollsResults').toggle('hidden');
-        clearInterval(gameTimer);
-        previousGamePoll.empty();
-        $('#scoreMessage').empty();
-        $('#scoreMessage').append("Your score is " + correctAnswersScore +
-        " correct answers and " + wrongAnswersScore +
-        " wrong answers. <br>You think you can do better?");
+        endGame();
         gamePoints = (correctAnswersScore * 100) - (wrongAnswersScore * 100);
       }
 
     }, 1000);
+  }
+
+  function endGame() {
+    gameQuestion.empty();
+    gameQuestion.append("GAME OVER");
+    gameAnswers.append('<form method="post" id="gameScoreForm"><fieldset>' +
+    '<div class="form-group"><div id="score">' +
+    '<label for="exampleInputEmail1">Enter name</label>' +
+    '<input type="text" class="form-control" name="name" id="name"" aria-describedby="scoreName" placeholder="Enter name">' +
+    '</div></div>' +
+    '<button type="submit" class="btn btn-primary">Submit Score</button>' +
+    '</fieldset></form>');
+    $('#pollsResults').toggle('hidden');
+    clearInterval(gameTimer);
+    previousGamePoll.empty();
+    $('#scoreMessage').empty();
+    $('#scoreMessage').append("Your score is " + correctAnswersScore +
+    " correct answers and " + wrongAnswersScore +
+    " wrong answers. <br>You think you can do better?");
   }
 
   function shuffleArray(array) {
@@ -106,11 +110,12 @@ $(function() {
         gameAnswers.append(randomPollAnswers);
       })
     } else {
-      gameQuestion.empty();
-      gameQuestion.append("GAME OVER");
+      // gameQuestion.empty();
+      // gameQuestion.append("GAME OVER");
       gameAnswers.empty();
       gameAnswers.append("You have finished ahead of time, with " + gameClockTimer + " s left to spare");
-      clearInterval(gameTimer);
+      endGame();
+      // clearInterval(gameTimer);
     }
   }
 
@@ -213,10 +218,14 @@ $(function() {
     gameScore.score = gamePoints;
     ajax.ajaxPostCallback("/gameScores", gameScore, function(response) {
     });
+    gameAnswers.empty();
+    gameAnswers.append('Your score has been saved and score board updated');
+    renderScoreBoard('/gameScores');
   })
 
   function renderScoreBoard(endpoint) {
     var rank = 1;
+    $('#scoreBoard').empty();
     ajax.ajaxGetCallback(endpoint, function (response) {
       response.forEach(function(nameScore) {
         $('#scoreBoard').append('<tr><th scope="row"> ' + rank + '</th>' +
