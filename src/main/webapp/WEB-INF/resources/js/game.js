@@ -215,7 +215,12 @@ $(function() {
     });
   })
 
+  function renderScoreBoard(endpoint) {
+    ajax.ajaxGetCallback(endpoint, function (response) {
+      console.log(response);
+    })
+  }
 
-
+  renderScoreBoard('/gameScores');
 
 })
