@@ -62,7 +62,7 @@ $(function() {
     gameQuestion.append("GAME OVER");
     gameAnswers.append('<form method="post" id="gameScoreForm"><fieldset>' +
     '<div class="form-group"><div id="score">' +
-    '<label for="exampleInputEmail1">Enter name</label>' +
+    '<label for="exampleInputEmail1">You can submit your score by entering your name and clicking on the button below</label>' +
     '<input type="text" class="form-control" name="name" id="name"" aria-describedby="scoreName" placeholder="Enter name">' +
     '</div></div>' +
     '<button type="submit" class="btn btn-primary">Submit Score</button>' +
