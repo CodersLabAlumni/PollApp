@@ -13,7 +13,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-    <a class="navbar-brand" href="http://localhost:5000/">PollApp</a>
+    <a class="navbar-brand" href="" id="PollAppBtn">PollApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -117,10 +117,14 @@
   <br>
 
 
-  <div class="alert alert-dismissible alert-light">
+  <div class="alert alert-dismissible alert-light noGameView">
     <div class="guide hidden">
       <div class="row">
-        <div class="col-sm-3"></div>
+        <div class="col-sm-2">
+          <p class="text-left"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+          <p class="text-left"><em>Refresh website content.</em></p>
+        </div>
+        <div class="col-sm-1"></div>
         <div class="col-sm-4">
           <p class="text-center"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
           <p class="text-center"><em>Click here to create your own poll. Set the question, possible answers and time you wish the poll to stay opened for voting.</em></p>
@@ -207,7 +211,7 @@
   <div class="row" id="pollsResults">
     <div class="col-sm-3">
       <div class="jumbotron">
-        <div id="noGameView">
+        <div class="noGameView">
           <h3 class="display-6 text-center">PollApp challenge</h3>
           <br>
           <p class="lead text-center">Various polls, 60 seconds, your guess...</p>
@@ -301,6 +305,53 @@
     </div>
     <div class="col-sm-3">
       <div class="jumbotron">
+        <h3 class="display-6 text-center">About</h3>
+        <hr class="my-4">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-danger active">
+            <input type="checkbox" checked="" autocomplete="off"> Statement
+          </label>
+          <label class="btn btn-danger">
+            <input type="checkbox" autocomplete="off"> Technologies
+          </label>
+          <label class="btn btn-danger">
+            <input type="checkbox" autocomplete="off"> Authors
+          </label>
+        </div>
+        <hr class="my-4">
+        <div id="statement">
+          <p class="lead text-center">Statement</p>
+          <hr class="my-4">
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        </div>
+        <div id="technologies">
+          <p class="lead text-center">Used technologies and tools</p>
+          <hr class="my-4">
+          <p>Our main focus is to develop competences regarding Java along with supplementing frameworks. However even the best backend engine seems divorced from reality witout consideration for user experience. Hence we believe it is important to stay
+            on top of ballance between frontend and backend.</p>
+          <p>Having said that, in the development of PollApp a variety of tools and technologies have been used, including:</p>
+          <ul>
+            <li>Java</li>
+            <li>Spring</li>
+            <li>Hibernate</li>
+            <li>JavaScript</li>
+            <li>jQuery</li>
+            <li>REST</li>
+            <li>HTML</li>
+            <li>Bootstrap</li>
+            <li>Heroku</li>
+            <li>MySQL</li>
+            <li>Postgres</li>
+            <li>Github</li>
+          </ul>
+        </div>
+        <div id="authors">
+          <p class="lead text-center">Authors</p>
+          <hr class="my-4">
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        </div>
+      </div>
+      <div class="jumbotron">
         <h3 class="display-6 text-center">Przemysław Konik</h3>
         <hr class="my-4">
         <a href="https://github.com/przemyslawkonik">https://github.com/przemyslawkonik</a>
@@ -316,12 +367,12 @@
         <h3 class="display-6 text-center">With support of:</h3>
         <hr class="my-4">
         <p>Łukasz Budyń
-        <a href="https://github.com/Lukasz-Bdn">https://github.com/Lukasz-Bdn</a>
-        <a href="https://www.linkedin.com/in/lukasz-budyn/">https://www.linkedin.com/in/lukasz-budyn/</a>
+          <a href="https://github.com/Lukasz-Bdn">https://github.com/Lukasz-Bdn</a>
+          <a href="https://www.linkedin.com/in/lukasz-budyn/">https://www.linkedin.com/in/lukasz-budyn/</a>
         </p>
         <p>Marcin Pietryga
-        <a href="https://github.com/PietrygaM">https://github.com/PietrygaM</a>
-        <a href="https://www.linkedin.com/in/pietryga-marcin/">https://www.linkedin.com/in/pietryga-marcin/</a>
+          <a href="https://github.com/PietrygaM">https://github.com/PietrygaM</a>
+          <a href="https://www.linkedin.com/in/pietryga-marcin/">https://www.linkedin.com/in/pietryga-marcin/</a>
         </p>
       </div>
     </div>

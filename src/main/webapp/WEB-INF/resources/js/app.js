@@ -292,6 +292,11 @@ $(function () {
         }
     });
 
+    $('#PollAppBtn').on('click', function() {
+      renderOpenedList('/categories/' + 0 + '/polls/available');
+      renderClosedList('/polls/closed');
+    });
+
     ongoingPolls.on('click', '.form-check-input', function (e) {
         ajax.ajaxPost('/answers/' + e.target.value + '/data');
         $(this).parents('.text-white').fadeOut();

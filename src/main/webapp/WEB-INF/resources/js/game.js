@@ -12,7 +12,7 @@ $(function() {
   var closeGame = $('#closeGame');
   var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
-  var noGameView = $('#noGameView');
+  var noGameView = $('.noGameView');
   var afterGameView = $('#afterGameView')
   var previousGamePoll = $('#previousGamePoll');
   var randomPoll;
