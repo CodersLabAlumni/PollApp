@@ -1,13 +1,17 @@
 package com.pollapp.service;
 
 import com.pollapp.entity.Poll;
+import com.pollapp.response.PollFormValidationResponse;
 import com.pollapp.response.PollResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.BindingResult;
 
 public interface PollService {
 
-    PollResponse save(Poll poll);
+    PollFormValidationResponse save(Poll poll, BindingResult bindingResult);
+
+    void delete(long pollId);
 
     PollResponse getPoll(long pollId);
 

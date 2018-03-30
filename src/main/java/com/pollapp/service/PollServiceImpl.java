@@ -6,12 +6,16 @@ import com.pollapp.entity.UserData;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.repository.UserDataRepository;
+import com.pollapp.response.AnswerResponse;
+import com.pollapp.response.PollFormValidationResponse;
 import com.pollapp.response.PollResponse;
+import com.pollapp.validation.PollValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,9 +36,27 @@ public class PollServiceImpl implements PollService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private PollValidation pollValidation;
+
+    @Autowired
+    private AnswerService answerService;
+
     @Override
-    public PollResponse save(Poll poll) {
-        return pollResponse.create(pollRepository.save(poll));
+    public PollFormValidationResponse save(Poll poll, BindingResult bindingResult) {
+        if (pollValidation.validPoll(poll, bindingResult)) {
+            poll = pollRepository.save(poll);
+        }
+        pollValidation.getPollFormValidationResponse().setPollId(poll.getId());
+        return pollValidation.getPollFormValidationResponse();
+    }
+
+    @Override
+    public void delete(long pollId) {
+        for (AnswerResponse a : answerService.getAnswersByPoll(pollId)) {
+            answerService.delete(a.getAnswer());
+        }
+        pollRepository.delete(pollId);
     }
 
     @Override
