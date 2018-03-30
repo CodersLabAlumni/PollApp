@@ -8,19 +8,22 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    @Autowired
     private AuthenticationManager authenticationManager;
-    private AppConfig appConfig;
 
     @Autowired
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager, AppConfig appConfig) {
-        this.authenticationManager = authenticationManager;
-        this.appConfig = appConfig;
-    }
+    private DataSource dataSource;
+
+    @Autowired
+    private TokenStore tokenStore;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -29,12 +32,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(appConfig.dataSource());
+        clients.jdbc(dataSource);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)
-                .tokenStore(appConfig.tokenStore());
+                .tokenStore(tokenStore);
     }
 }

@@ -1,1 +1,0 @@
-web: java -jar target/PollApp-0.1.jar
