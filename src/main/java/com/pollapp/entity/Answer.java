@@ -1,5 +1,8 @@
 package com.pollapp.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +13,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty
+    @NotBlank
     private String content;
 
     @ManyToOne(fetch = FetchType.EAGER)

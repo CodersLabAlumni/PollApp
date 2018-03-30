@@ -19,23 +19,23 @@
     </button>
     <button type="button" class="btn btn-danger btn-lg btn-block" id="pollCreate">Create your poll</button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-        <form method="post" id="login-form">
-            <table>
-                <tr>
-                    <td class="text-white">Username</td>
-                    <td class="text-white">Password</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="username-login" name="username"/></td>
-                    <td><input type="password" id="password-login" name="password"/></td>
-                    <td><a class="btn text-white" id="login">Login</a></td>
-                    <td><a id="register" class="btn text-white">Register</a></td>
-                </tr>
-            </table>
-            <span id="login-error" class="bg-light text-danger"></span>
-        </form>
+      <form method="post" id="login-form">
+        <table>
+          <tr>
+            <td class="text-white">Username</td>
+            <td class="text-white">Password</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><input type="text" id="username-login" name="username" /></td>
+            <td><input type="password" id="password-login" name="password" /></td>
+            <td><a class="btn text-white" id="login">Login</a></td>
+            <td><a id="register" class="btn text-white">Register</a></td>
+          </tr>
+        </table>
+        <span id="login-error" class="bg-light text-danger"></span>
+      </form>
     </div>
   </nav>
 
@@ -87,52 +87,45 @@
         </div>
       </fieldset>
     </form>
-</div>
-<div class="container">
+  </div>
+  <div class="container">
     <form class="hidden" method="post" id="register-form">
-        <fieldset>
-            <legend>Registration</legend>
-            <div class="container form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" aria-describedby="emailHelp"
-                       name="username" id="username" placeholder="Enter your username">
-            </div>
-            <div class="container form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" aria-describedby="emailHelp"
-                       name="email" id="email" placeholder="Enter your email">
-            </div>
-            <div class="container form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" aria-describedby="emailHelp"
-                       name="password" id="password" placeholder="Enter your password">
-            </div>
-            <div class="container form-group">
-                <label for="password-confirm">Confirm password</label>
-                <input type="password" class="form-control" aria-describedby="emailHelp"
-                       name="passwordConfirmation" id="password-confirm" placeholder="Enter your password">
-            </div>
-            <div class="container form-group">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </fieldset>
+      <fieldset>
+        <legend>Registration</legend>
+        <div class="container form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" aria-describedby="emailHelp" name="username" id="username" placeholder="Enter your username">
+        </div>
+        <div class="container form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" aria-describedby="emailHelp" name="email" id="email" placeholder="Enter your email">
+        </div>
+        <div class="container form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" aria-describedby="emailHelp" name="password" id="password" placeholder="Enter your password">
+        </div>
+        <div class="container form-group">
+          <label for="password-confirm">Confirm password</label>
+          <input type="password" class="form-control" aria-describedby="emailHelp" name="passwordConfirmation" id="password-confirm" placeholder="Enter your password">
+        </div>
+        <div class="container form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </fieldset>
     </form>
-</div>
-<br>
+  </div>
+  <br>
 
 
   <div class="alert alert-dismissible alert-light">
     <div class="guide hidden">
       <div class="row">
-        <div class="col-sm-2">
-          <!-- <p class="text-left"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
-          <p class="text-left"><em>Reload page.</em></p> -->
-        </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-3"></div>
         <div class="col-sm-4">
           <p class="text-center"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
           <p class="text-center"><em>Click here to create your own poll. Set the question, possible answers and time you wish the poll to stay opened for voting.</em></p>
         </div>
+        <div class="col-sm-1"></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-2">
           <p class="text-right"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
@@ -240,6 +233,19 @@
 
       <button type="button" class="btn btn-primary hidden" id="closeGame">Close Game</button>
       <button type="button" class="btn btn-primary hidden" id="nextGame">I want another go</button>
+
+      <h3 class="text-center">Score Board</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody id="scoreBoard">
+        </tbody>
+      </table>
     </div>
     <div class="col-sm-3">
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -272,13 +278,13 @@
           </div>
         </div>
       </div>
-        <br/><br/>
-        <div class="pager">
-            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
-        </div>
-        <div id="closedPolls"></div>
-        <div class="pager">
-            <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+      <br/><br/>
+      <div class="pager">
+        <ul class="pagination-polls sync-pagination pagination-sm"></ul>
+      </div>
+      <div id="closedPolls"></div>
+      <div class="pager">
+        <ul class="pagination-polls sync-pagination pagination-sm"></ul>
       </div>
     </div>
     <div class="col-sm-3">
@@ -294,27 +300,43 @@
       <div id="ongoingPolls"></div>
     </div>
     <div class="col-sm-3">
-      Auhors details
+      <div class="jumbotron">
+        <h3 class="display-6 text-center">Przemysław Konik</h3>
+        <hr class="my-4">
+        <a href="https://github.com/przemyslawkonik">https://github.com/przemyslawkonik</a>
+        <a href="https://www.linkedin.com/in/przemys%C5%82aw-konik/">https://www.linkedin.com/in/przemysław-konik/</a>
+      </div>
+      <div class="jumbotron">
+        <h3 class="display-6 text-center">Mateusz Lichoń</h3>
+        <hr class="my-4">
+        <a href="https://github.com/mateuszlichon">https://github.com/mateuszlichon</a>
+        <a href="https://www.linkedin.com/in/mateusz-lichon/">https://www.linkedin.com/in/mateusz-lichon/</a>
+      </div>
+      <div class="jumbotron">
+        <h3 class="display-6 text-center">With support of:</h3>
+        <hr class="my-4">
+        <p>Łukasz Budyń
+        <a href="https://github.com/Lukasz-Bdn">https://github.com/Lukasz-Bdn</a>
+        <a href="https://www.linkedin.com/in/lukasz-budyn/">https://www.linkedin.com/in/lukasz-budyn/</a>
+        </p>
+        <p>Marcin Pietryga
+        <a href="https://github.com/PietrygaM">https://github.com/PietrygaM</a>
+        <a href="https://www.linkedin.com/in/pietryga-marcin/">https://www.linkedin.com/in/pietryga-marcin/</a>
+        </p>
+      </div>
     </div>
   </div>
 
-<!-- scripts -->
-<script src="..\resources\js\js.cookie-2.2.0.min.js"></script>
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-<script src="..\resources\js\jquery.twbsPagination.min.js"></script>
-<script src="..\resources\js\util.js"></script>
-<script src="..\resources\js\app.js"></script>
-<script src="..\resources\js\game.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <!-- scripts -->
+  <script src="..\resources\js\js.cookie-2.2.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="..\resources\js\jquery.twbsPagination.min.js"></script>
+  <script src="..\resources\js\util.js"></script>
+  <script src="..\resources\js\app.js"></script>
+  <script src="..\resources\js\game.js"></script>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
 </html>

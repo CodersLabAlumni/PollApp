@@ -1,5 +1,7 @@
 package com.pollapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -24,10 +26,12 @@ public class UserAccount {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     @NotBlank
     @Size(min = 5, max = 100)
     private String password;
 
+    @JsonIgnore
     @Transient
     private String passwordConfirmation;
 
@@ -35,6 +39,7 @@ public class UserAccount {
     @JoinColumn(name = "role_id")
     private UserRole userRole;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "data_id")
     @MapsId
