@@ -195,9 +195,23 @@ $(function () {
         pollForm.find('.text-danger').remove();
         var poll = formUtil.createObjectFromForm($('#poll'));
         var answers = $('#answers').children();
-        var days = $('#days').children().first().val();
-        var hours = $('#hours').children().first().val();
+        var days = parseInt($('#days').children().first().val());
+        var hours = parseInt($('#hours').children().first().val());
         var valid = true;
+        if (isNaN(hours)) {
+          hours = 0;
+        }
+        if (isNaN(days)) {
+          days = 0;
+        }
+        if (days + hours === 0) {
+          days = 1;
+          hours = 0;
+        }
+        var closeDate = new Date();
+        closeDate.setDate(closeDate.getDate() + days);
+        closeDate.setHours(closeDate.getHours() + hours);
+        poll.closed = closeDate;
         ajax.ajaxPostCallback("/polls", poll, function (response) {
             if (response.status !== 'OK') {
                 valid = false;
@@ -229,6 +243,8 @@ $(function () {
                 renderCategoriesToSelect();
                 pollForm.trigger('reset');
                 pollForm.append('<p class="text-success">' + response.successMsg + '</p>')
+                renderOpenedList('/categories/' + 0 + '/polls/available');
+                pollForm.toggle('hidden');
             } else {
                 if (response.pollId !== 0) {
                     ajax.ajaxDelete('/polls/' + response.pollId);
@@ -270,11 +286,6 @@ $(function () {
         ajax.ajaxPost('/answers/' + e.target.value + '/data');
         $(this).parents('.text-white').fadeOut();
     });
-
-    renderCategoriesList();
-    renderOpenedList('/categories/' + 0 + '/polls/available');
-    renderClosedList('/categories/' + 0 + '/polls/closed');
-
 
     $('#register').on('click', function () {
         registerForm.toggle('hidden');
@@ -322,7 +333,7 @@ $(function () {
 
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
-    renderClosedList('/categories/' + 0 + '/polls');
+    renderClosedList('/categories/' + 0 + '/polls/closed');
     handleLoginError();
 
 });
