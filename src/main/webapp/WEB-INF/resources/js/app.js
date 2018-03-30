@@ -20,10 +20,15 @@ $(function () {
 
     var defaultOpts = {
         totalPages: 10,
-        visiblePages: 10,
+        visiblePages: 5,
         startPage: 1
     };
     $pagination.twbsPagination(defaultOpts);
+
+    function createCommentInfoLink(commentsAmount, pollId) {
+        return '<div class="container text-right toggle-comments">' +
+            '<a class="btn" data-poll=' + pollId + '>Comments (' + commentsAmount + ')</a></div>'
+    }
 
     function renderClosedList(endpoint) {
         ajax.ajaxGetCallback(endpoint, function (response) {
@@ -60,8 +65,13 @@ $(function () {
                                     poll.question +
                                     '</div>' +
                                     '<div class="card-body">' +
-                                    '<div id="chartContainer' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
-                                    '</div></div>');
+                                    '<div id="chartContainer' + poll.id + '" data-id="' + poll.id + '" style="height: 370px; width: 100%;"></div>' +
+                                    '</div>' +
+                                    createCommentInfoLink(pollData.comments, poll.id) +
+                                    '<div class="container comments hidden p-2"></div>' +
+                                    '<div class="pager-comments hidden">' +
+                                    '<ul class="pagination-comments pagination-sm"></ul></div>' +
+                                    '</div>');
                                 var chart = new CanvasJS.Chart("chartContainer" + poll.id, {
                                     animationEnabled: true,
                                     theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -330,6 +340,49 @@ $(function () {
         $('#login-error').remove();
         Cookies.remove('logged_error');
     }
+
+    function renderComments(elem, pollId) {
+        var commentPager = elem.siblings('.pager-comments').find('.pagination-comments');
+        ajax.ajaxGetCallback('/polls/' + pollId + '/comments', function (response) {
+            var totalPages = response.totalPages;
+            if (totalPages <= 0) {
+                totalPages = 1;
+            }
+            commentPager.twbsPagination('destroy');
+            commentPager.twbsPagination($.extend({}, defaultOpts, {
+                totalPages: totalPages,
+                onPageClick: function (evt, page) {
+                    elem.empty();
+                    ajax.ajaxGetCallback('/polls/' + pollId + '/comments?page=' + (page - 1), function (response) {
+                        var comments = response.content;
+                        comments.forEach(function (comment) {
+                            var date = new Date(comment.created).toLocaleString();
+                            $(elem).append('<div class="container">' +
+                                '<div class="card">' +
+                                '<div class="card-header">' +
+                                '<strong>' + comment.userAccount.username + " commented on " + date + '</strong>' +
+                                '</div>' +
+                                '<div class="card-body">' +
+                                '<span class="card-text">' + comment.content + '</span>' +
+                                '</div>' +
+                                '</div>')
+                        })
+                    });
+
+                }
+            }));
+
+        });
+    }
+
+    closedPolls.on('click', '.toggle-comments', function (e) {
+        var comments = $(e.target).parent().siblings('.comments');
+        var pollId = $(e.target).data("poll");
+        comments.toggle('hidden');
+        comments.siblings('.pager-comments').toggle('hidden');
+        renderComments(comments, pollId);
+
+    });
 
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
