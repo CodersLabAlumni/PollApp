@@ -220,8 +220,10 @@ $(function () {
       selectedCategories.empty();
       renderCategoriesToSelect();
       renderAnswers();
+      renderOpenedList('/categories/' + 0 + '/polls/available');
     });
     this.reset();
+    pollForm.toggle('hidden');
   });
 
   $('#pollCreate').on('click', function() {
@@ -254,7 +256,7 @@ $(function () {
     $(this).parents('.text-white').fadeOut();
   });
 
-  renderCategoriesList();
+  // renderCategoriesList();
   renderOpenedList('/categories/' + 0 + '/polls/available');
   renderClosedList('/categories/' + 0 + '/polls/closed');
 
