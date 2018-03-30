@@ -114,13 +114,95 @@
 </div>
 <br>
 
-<div class="row">
+<div class="container hidden" id="gameBoard">
+    <br>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card text-white bg-success mb-3" style="max-width: 100%;">
+                <div class="card-header">Correct answers</div>
+                <div class="card-body">
+                    <h4 class="card-title" id="correctAnswers">0</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-white bg-danger mb-3" style="max-width: 100%;">
+                <div class="card-header">Wrong answers</div>
+                <div class="card-body">
+                    <h4 class="card-title" id="wrongAnswers">0</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card text-white bg-info mb-3" style="max-width: 100%;">
+                <div class="card-header">Time left</div>
+                <div class="card-body">
+                    <h4 class="card-title" id="gameClock">60 s</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card bg-light mb-3" style="max-width: 100%;">
+                <div class="card-header" id="gameQuestion">Header</div>
+                <div class="card-body">
+                    <fieldset class="form-group" id="gameAnswers">
+                    </fieldset>
+                </div>
+            </div>
+            <div id="previousGamePoll"></div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row" id="pollsResults">
     <div class="col-sm-3">
-        GAME?
+        <div class="jumbotron">
+            <div id="noGameView">
+                <h3 class="display-6 text-center">PollApp challenge</h3>
+                <br>
+                <p class="lead text-center">Various polls, 60 seconds, your guess...</p>
+                <p class="lead text-center">Good luck!</p>
+                <hr class="my-4">
+                <p>You will be presented with a set of random poll questions. Try to guess the most popular answer.
+                    After each answer you will be able to see the actual results of the poll.</p>
+                <p class="lead">
+                    <button type="button" class="btn btn-primary" id="startGame">Start Game</button>
+                </p>
+            </div>
+            <div class="hidden" id="afterGameView">
+                <h3 class="display-6 text-center">PollApp challenge completed</h3>
+                <br>
+                <p class="lead text-center" id="scoreMessage">You think you can do better?</p>
+                <hr class="my-4">
+                <p>You can close the game or try again.</p>
+                <p class="lead">
+                    <button type="button" class="btn btn-primary" id="closeGame">Close Game</button>
+                    <button type="button" class="btn btn-primary" id="nextGame">I want another go</button>
+                </p>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary hidden" id="closeGame">Close Game</button>
+        <button type="button" class="btn btn-primary hidden" id="nextGame">I want another go</button>
+
+        <h3 class="text-center">Score Board</h3>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">Score</th>
+            </tr>
+            </thead>
+            <tbody id="scoreBoard">
+            </tbody>
+        </table>
     </div>
     <div class="col-sm-3">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button id="showPollsButton" type="button" class="btn btn-danger">ALL POLLS</button>
+            <button id="showPollsButton" type="button" class="btn btn-danger">CLOSED POLLS</button>
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop4" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false"></button>
@@ -197,6 +279,7 @@
 <script src="..\resources\js\util.js"></script>
 <script src="..\resources\js\app.js"></script>
 <script src="..\resources\js\app_logged.js"></script>
+<script src="..\resources\js\game.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
