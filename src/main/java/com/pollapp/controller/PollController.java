@@ -6,25 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
 import com.pollapp.entity.Poll;
 import com.pollapp.repository.PollRepository;
+import com.pollapp.response.AnswerFormValidationResponse;
 import com.pollapp.response.AnswerResponse;
+import com.pollapp.response.CommentValidationResponse;
+import com.pollapp.response.PollFormValidationResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.AnswerService;
+import com.pollapp.service.CommentService;
 import com.pollapp.service.PollService;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Calendar;
+import java.util.List;
 
 @RestController
 @RequestMapping("/polls")
@@ -39,6 +41,9 @@ public class PollController {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping("")
     public Page<PollResponse> getAllPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
         return pollService.getPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
@@ -48,10 +53,10 @@ public class PollController {
     public Page<PollResponse> getOpenedPolls(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction) {
         return pollService.getOnGoingPolls(new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
-    
+
     @GetMapping("/game")
     public List<Poll> getGamePolls() {
-    	return pollRepository.findAll();
+        return pollRepository.findAll();
     }
 
     @GetMapping("/closed")
@@ -60,8 +65,8 @@ public class PollController {
     }
 
     @PostMapping("")
-    public PollResponse createPoll(@RequestBody Poll poll) {
-        return pollService.save(poll);
+    public PollFormValidationResponse createPoll(@Valid @RequestBody Poll poll, BindingResult bindingResult) {
+        return pollService.save(poll, bindingResult);
     }
 
     @GetMapping("/{pollId}")
@@ -76,9 +81,8 @@ public class PollController {
     }
 
     @DeleteMapping("/{pollId}")
-    public Poll deletePoll(@PathVariable long pollId) {
-        // TODO
-        return null;
+    public void deletePoll(@PathVariable long pollId) {
+        pollService.delete(pollId);
     }
 
     @GetMapping("/{pollId}/categories")
@@ -98,13 +102,17 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/answers")
-    public AnswerResponse addAnswerToPoll(@RequestBody Answer answer, @PathVariable long pollId) {
-        return answerService.addAnswerToPoll(answer, pollId);
+    public AnswerFormValidationResponse addAnswerToPoll(@Valid @RequestBody Answer answer, BindingResult bindingResult, @PathVariable long pollId) {
+        return answerService.addAnswerToPoll(answer, pollId, bindingResult);
     }
 
     @GetMapping("/{pollId}/comments")
-    public List<Comment> getCommentsByPoll(@PathVariable long pollId) {
-        // TODO
-        return null;
+    public Page<Comment> getPollComments(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction, @PathVariable long pollId) {
+        return commentService.getCommentsByPollId(pollId, new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
+    }
+
+    @PostMapping("/{pollId}/comments")
+    public CommentValidationResponse addCommentToPoll(@PathVariable long pollId, @CookieValue("logged_user") String username, @Valid @RequestBody Comment comment, BindingResult bindingResult) {
+        return commentService.add(pollId, username, comment, bindingResult);
     }
 }
