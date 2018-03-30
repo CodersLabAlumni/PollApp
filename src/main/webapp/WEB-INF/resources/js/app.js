@@ -209,14 +209,14 @@ $(function () {
         var hours = parseInt($('#hours').children().first().val());
         var valid = true;
         if (isNaN(hours)) {
-          hours = 0;
+            hours = 0;
         }
         if (isNaN(days)) {
-          days = 0;
+            days = 0;
         }
         if (days + hours === 0) {
-          days = 1;
-          hours = 0;
+            days = 1;
+            hours = 0;
         }
         var closeDate = new Date();
         closeDate.setDate(closeDate.getDate() + days);
@@ -232,7 +232,6 @@ $(function () {
                 $('#selected-categories').children().each(function (index, category) {
                     ajax.ajaxPost("/polls/" + response.pollId + "/categories/" + $(category).data('id'))
                 });
-                ajax.ajaxPost("/polls/" + response.pollId + "/closed/0" + days + "/0" + hours);
             }
             answers.each(function (index, elem) {
                 var answer = {content: $(elem).val()};
@@ -252,7 +251,7 @@ $(function () {
                 selectedCategories.empty();
                 renderCategoriesToSelect();
                 pollForm.trigger('reset');
-                pollForm.append('<p class="text-success">' + response.successMsg + '</p>')
+                pollForm.append('<p class="text-success">' + response.successMsg + '</p>');
                 renderOpenedList('/categories/' + 0 + '/polls/available');
                 pollForm.toggle('hidden');
             } else {
