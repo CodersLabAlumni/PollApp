@@ -1,5 +1,21 @@
 package com.pollapp.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.pollapp.entity.Answer;
 import com.pollapp.entity.Category;
 import com.pollapp.entity.Comment;
@@ -9,14 +25,6 @@ import com.pollapp.response.AnswerResponse;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.AnswerService;
 import com.pollapp.service.PollService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Calendar;
-import java.util.List;
 
 @RestController
 @RequestMapping("/polls")
@@ -82,18 +90,6 @@ public class PollController {
     @PostMapping("/{pollId}/categories/{categoryId}")
     public PollResponse addCategoryToPoll(@PathVariable long pollId, @PathVariable int categoryId) {
         return pollService.addCategoryToPoll(pollId, categoryId);
-    }
-
-    @PostMapping("/{pollId}/closed/{days}/{hours}")
-    public Poll addHoursToPoll(@PathVariable long pollId, @PathVariable int days, @PathVariable int hours) {
-        Poll poll = pollRepository.findOne(pollId);
-        if (days + hours <= 0) {
-            poll.getClosed().add(Calendar.HOUR_OF_DAY, 24);
-        } else {
-            poll.getClosed().add(Calendar.DAY_OF_MONTH, days);
-            poll.getClosed().add(Calendar.HOUR_OF_DAY, hours);
-        }
-        return pollRepository.save(poll);
     }
 
     @GetMapping("/{pollId}/answers")

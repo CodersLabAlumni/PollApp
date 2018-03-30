@@ -193,8 +193,22 @@ $(function () {
     e.preventDefault();
     var poll = formUtil.createObjectFromForm($('#poll'));
     var answers = formUtil.createObjectListFromForm($('#answers'));
-    var days = $('#days').children().first().val();
-    var hours = $('#hours').children().first().val();
+    var days = parseInt($('#days').children().first().val());
+    var hours = parseInt($('#hours').children().first().val());
+    if (isNaN(hours)) {
+      hours = 0;
+    }
+    if (isNaN(days)) {
+      days = 0;
+    }
+    if (days + hours === 0) {
+      days = 1;
+      hours = 0;
+    }
+    var closeDate = new Date();
+    closeDate.setDate(closeDate.getDate() + days);
+    closeDate.setHours(closeDate.getHours() + hours);
+    poll.closed = closeDate;
     ajax.ajaxPostCallback("/polls", poll, function(response) {
       answers.forEach(function(answer) {
         ajax.ajaxPost("/polls/" + response.poll.id + "/answers", answer)
@@ -202,13 +216,14 @@ $(function () {
       $('#selected-categories').children().each(function(index, category) {
         ajax.ajaxPost("/polls/" + response.poll.id + "/categories/" + $(category).data('id'))
       });
-      ajax.ajaxPost("/polls/" + response.poll.id + "/closed/0" + days + "/0" + hours);
       categories.empty();
       selectedCategories.empty();
       renderCategoriesToSelect();
       renderAnswers();
+      renderOpenedList('/categories/' + 0 + '/polls/available');
     });
     this.reset();
+    pollForm.toggle('hidden');
   });
 
   $('#pollCreate').on('click', function() {
@@ -241,7 +256,7 @@ $(function () {
     $(this).parents('.text-white').fadeOut();
   });
 
-  renderCategoriesList();
+  // renderCategoriesList();
   renderOpenedList('/categories/' + 0 + '/polls/available');
   renderClosedList('/categories/' + 0 + '/polls/closed');
 

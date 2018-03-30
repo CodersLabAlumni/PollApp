@@ -1,6 +1,7 @@
 $(function() {
 
   var ajax = new Ajax();
+  var formUtil = new FormUtil();
   var gamePollList;
   var gameQuestion = $('#gameQuestion');
   var gameAnswers = $('#gameAnswers');
@@ -21,6 +22,7 @@ $(function() {
   var pollList = [];
   var gameTimer;
   var gameClockTimer;
+  var gamePoints = 0;
 
 
 
@@ -48,17 +50,31 @@ $(function() {
       } else {
         gameClock.empty();
         gameClock.append("TIME'S UP");
-        gameQuestion.empty();
-        gameQuestion.append("GAME OVER");
         gameAnswers.empty();
-        $('#pollsResults').toggle('hidden');
-        clearInterval(gameTimer);
-        previousGamePoll.empty();
-        $('#scoreMessage').empty();
-        $('#scoreMessage').append("Your score is " + correctAnswersScore + " correct answers and " + wrongAnswersScore + " wrong answers. <br>You think you can do better?");
+        endGame();
       }
 
     }, 1000);
+  }
+
+  function endGame() {
+    gameQuestion.empty();
+    gameQuestion.append("GAME OVER");
+    gameAnswers.append('<form method="post" id="gameScoreForm"><fieldset>' +
+    '<div class="form-group"><div id="score">' +
+    '<label for="exampleInputEmail1">You can submit your score by entering your name and clicking on the button below</label>' +
+    '<input type="text" class="form-control" name="name" id="name"" aria-describedby="scoreName" placeholder="Enter name">' +
+    '</div></div>' +
+    '<button type="submit" class="btn btn-primary">Submit Score</button>' +
+    '</fieldset></form>');
+    $('#pollsResults').toggle('hidden');
+    clearInterval(gameTimer);
+    previousGamePoll.empty();
+    $('#scoreMessage').empty();
+    $('#scoreMessage').append("Your score is " + correctAnswersScore +
+    " correct answers and " + wrongAnswersScore +
+    " wrong answers. <br>You think you can do better?");
+    gamePoints = (correctAnswersScore * 100) - (wrongAnswersScore * 100) + gameClockTimer * 5;
   }
 
   function shuffleArray(array) {
@@ -94,11 +110,11 @@ $(function() {
         gameAnswers.append(randomPollAnswers);
       })
     } else {
-      gameQuestion.empty();
-      gameQuestion.append("GAME OVER");
+      gameClock.empty();
+      gameClock.append(gameClockTimer);
       gameAnswers.empty();
       gameAnswers.append("You have finished ahead of time, with " + gameClockTimer + " s left to spare");
-      clearInterval(gameTimer);
+      endGame();
     }
   }
 
@@ -195,7 +211,30 @@ $(function() {
     $('.guide').toggle('hidden');
   })
 
+  gameAnswers.on('submit', function(e) {
+    e.preventDefault();
+    var gameScore = formUtil.createObjectFromForm($('#score'));
+    gameScore.score = gamePoints;
+    ajax.ajaxPostCallback("/gameScores", gameScore, function(response) {
+    });
+    gameAnswers.empty();
+    gameAnswers.append('Your score has been saved and score board updated');
+    renderScoreBoard('/gameScores');
+  })
 
+  function renderScoreBoard(endpoint) {
+    var rank = 1;
+    $('#scoreBoard').empty();
+    ajax.ajaxGetCallback(endpoint, function (response) {
+      response.forEach(function(nameScore) {
+        $('#scoreBoard').append('<tr><th scope="row"> ' + rank + '</th>' +
+      '<td>' + nameScore.name + '</td>' +
+      '<td>' + nameScore.score + '</td></tr>')
+      rank++;
+      })
+    })
+  }
 
+  renderScoreBoard('/gameScores');
 
 })
