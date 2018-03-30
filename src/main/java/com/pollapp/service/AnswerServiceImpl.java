@@ -6,9 +6,12 @@ import com.pollapp.entity.UserData;
 import com.pollapp.repository.AnswerRepository;
 import com.pollapp.repository.PollRepository;
 import com.pollapp.repository.UserDataRepository;
+import com.pollapp.response.AnswerFormValidationResponse;
 import com.pollapp.response.AnswerResponse;
+import com.pollapp.validation.AnswerValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -27,15 +30,32 @@ public class AnswerServiceImpl implements AnswerService {
     @Autowired
     private AnswerResponse answerResponse;
 
+    @Autowired
+    private AnswerValidation answerValidation;
+
     @Override
     public AnswerResponse save(Answer answer) {
         return answerResponse.create(answerRepository.save(answer));
     }
 
     @Override
-    public AnswerResponse addAnswerToPoll(Answer answer, long pollId) {
-        answer.setPoll(pollRepository.findOne(pollId));
-        return answerResponse.create(answerRepository.save(answer));
+    public void delete(Answer answer) {
+        answerRepository.delete(answer);
+    }
+
+    @Override
+    public void delete(long answerId) {
+        answerRepository.delete(answerId);
+    }
+
+    @Override
+    public AnswerFormValidationResponse addAnswerToPoll(Answer answer, long pollId, BindingResult bindingResult) {
+        if (answerValidation.validAnswer(answer, bindingResult)) {
+            answer.setPoll(pollRepository.findOne(pollId));
+            answerRepository.save(answer);
+        }
+        answerValidation.getAnswerFormValidationResponse().setAnswerId(answer.getId());
+        return answerValidation.getAnswerFormValidationResponse();
     }
 
     @Override
