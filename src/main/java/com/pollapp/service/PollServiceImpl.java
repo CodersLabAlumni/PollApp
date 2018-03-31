@@ -12,7 +12,6 @@ import com.pollapp.response.PollResponse;
 import com.pollapp.validation.PollValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -114,24 +113,16 @@ public class PollServiceImpl implements PollService {
     }
 
     @Override
-    public Page<PollResponse> getAvailablePollsByCategory(int categoryId, Pageable pageable) {
+    public Page<Poll> getAvailablePollsByCategory(int categoryId, Pageable pageable) {
         List<Long> idList = new ArrayList<>();
-        List<Poll> polls;
         if (userDataRepository.existsByIp(Ip.remote())) {
             idList = createPollsIdList(userDataRepository.findByIp(Ip.remote()));
         }
         if (isAllCategories(categoryId)) {
-            polls = pollRepository.findAllByClosedAfter(Calendar.getInstance());
+            return pollRepository.findAllByClosedAfterAndIdNotIn(Calendar.getInstance(), idList, pageable);
         } else {
-            polls = pollRepository.findAllByClosedAfterAndCategoriesId(Calendar.getInstance(), categoryId);
+            return pollRepository.findAllByClosedAfterAndCategoriesIdAndIdNotIn(Calendar.getInstance(), categoryId, idList, pageable);
         }
-        removeAlreadyVoted(polls, idList);
-        return pollResponse.create(new PageImpl<>(polls, pageable, polls.size()), pageable);
-    }
-
-    private List<Poll> removeAlreadyVoted(List<Poll> polls, List<Long> pollsId) {
-        pollsId.forEach(id -> polls.removeIf(poll -> poll.getId() == id));
-        return polls;
     }
 
     private boolean isAllCategories(int categoryId) {
