@@ -12,6 +12,7 @@ $(function () {
     var selectedCategories = $('#selected-categories');
     var $pagination = $('.pagination-polls');
     var categoryId = 0;
+    var openCategoryId = 0;
     var showPollsAddress = "";
     var pollSortProperty = "created";
     var pollSortDirection = "desc";
@@ -102,8 +103,7 @@ $(function () {
         ongoingPolls.empty();
         ajax.ajaxGetCallback(endpoint, function (response) {
             var content = response.content;
-            content.forEach(function (elem) {
-                var poll = elem.poll;
+            content.forEach(function (poll) {
                 var pollAnswers = '';
                 ajax.ajaxGetCallback('/polls/' + poll.id + '/answers', function (response) {
                     response.forEach(function (elem) {
@@ -193,9 +193,9 @@ $(function () {
     });
 
     openPollsCategories.on('click', function (e) {
-        categoryId = $(e.target).data("category");
+        openCategoryId = $(e.target).data("category");
         var categoryName = $(e.target).html();
-        renderOpenedList('/categories/' + categoryId + '/polls/available');
+        renderOpenedList('/categories/' + openCategoryId + '/polls/available');
         $('#ongoingPollsCategoryButton').html('CATEGORY ' + categoryName);
     });
 
@@ -253,6 +253,7 @@ $(function () {
                 pollForm.trigger('reset');
                 pollForm.append('<p class="text-success">' + response.successMsg + '</p>');
                 renderOpenedList('/categories/' + 0 + '/polls/available');
+                $('#ongoingPollsCategoryButton').html('CATEGORY ALL');
                 pollForm.toggle('hidden');
             } else {
                 if (response.pollId !== 0) {
@@ -292,8 +293,9 @@ $(function () {
     });
 
     ongoingPolls.on('click', '.form-check-input', function (e) {
+        e.preventDefault();
         ajax.ajaxPost('/answers/' + e.target.value + '/data');
-        $(this).parents('.text-white').fadeOut();
+        renderOpenedList('/categories/' + openCategoryId + '/polls/available');
     });
 
     $('#register').on('click', function () {
@@ -384,7 +386,7 @@ $(function () {
     });
 
     renderCategoriesList();
-    renderOpenedList('/categories/' + 0 + '/polls/available');
+    renderOpenedList('/categories/' + openCategoryId + '/polls/available');
     renderClosedList('/polls/closed');
     handleLoginError();
 
