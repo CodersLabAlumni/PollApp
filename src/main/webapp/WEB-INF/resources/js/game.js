@@ -12,7 +12,7 @@ $(function() {
   var closeGame = $('#closeGame');
   var nextGame = $('#nextGame');
   var gameBoard = $('#gameBoard');
-  var noGameView = $('#noGameView');
+  var noGameView = $('.noGameView');
   var afterGameView = $('#afterGameView')
   var previousGamePoll = $('#previousGamePoll');
   var randomPoll;
@@ -40,7 +40,7 @@ $(function() {
   function renderGame() {
     gamePollList = pollList.slice();
     shuffleArray(gamePollList);
-    gameClockTimer = 10;
+    gameClockTimer = 30;
     renderGameQuestion();
     gameTimer = setInterval(function() {
       gameClock.empty();

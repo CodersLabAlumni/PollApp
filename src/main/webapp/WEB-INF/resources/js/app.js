@@ -292,6 +292,11 @@ $(function () {
         }
     });
 
+    $('#PollAppBtn').on('click', function() {
+      renderOpenedList('/categories/' + 0 + '/polls/available');
+      renderClosedList('/polls/closed');
+    });
+
     ongoingPolls.on('click', '.form-check-input', function (e) {
         e.preventDefault();
         ajax.ajaxPost('/answers/' + e.target.value + '/data');
@@ -385,9 +390,39 @@ $(function () {
 
     });
 
+    function toggleAuthors() {
+      var now = new Date();
+      if (now.getMilliseconds() % 2 == 0) {
+        $('#authorScenarioA').hide();
+      } else {
+        $('#authorScenarioB').hide();
+      }
+    }
+
+    $('#showApplication').on('click', function () {
+      $('.appDescription').hide();
+      $('.appDescription').toggle('hidden');
+    });
+
+    $('#showStatement').on('click', function () {
+      $('.appDescription').hide();
+      $('#statement').toggle('hidden');
+    });
+
+    $('#showTechnologies').on('click', function () {
+      $('.appDescription').hide();
+      $('#technologies').toggle('hidden');
+    });
+
+    $('#showAuthors').on('click', function () {
+      $('.appDescription').hide();
+      $('#authors').toggle('hidden');
+    });
+
     renderCategoriesList();
     renderOpenedList('/categories/' + openCategoryId + '/polls/available');
     renderClosedList('/polls/closed');
     handleLoginError();
+    toggleAuthors();
 
 });
