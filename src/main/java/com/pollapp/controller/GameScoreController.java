@@ -21,7 +21,7 @@ public class GameScoreController {
 	
 	@GetMapping("")
 	public List<GameScore> getAllGameScore() {
-		return gameScoreRepository.findAllByOrderByScoreDesc();
+		return gameScoreRepository.findTop50ByOrderByScoreDesc();
 	}
 	
 	@PostMapping("")

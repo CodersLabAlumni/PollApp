@@ -160,7 +160,7 @@
           <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
         </div>
         <div class="col-sm-3">
-          <p class="text-center"><em>Checkout the details of PollApp's authors and contributors.</em></p>
+          <p class="text-center"><em>Checkout the details of PollApp's aim, used technologies and authors.</em></p>
           <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
         </div>
       </div>
@@ -307,28 +307,32 @@
       <div class="jumbotron">
         <h3 class="display-6 text-center">About</h3>
         <hr class="my-4">
-        <div class="btn-group btn-group-toggle description-menu" data-toggle="buttons">
+        <button type="button" id="showApplication" class="btn btn-danger">General</button>
+        <button type="button" id="showStatement" class="btn btn-danger">Purpose</button>
+        <button type="button" id="showTechnologies" class="btn btn-danger">Technologies</button>
+        <button type="button" id="showAuthors" class="btn btn-danger">Authors</button>
+        <!-- <div class="btn-group btn-group-toggle description-menu" data-toggle="buttons">
           <label class="btn btn-danger active" id="showApplication">
-            <input type="radio" autocomplete="off" checked=""> Application
+            <input type="radio" autocomplete="off" checked=""> General
           </label>
           <label class="btn btn-danger" id="showStatement">
             <input type="radio" autocomplete="off"> Statement
           </label>
-          <label class="btn btn-danger"  id="showTechnologies">
+          <label class="btn btn-danger" id="showTechnologies">
             <input type="radio" autocomplete="off"> Technologies
           </label>
-          <label class="btn btn-danger"  id="showAuthors">
+          <label class="btn btn-danger" id="showAuthors">
             <input type="radio" autocomplete="off"> Authors
           </label>
-        </div>
+        </div> -->
         <hr class="my-4">
         <div class="appDescription" id="statement">
-          <p class="lead text-center">Statement</p>
+          <p class="lead text-center">Purpose</p>
           <hr class="my-4">
-          <p>PollApp was created as an excercise ground for a variety of skills regarding software development. That included practical application of particular coding tools but also conceptualization, planning and work management, version controll coordination,
+          <p>PollApp was created as an exercise ground for a variety of skills regarding software development. That included practical application of particular coding tools but also conceptualization, planning and work management, version control coordination,
             testing, deployment, etc.</p>
           <p>Despite the deployment at the current stage, the project lives and its original aims remain valid. Therefore we invite interested developers to take a look at the source code, which can be found under <a href="https://github.com/CodersLabAlumni/PollApp">github.com/CodersLabAlumni/PollApp</a>.</p>
-          <p>We strongy believe in constant learning and community based development. Whether you're an experienced developer who can share his or hers knowledge, beginning developer looking for inspiration, a user who can share thoughts and suggestions
+          <p>We strongly believe in constant learning and community based development. Whether you're an experienced developer who can share his or hers knowledge, beginning developer looking for inspiration, a user who can share thoughts and suggestions
             regarding existing and future issues or a person wishing to propose some kind of cooperation, go ahead and contact us.</p>
           <p>You can find contact details under authors section.</p>
           <br>
@@ -337,7 +341,7 @@
           <p class="lead text-center">Used technologies and tools</p>
           <hr class="my-4">
           <p>Our main focus is to develop competences regarding Java along with supplementing frameworks. However even the best backend engine seems divorced from reality without consideration for user experience. Hence we believe it is important to stay
-            on top of ballance between frontend and backend.</p>
+            on top of balance between frontend and backend.</p>
           <p>Having said that, in the development of PollApp a variety of tools and technologies have been used, including:</p>
           <ul>
             <li>Java</li>
@@ -358,8 +362,8 @@
         <div class="appDescription" id="authors">
           <p class="lead text-center">Authors</p>
           <hr class="my-4">
-          <p>Despite comming from various academic and professional backgrounds, authors share fascination for IT and the pursuit for knowledge and expierience regarding software development.</p>
-          <p>PollApp was developed by:</p>
+          <p>Despite coming from various academic and professional backgrounds, authors share fascination for IT and the pursuit for knowledge and experience regarding software development.
+          PollApp was developed by:</p>
           <div id="authorScenarioA">
             <p>Mateusz Lichoń</p>
             <ul>

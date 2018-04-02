@@ -10,5 +10,5 @@ import com.pollapp.entity.GameScore;
 @Repository
 public interface GameScoreRepository extends JpaRepository<GameScore, Long>{
 
-	List<GameScore> findAllByOrderByScoreDesc();
+	List<GameScore> findTop50ByOrderByScoreDesc();
 }
