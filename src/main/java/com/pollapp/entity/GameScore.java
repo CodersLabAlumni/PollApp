@@ -1,25 +1,22 @@
 package com.pollapp.entity;
 
+import javax.persistence.*;
 import java.util.Calendar;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "gamescore")
 public class GameScore {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	private String name;
 	
 	private long score;
-	
+
+	@Column(columnDefinition= "timestamp with time zone")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar created;
 
 	public GameScore() {

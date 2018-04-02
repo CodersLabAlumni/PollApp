@@ -33,7 +33,7 @@ public class AppConfig extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(AppConfig.class);
+        return application.sources(AppInitializer.class);
     }
 
     @Bean

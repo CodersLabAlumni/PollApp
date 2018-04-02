@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pollapp</groupId>
     <artifactId>PollApp</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>0.1</version>
     <name>PollApp Maven Webapp</name>
     <url>http://maven.apache.org</url>

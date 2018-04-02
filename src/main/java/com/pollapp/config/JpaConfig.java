@@ -23,7 +23,7 @@ public class JpaConfig {
 
     @Bean
     @Primary
-    @ConfigurationProperties(prefix = "mysql.datasource")
+    @ConfigurationProperties(prefix = "heroku.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }

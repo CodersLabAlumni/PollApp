@@ -4,17 +4,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,15 +15,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Poll {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotBlank
     @NotEmpty
     private String question;
-    
+
+    @Column(columnDefinition= "timestamp with time zone")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar created;
-    
+
+    @Column(columnDefinition= "timestamp with time zone")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar closed;
 
     @JoinColumn(name = "account_id")

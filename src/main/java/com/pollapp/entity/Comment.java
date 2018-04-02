@@ -11,13 +11,15 @@ import java.util.Calendar;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @NotEmpty
     @NotBlank
     private String content;
 
+    @Column(columnDefinition= "timestamp with time zone")
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar created;
 
     @JoinColumn(name = "account_id")

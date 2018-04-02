@@ -119,8 +119,14 @@ public class PollServiceImpl implements PollService {
             idList = createPollsIdList(userDataRepository.findByIp(Ip.remote()));
         }
         if (isAllCategories(categoryId)) {
+            if (idList.isEmpty()) {
+                pollRepository.findAllByClosedAfter(Calendar.getInstance(), pageable);
+            }
             return pollRepository.findAllByClosedAfterAndIdNotIn(Calendar.getInstance(), idList, pageable);
         } else {
+            if (idList.isEmpty()) {
+                pollRepository.findAllByClosedAfterAndCategoriesId(Calendar.getInstance(), categoryId, pageable);
+            }
             return pollRepository.findAllByClosedAfterAndCategoriesIdAndIdNotIn(Calendar.getInstance(), categoryId, idList, pageable);
         }
     }
