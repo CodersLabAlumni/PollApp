@@ -398,6 +398,26 @@ $(function () {
       }
     }
 
+    $('#showApplication').on('click', function () {
+      $('.appDescription').hide();
+      $('.appDescription').toggle('hidden');
+    });
+
+    $('#showStatement').on('click', function () {
+      $('.appDescription').hide();
+      $('#statement').toggle('hidden');
+    });
+
+    $('#showTechnologies').on('click', function () {
+      $('.appDescription').hide();
+      $('#technologies').toggle('hidden');
+    });
+
+    $('#showAuthors').on('click', function () {
+      $('.appDescription').hide();
+      $('#authors').toggle('hidden');
+    });
+
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/polls/closed');

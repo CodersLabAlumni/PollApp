@@ -307,19 +307,22 @@
       <div class="jumbotron">
         <h3 class="display-6 text-center">About</h3>
         <hr class="my-4">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-danger active">
-            <input type="checkbox" checked="" autocomplete="off"> Statement
+        <div class="btn-group btn-group-toggle description-menu" data-toggle="buttons">
+          <label class="btn btn-danger active" id="showApplication">
+            <input type="radio" autocomplete="off" checked=""> Application
           </label>
-          <label class="btn btn-danger">
-            <input type="checkbox" autocomplete="off"> Technologies
+          <label class="btn btn-danger" id="showStatement">
+            <input type="radio" autocomplete="off"> Statement
           </label>
-          <label class="btn btn-danger">
-            <input type="checkbox" autocomplete="off"> Authors
+          <label class="btn btn-danger"  id="showTechnologies">
+            <input type="radio" autocomplete="off"> Technologies
+          </label>
+          <label class="btn btn-danger"  id="showAuthors">
+            <input type="radio" autocomplete="off"> Authors
           </label>
         </div>
         <hr class="my-4">
-        <div id="statement">
+        <div class="appDescription" id="statement">
           <p class="lead text-center">Statement</p>
           <hr class="my-4">
           <p>PollApp was created as an excercise ground for a variety of skills regarding software development. That included practical application of particular coding tools but also conceptualization, planning and work management, version controll coordination,
@@ -328,8 +331,9 @@
           <p>We strongy believe in constant learning and community based development. Whether you're an experienced developer who can share his or hers knowledge, beginning developer looking for inspiration, a user who can share thoughts and suggestions
             regarding existing and future issues or a person wishing to propose some kind of cooperation, go ahead and contact us.</p>
           <p>You can find contact details under authors section.</p>
+          <br>
         </div>
-        <div id="technologies">
+        <div class="appDescription" id="technologies">
           <p class="lead text-center">Used technologies and tools</p>
           <hr class="my-4">
           <p>Our main focus is to develop competences regarding Java along with supplementing frameworks. However even the best backend engine seems divorced from reality without consideration for user experience. Hence we believe it is important to stay
@@ -349,8 +353,9 @@
             <li>Postgres</li>
             <li>Github</li>
           </ul>
+          <br>
         </div>
-        <div id="authors">
+        <div class="appDescription" id="authors">
           <p class="lead text-center">Authors</p>
           <hr class="my-4">
           <p>Despite comming from various academic and professional backgrounds, authors share fascination for IT and the pursuit for knowledge and expierience regarding software development.</p>
