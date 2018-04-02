@@ -29,6 +29,6 @@ public interface PollService {
 
     Page<PollResponse> getOnGoingPollsByCategory(int categoryId, Pageable pageable);
 
-    Page<PollResponse> getAvailablePollsByCategory(int categoryId, Pageable pageable);
+    Page<Poll> getAvailablePollsByCategory(int categoryId, Pageable pageable);
 }
 

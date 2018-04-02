@@ -1,6 +1,7 @@
 package com.pollapp.controller;
 
 import com.pollapp.entity.Category;
+import com.pollapp.entity.Poll;
 import com.pollapp.repository.CategoryRepository;
 import com.pollapp.response.PollResponse;
 import com.pollapp.service.PollService;
@@ -65,7 +66,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}/polls/available")
-    public Page<PollResponse> getAvailablePollsByCategory(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction, @PathVariable int categoryId) {
+    public Page<Poll> getAvailablePollsByCategory(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "size", defaultValue = "5") int size, @RequestParam(value = "sort", defaultValue = "created") String[] properties, @RequestParam(value = "dir", defaultValue = "desc") String direction, @PathVariable int categoryId) {
         return pollService.getAvailablePollsByCategory(categoryId, new PageRequest(page, size, Sort.Direction.fromString(direction), properties));
     }
 }
