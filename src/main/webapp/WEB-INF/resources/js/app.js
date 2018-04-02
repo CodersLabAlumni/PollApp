@@ -389,9 +389,19 @@ $(function () {
 
     });
 
+    function toggleAuthors() {
+      var now = new Date();
+      if (now.getMilliseconds() % 2 == 0) {
+        $('#authorScenarioA').hide();
+      } else {
+        $('#authorScenarioB').hide();
+      }
+    }
+
     renderCategoriesList();
     renderOpenedList('/categories/' + 0 + '/polls/available');
     renderClosedList('/polls/closed');
     handleLoginError();
+    toggleAuthors();
 
 });
