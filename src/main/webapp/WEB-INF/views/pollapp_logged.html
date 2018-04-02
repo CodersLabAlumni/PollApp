@@ -12,7 +12,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
-    <a class="navbar-brand" href="#">PollApp</a>
+    <a class="navbar-brand" href="" id="PollAppBtn">PollApp</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
@@ -114,6 +114,66 @@
 </div>
 <br>
 
+<div class="alert alert-dismissible alert-light noGameView">
+    <div class="guide hidden">
+        <div class="row">
+            <div class="col-sm-2">
+                <p class="text-left"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+                <p class="text-left"><em>Refresh website content.</em></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4">
+                <p class="text-center"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+                <p class="text-center"><em>Click here to create your own poll. Set the question, possible answers and
+                    time you wish the poll to stay opened for voting.</em></p>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-2">
+                <p class="text-right"><i class="fa fa-arrow-up" style="font-size:36px"></i></p>
+                <p class="text-right"><em>Create your account and log in for more options.</em></p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="container">
+        <h3 class="text-center">Welcome to <strong>PollApp</strong>.</h3>
+        <p class="text-center">A platform which lets you share your oppinion in various more or less important matters
+            via short poll method. You can take part in as many polls as you want. You can also create your own question
+            and see what the world thinks about it. If you need
+            more information on how it works this
+            <button type="button" class="btn btn-primary" id="guideButton"> Guide</button>
+            may be helpfull.
+        </p>
+    </div>
+    <br>
+    <div class="guide hidden">
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="text-center"><em>Take part in a game, where you have to guess the most popular answers to
+                    random polls.</em></p>
+                <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-center"><em>See the results of PollApp polls. You can choose to see closed, ongoing or
+                    all polls, select category and sort them to your liking.</em></p>
+                <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-center"><em>Here you can share your oppinion in ongoing polls. You can select categories
+                    or answer random polls. Without logging in, each IP address can cast one vote per poll.</em></p>
+                <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-center"><em>Checkout the details of PollApp's aim, used technologies and authors.</em>
+                </p>
+                <p class="text-center"><i class="fa fa-arrow-down" style="font-size:36px"></i></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container hidden" id="gameBoard">
     <br>
     <div class="row">
@@ -137,7 +197,7 @@
             <div class="card text-white bg-info mb-3" style="max-width: 100%;">
                 <div class="card-header">Time left</div>
                 <div class="card-body">
-                    <h4 class="card-title" id="gameClock">60 s</h4>
+                    <h4 class="card-title" id="gameClock">30 s</h4>
                 </div>
             </div>
         </div>
@@ -159,10 +219,10 @@
 <div class="row" id="pollsResults">
     <div class="col-sm-3">
         <div class="jumbotron">
-            <div id="noGameView">
+            <div class="noGameView">
                 <h3 class="display-6 text-center">PollApp challenge</h3>
                 <br>
-                <p class="lead text-center">Various polls, 60 seconds, your guess...</p>
+                <p class="lead text-center">Various polls, 30 seconds, your guess...</p>
                 <p class="lead text-center">Good luck!</p>
                 <hr class="my-4">
                 <p>You will be presented with a set of random poll questions. Try to guess the most popular answer.
@@ -259,7 +319,96 @@
         <div id="ongoingPolls"></div>
     </div>
     <div class="col-sm-3">
-        Auhors details
+        <div class="jumbotron">
+            <h3 class="display-6 text-center">About</h3>
+            <hr class="my-4">
+            <button type="button" id="showStatement" class="btn btn-danger">Purpose</button>
+            <button type="button" id="showTechnologies" class="btn btn-danger">Technologies</button>
+            <button type="button" id="showAuthors" class="btn btn-danger">Authors</button>
+            <button type="button" id="showApplication" class="btn btn-danger">Overall</button>
+            <hr class="my-4">
+            <div class="appDescription" id="statement">
+                <p class="lead text-center">Purpose</p>
+                <hr class="my-4">
+                <p>PollApp was created as an exercise ground for a variety of skills regarding software development.
+                    That included practical application of particular coding tools but also conceptualization, planning
+                    and work management, version control coordination,
+                    testing, deployment, etc.</p>
+                <p>Despite the deployment at the current stage, the project lives and its original aims remain valid.
+                    Therefore we invite interested developers to take a look at the source code, which can be found
+                    under <a href="https://github.com/CodersLabAlumni/PollApp">github.com/CodersLabAlumni/PollApp</a>.
+                </p>
+                <p>We strongly believe in constant learning and community based development. Whether you're an
+                    experienced developer who can share his or hers knowledge, beginning developer looking for
+                    inspiration, a user who can share thoughts and suggestions
+                    regarding existing and future issues or a person wishing to propose some kind of cooperation, go
+                    ahead and contact us.</p>
+                <p>You can find contact details under authors section.</p>
+                <br>
+            </div>
+            <div class="appDescription" id="technologies">
+                <p class="lead text-center">Used technologies and tools</p>
+                <hr class="my-4">
+                <p>Our main focus is to develop competences regarding Java along with supplementing frameworks. However
+                    even the best backend engine seems divorced from reality without consideration for user experience.
+                    Hence we believe it is important to stay
+                    on top of balance between frontend and backend.</p>
+                <p>Having said that, in the development of PollApp a variety of tools and technologies have been used,
+                    including:</p>
+                <ul>
+                    <li>Java</li>
+                    <li>Spring</li>
+                    <li>Hibernate</li>
+                    <li>JavaScript</li>
+                    <li>jQuery</li>
+                    <li>REST</li>
+                    <li>HTML</li>
+                    <li>Bootstrap</li>
+                    <li>Heroku</li>
+                    <li>MySQL</li>
+                    <li>Postgres</li>
+                    <li>Github</li>
+                </ul>
+                <br>
+            </div>
+            <div class="appDescription" id="authors">
+                <p class="lead text-center">Authors</p>
+                <hr class="my-4">
+                <p>Despite coming from various academic and professional backgrounds, authors share fascination for IT
+                    and the pursuit for knowledge and experience regarding software development.
+                    PollApp was developed by:</p>
+                <div id="authorScenarioA">
+                    <p>Mateusz Lichoń</p>
+                    <ul>
+                        <li>mateusz.lichon@gmail.com</li>
+                        <li><a href="https://github.com/mateuszlichon">https://github.com/mateuszlichon</a></li>
+                        <li><a href="https://www.linkedin.com/in/mateusz-lichon/">https://www.linkedin.com/in/mateusz-lichon/</a>
+                        </li>
+                    </ul>
+                </div>
+                <p>Przemysław Konik</p>
+                <ul>
+                    <li>przemyslawkonik@gmail.com</li>
+                    <li><a href="https://github.com/przemyslawkonik">https://github.com/przemyslawkonik</a></li>
+                    <li><a href="https://www.linkedin.com/in/przemys%C5%82aw-konik/">https://www.linkedin.com/in/przemysław-konik/</a>
+                    </li>
+                </ul>
+                <div id="authorScenarioB">
+                    <p>Mateusz Lichoń</p>
+                    <ul>
+                        <li>mateusz.lichon@gmail.com</li>
+                        <li><a href="https://github.com/mateuszlichon">https://github.com/mateuszlichon</a></li>
+                        <li><a href="https://www.linkedin.com/in/mateusz-lichon/">https://www.linkedin.com/in/mateusz-lichon/</a>
+                        </li>
+                    </ul>
+                </div>
+                <p>with support of:</p>
+                <ul>
+                    <li>Łukasz Budyń - <a href="https://github.com/Lukasz-Bdn">https://github.com/Lukasz-Bdn</a></li>
+                    <li>Marcin Pietryga - <a href="https://github.com/PietrygaM">https://github.com/PietrygaM</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
