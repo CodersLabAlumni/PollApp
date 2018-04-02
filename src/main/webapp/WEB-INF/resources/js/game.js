@@ -40,7 +40,7 @@ $(function() {
   function renderGame() {
     gamePollList = pollList.slice();
     shuffleArray(gamePollList);
-    gameClockTimer = 10;
+    gameClockTimer = 30;
     renderGameQuestion();
     gameTimer = setInterval(function() {
       gameClock.empty();
