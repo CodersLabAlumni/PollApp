@@ -328,8 +328,9 @@ $(function () {
     });
 
     $('#login').on('click', function () {
-        removeLoginError();
-        loginForm.submit();
+        //removeLoginError();
+        //loginForm.submit();
+        $('#login-error').text('Feature available soon');
     });
 
     $(window).on('beforeunload', function () {
